@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HelperGo | Devenir Helper</title>
+    <meta
+      name="description"
+      content="Rejoins le réseau HelperGo à Casablanca. Livraison flexible, rémunération en cash."
+    />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.0.3/src/fill/style.css"
+    />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <a href="index.html" class="logo-link" aria-label="HelperGo accueil">
+          <svg
+            class="logo-mark"
+            width="44"
+            height="44"
+            viewBox="0 0 44 44"
+            aria-hidden="true"
+          >
+            <circle cx="22" cy="22" r="22" fill="#1D9E75" />
+            <g fill="#ffffff">
+              <rect x="10" y="12" width="4" height="20" rx="1" />
+              <rect x="18" y="12" width="4" height="20" rx="1" />
+              <rect x="10" y="20" width="12" height="4" rx="1" />
+            </g>
+            <path
+              d="M26 14 L34 22 L26 30"
+              fill="none"
+              stroke="#ffffff"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <span class="logo-text"
+            ><span class="logo-helper">Helper</span
+            ><span class="logo-go">Go</span></span
+          >
+        </a>
+        <nav class="nav-desktop" aria-label="Navigation principale">
+          <a href="helper.html" aria-current="page">Devenir Helper</a>
+        </nav>
+        <button
+          type="button"
+          class="nav-toggle"
+          aria-label="Ouvrir le menu"
+          aria-expanded="false"
+        >
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </button>
+      </div>
+      <nav class="nav-mobile" aria-label="Navigation mobile">
+        <a href="helper.html">Devenir Helper</a>
+      </nav>
+    </header>
+
+    <section class="hero helper-hero">
+      <div class="container">
+        <h1 class="hero-title">Devenez Helper</h1>
+        <p class="hero-subtitle" style="margin-bottom: 0">
+          Rejoignez le réseau et commencez à livrer près de chez vous.
+        </p>
+        <div class="helper-stats" role="list">
+          <div class="helper-stat" role="listitem">
+            <span class="helper-stat-icon" aria-hidden="true"
+              ><i class="ph-fill ph-clock"></i
+            ></span>
+            <span>Flexible</span>
+          </div>
+          <div class="helper-stat" role="listitem">
+            <span class="helper-stat-icon" aria-hidden="true"
+              ><i class="ph-fill ph-money"></i
+            ></span>
+            <span>Payé en cash</span>
+          </div>
+          <div class="helper-stat" role="listitem">
+            <span class="helper-stat-icon" aria-hidden="true"
+              ><i class="ph-fill ph-map-pin"></i
+            ></span>
+            <span>Dans votre quartier</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="helper-form-section" data-reveal>
+      <div class="helper-form-card" id="helper-card">
+        <div class="helper-form-wrap" id="helper-form-wrap">
+          <form
+            id="helper-form"
+            action="https://formspree.io/f/xrejywbo"
+            method="POST"
+            novalidate
+          >
+            <input
+              type="hidden"
+              name="_subject"
+              value="Candidature Helper HelperGo"
+            />
+            <input type="hidden" name="transport_modes" id="field-transport" />
+
+            <div class="form-group">
+              <label class="form-label" for="helper-name">Prénom et nom</label>
+              <input
+                type="text"
+                id="helper-name"
+                name="full_name"
+                class="form-input"
+                placeholder="Votre nom complet"
+                autocomplete="name"
+                required
+              />
+              <p class="form-error" id="err-name">Indique ton prénom et nom.</p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="helper-whatsapp"
+                >Numéro WhatsApp</label
+              >
+              <div class="whatsapp-field" id="helper-whatsapp-wrap">
+                <span class="whatsapp-prefix">+212</span>
+                <input
+                  type="tel"
+                  id="helper-whatsapp"
+                  name="whatsapp_local"
+                  class="form-input"
+                  placeholder="6XXXXXXXXX"
+                  autocomplete="tel"
+                  required
+                />
+              </div>
+              <p class="form-error" id="err-helper-wa">
+                Entre un numéro valide (9 à 10 chiffres après +212).
+              </p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="helper-quartier">Votre quartier</label>
+              <select
+                id="helper-quartier"
+                name="quartier"
+                class="form-select"
+                required
+              >
+                <option value="">Sélectionnez votre quartier</option>
+                <option value="Al Ferdaous">Al Ferdaous</option>
+                <option value="Maarif">Maarif</option>
+                <option value="Hay Hassani">Hay Hassani</option>
+                <option value="Oulfa">Oulfa</option>
+              </select>
+              <p class="form-error" id="err-q">Choisissez un quartier.</p>
+            </div>
+
+            <div class="form-group">
+              <span class="form-label">Moyen de déplacement</span>
+              <div class="toggle-row toggle-row-transport" id="transport-toggle">
+                <button
+                  type="button"
+                  class="toggle-btn multi toggle-btn-transport"
+                  data-transport="À pied"
+                >
+                  <span class="toggle-btn-ico" aria-hidden="true"
+                    ><i class="ph-fill ph-person-simple-walk"></i
+                  ></span>
+                  <span class="toggle-btn-txt">À pied</span>
+                </button>
+                <button
+                  type="button"
+                  class="toggle-btn multi toggle-btn-transport"
+                  data-transport="Vélo"
+                >
+                  <span class="toggle-btn-ico" aria-hidden="true"
+                    ><i class="ph-fill ph-bicycle"></i
+                  ></span>
+                  <span class="toggle-btn-txt">Vélo</span>
+                </button>
+                <button
+                  type="button"
+                  class="toggle-btn multi toggle-btn-transport"
+                  data-transport="Trottinette"
+                >
+                  <span class="toggle-btn-ico" aria-hidden="true"
+                    ><i class="ph-fill ph-scooter"></i
+                  ></span>
+                  <span class="toggle-btn-txt">Trottinette</span>
+                </button>
+                <button
+                  type="button"
+                  class="toggle-btn multi toggle-btn-transport"
+                  data-transport="Moto"
+                >
+                  <span class="toggle-btn-ico" aria-hidden="true"
+                    ><i class="ph-fill ph-motorcycle"></i
+                  ></span>
+                  <span class="toggle-btn-txt">Moto</span>
+                </button>
+              </div>
+              <p class="form-error" id="err-transport">
+                Sélectionne au moins un moyen de déplacement.
+              </p>
+            </div>
+
+            <button
+              type="submit"
+              class="btn btn-primary btn-block btn-lg"
+              id="helper-submit"
+            >
+              <span class="btn-spinner" aria-hidden="true"></span>
+              <span class="btn-text">Je veux devenir Helper →</span>
+            </button>
+          </form>
+        </div>
+
+        <div class="helper-success" id="helper-success" aria-live="polite">
+          <svg
+            class="checkmark-svg"
+            id="helper-check"
+            viewBox="0 0 100 100"
+            aria-hidden="true"
+          >
+            <circle cx="50" cy="50" r="44" />
+            <path d="M28 52 L45 68 L72 38" />
+          </svg>
+          <h2 class="confirmation-title">Candidature envoyée !</h2>
+          <p class="confirmation-text">
+            On te contacte sur WhatsApp dans les 24h. Merci de rejoindre
+            HelperGo !
+          </p>
+          <a href="index.html" class="btn btn-primary">Retour à l'accueil</a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      HelperGo © 2026 — Casablanca, Maroc
+    </footer>
+
+    <script src="main.js"></script>
+    <script>
+      (function () {
+        "use strict";
+
+        var FORMSPREE_URL = "https://formspree.io/f/xrejywbo";
+        var transportSelected = [];
+
+        function normalizeWhatsAppLocal(input) {
+          var d = (input || "").replace(/\D/g, "");
+          if (d.startsWith("212")) d = d.slice(3);
+          if (d.startsWith("0")) d = d.slice(1);
+          return d;
+        }
+
+        var toggle = document.getElementById("transport-toggle");
+        if (toggle) {
+          toggle.querySelectorAll(".toggle-btn").forEach(function (btn) {
+            btn.addEventListener("click", function () {
+              btn.classList.toggle("selected");
+              var label = btn.getAttribute("data-transport");
+              var idx = transportSelected.indexOf(label);
+              if (btn.classList.contains("selected")) {
+                if (idx === -1) transportSelected.push(label);
+              } else if (idx !== -1) {
+                transportSelected.splice(idx, 1);
+              }
+              document.getElementById("err-transport").classList.remove("visible");
+            });
+          });
+        }
+
+        var form = document.getElementById("helper-form");
+        form.setAttribute("action", FORMSPREE_URL);
+
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          document.querySelectorAll("#helper-form-wrap .form-error").forEach(function (el) {
+            el.classList.remove("visible");
+          });
+          document
+            .querySelectorAll("#helper-form-wrap .form-input.error, #helper-form-wrap .form-select.error")
+            .forEach(function (el) {
+              el.classList.remove("error");
+            });
+          document.getElementById("helper-whatsapp-wrap").classList.remove("error");
+
+          var ok = true;
+          var name = (document.getElementById("helper-name").value || "").trim();
+          if (name.length < 2) {
+            document.getElementById("err-name").classList.add("visible");
+            document.getElementById("helper-name").classList.add("error");
+            ok = false;
+          }
+
+          var local = normalizeWhatsAppLocal(
+            document.getElementById("helper-whatsapp").value
+          );
+          if (local.length < 9 || local.length > 10 || !/^\d+$/.test(local)) {
+            document.getElementById("err-helper-wa").classList.add("visible");
+            document.getElementById("helper-whatsapp-wrap").classList.add("error");
+            ok = false;
+          }
+
+          var qEl = document.getElementById("helper-quartier");
+          var q = (qEl.value || "").trim();
+          if (!q) {
+            document.getElementById("err-q").classList.add("visible");
+            qEl.classList.add("error");
+            ok = false;
+          }
+
+          if (transportSelected.length === 0) {
+            document.getElementById("err-transport").classList.add("visible");
+            ok = false;
+          }
+
+          if (!ok) return;
+
+          document.getElementById("field-transport").value =
+            transportSelected.join(", ");
+
+          var fullWa = "+212" + local;
+          var fd = new FormData();
+          fd.append("_subject", "Candidature Helper HelperGo");
+          fd.append("full_name", name);
+          fd.append("whatsapp", fullWa);
+          fd.append("quartier", q);
+          fd.append("transport_modes", transportSelected.join(", "));
+
+          var btn = document.getElementById("helper-submit");
+          btn.classList.add("loading");
+          btn.disabled = true;
+
+          fetch(FORMSPREE_URL, {
+            method: "POST",
+            body: fd,
+            headers: { Accept: "application/json" },
+          })
+            .then(function (res) {
+              if (!res.ok) throw new Error("fail");
+              document.getElementById("helper-form-wrap").classList.add("hidden");
+              var success = document.getElementById("helper-success");
+              success.classList.add("visible");
+              document.getElementById("helper-check").classList.add("animate");
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            })
+            .catch(function () {
+              alert(
+                "Envoi impossible. Vérifie ta connexion ou réessaie plus tard."
+              );
+            })
+            .finally(function () {
+              btn.classList.remove("loading");
+              btn.disabled = false;
+            });
+        });
+      })();
+    </script>
+  </body>
+</html>

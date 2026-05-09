@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HelperGo | Commander</title>
+    <meta
+      name="description"
+      content="Passe ta commande HelperGo en 2 minutes. Livraison à Al Ferdaous, Casablanca."
+    />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.0.3/src/fill/style.css"
+    />
+    <style>
+      .order-page {
+        background: #f4f4f5;
+      }
+
+      .order-page .progress-wrap {
+        background: #f4f4f5;
+        padding: 16px 0 18px;
+      }
+
+      .order-header {
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      .order-title {
+        font-size: 28px;
+        font-weight: 800;
+        color: #0f172a;
+        letter-spacing: -0.02em;
+        margin-bottom: 6px;
+      }
+
+      .order-subtitle {
+        font-size: 15px;
+        color: #6b7280;
+        font-weight: 400;
+      }
+
+      .order-main {
+        max-width: none;
+        width: 100%;
+        margin: 0;
+        padding: 0 20px;
+        box-sizing: border-box;
+      }
+
+      @media (min-width: 768px) {
+        .order-main {
+          padding: 0 32px;
+        }
+      }
+
+      .form-container {
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 16px;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+        max-width: 760px;
+        margin: 20px auto 40px;
+        padding: 24px 28px 32px;
+        box-sizing: border-box;
+      }
+
+      .form-container * {
+        box-sizing: border-box;
+      }
+
+      .form-container .form-group,
+      .form-container .form-field,
+      .form-container input,
+      .form-container textarea,
+      .form-container select,
+      .form-container .category-grid,
+      .form-container .step-content,
+      .form-container .form-inner {
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .form-container .category-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        width: 100%;
+      }
+
+      .form-container .form-step {
+        max-width: 100%;
+        width: 100%;
+        padding-top: 8px;
+      }
+
+      .form-container .whatsapp-field,
+      .form-container .summary-box,
+      .form-container .note-box,
+      .form-container .info-box,
+      .form-container .form-actions {
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .form-container .form-actions:not(.row) .btn {
+        width: 100%;
+      }
+
+      .form-container .form-actions.row {
+        display: flex;
+        flex-direction: row;
+        gap: 12px;
+        width: 100%;
+      }
+
+      .form-container .form-actions.row .btn {
+        flex: 1;
+        width: auto;
+        min-width: 0;
+        max-width: 100%;
+      }
+
+      .form-container .summary-box {
+        text-align: left;
+      }
+
+      .form-container .summary-box .summary-row {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: baseline;
+        gap: 6px;
+        font-size: 15px;
+        color: #374151;
+        margin: 0 0 10px;
+        line-height: 1.5;
+      }
+
+      .form-container .summary-box .summary-row:last-child {
+        margin-bottom: 0;
+      }
+
+      .form-container .summary-box .summary-row strong {
+        font-weight: 700;
+        color: #0f172a;
+      }
+
+      .form-container .summary-box .summary-row-value {
+        font-weight: 400;
+        color: #374151;
+        text-align: left;
+        word-break: break-word;
+      }
+
+      .form-container .summary-total {
+        font-size: 17px;
+        font-weight: 700;
+        color: #0f172a;
+        margin: 16px 0 0;
+        line-height: 1.5;
+        text-align: left;
+      }
+
+      .step-2,
+      #step-2,
+      [data-step="2"],
+      .step-3,
+      #step-3,
+      [data-step="3"] {
+        padding-top: 0;
+        margin-top: 0;
+      }
+
+      .order-especes-field {
+        border: 1.5px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 14px 16px;
+        font-size: 15px;
+        width: 100%;
+        font-family: inherit;
+        box-sizing: border-box;
+      }
+
+      .order-especes-field:focus {
+        border-color: #1d9e75;
+        outline: none;
+      }
+
+      .order-especes-field.error {
+        border-color: #dc2626;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <a href="index.html" class="logo-link" aria-label="HelperGo accueil">
+          <svg
+            class="logo-mark"
+            width="44"
+            height="44"
+            viewBox="0 0 44 44"
+            aria-hidden="true"
+          >
+            <circle cx="22" cy="22" r="22" fill="#1D9E75" />
+            <g fill="#ffffff">
+              <rect x="10" y="12" width="4" height="20" rx="1" />
+              <rect x="18" y="12" width="4" height="20" rx="1" />
+              <rect x="10" y="20" width="12" height="4" rx="1" />
+            </g>
+            <path
+              d="M26 14 L34 22 L26 30"
+              fill="none"
+              stroke="#ffffff"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <span class="logo-text"
+            ><span class="logo-helper">Helper</span
+            ><span class="logo-go">Go</span></span
+          >
+        </a>
+        <nav class="nav-desktop" aria-label="Navigation principale">
+          <a href="helper.html" class="nav-helper-cta">Devenir Helper</a>
+        </nav>
+        <nav class="nav-pills-mobile" aria-label="Navigation mobile">
+          <a href="helper.html" class="nav-helper-cta">Devenir Helper</a>
+        </nav>
+      </div>
+    </header>
+
+    <div class="order-page">
+      <div class="progress-wrap">
+        <div class="container">
+          <div class="order-header">
+            <h1 class="order-title">Passez votre commande</h1>
+            <p class="order-subtitle">
+              3 étapes simples pour être livré rapidement
+            </p>
+          </div>
+          <div class="progress-steps" id="progress-steps">
+            <div class="progress-line-bg" aria-hidden="true"></div>
+            <div
+              class="progress-line-fill"
+              id="progress-line-fill"
+              style="width: 0%"
+              aria-hidden="true"
+            ></div>
+            <div class="progress-step active" data-step-indicator="1">
+              <div class="progress-dot">1</div>
+              <span class="progress-label">Commande</span>
+            </div>
+            <div class="progress-step" data-step-indicator="2">
+              <div class="progress-dot">2</div>
+              <span class="progress-label">Contact</span>
+            </div>
+            <div class="progress-step" data-step-indicator="3">
+              <div class="progress-dot">3</div>
+              <span class="progress-label">Confirmation</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <main class="order-main" id="order-main">
+        <div class="form-container">
+        <form
+          id="order-form"
+          action="https://formspree.io/f/xkoyqlgz"
+          method="POST"
+          novalidate
+        >
+          <input type="hidden" name="_subject" value="Nouvelle commande HelperGo" />
+          <input type="hidden" name="category" id="field-category" />
+          <input type="hidden" name="product_details" id="field-product-details" />
+          <input type="hidden" name="estimated_price_mad" id="field-estimated-price" />
+          <input type="hidden" name="quartier" id="field-quartier" />
+          <input type="hidden" name="cash_available_mad" id="field-cash" />
+          <input type="hidden" name="delivery_fee_mad" value="8" />
+          <input type="hidden" name="whatsapp" id="field-whatsapp" />
+
+          <!-- Step 1 -->
+          <div class="form-step active" data-step="1">
+            <h2 class="form-step-title">Étape 1 : Produit et quartier</h2>
+
+            <div class="form-group">
+              <span class="form-label">Catégorie</span>
+              <div class="category-grid" id="category-grid">
+                <button
+                  type="button"
+                  class="category-card"
+                  data-category="Eau & Boissons"
+                >
+                  <span class="category-card-icon" aria-hidden="true"
+                    ><i class="ph-fill ph-drop-half"></i
+                  ></span>
+                  <span class="category-card-text">Eau &amp; Boissons</span>
+                </button>
+                <button
+                  type="button"
+                  class="category-card"
+                  data-category="Alimentation"
+                >
+                  <span class="category-card-icon" aria-hidden="true"
+                    ><i class="ph-fill ph-shopping-bag"></i
+                  ></span>
+                  <span class="category-card-text">Alimentation</span>
+                </button>
+                <button
+                  type="button"
+                  class="category-card"
+                  data-category="Pharmacie"
+                >
+                  <span class="category-card-icon" aria-hidden="true"
+                    ><i class="ph-fill ph-first-aid"></i
+                  ></span>
+                  <span class="category-card-text">Pharmacie</span>
+                </button>
+                <button type="button" class="category-card" data-category="Autre">
+                  <span class="category-card-icon" aria-hidden="true"
+                    ><i class="ph-fill ph-plus-circle"></i
+                  ></span>
+                  <span class="category-card-text">Autre</span>
+                </button>
+              </div>
+              <p class="form-error" id="err-category">
+                Choisis une catégorie.
+              </p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="product-details"
+                >Produit :</label
+              >
+              <input
+                type="text"
+                id="product-details"
+                class="form-input"
+                maxlength="500"
+                autocomplete="off"
+                placeholder="Exemple: 2 bouteilles d'eau"
+              />
+              <p class="form-error" id="err-details">
+                Indique ta commande (au moins 3 caractères).
+              </p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="estimated-price"
+                >Prix estimé du produit (MAD)</label
+              >
+              <input
+                type="number"
+                id="estimated-price"
+                class="form-input"
+                min="0"
+                step="0.01"
+                placeholder="Exemple: 15"
+              />
+              <p class="form-hint">
+                Mets le prix approximatif que tu connais. Si différent en
+                boutique, ton Helper te préviendra.
+              </p>
+              <p class="form-error" id="err-price">
+                Indique un prix estimé valide (nombre positif).
+              </p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="quartier">Votre quartier</label>
+              <select id="quartier" class="form-select">
+                <option value="">Sélectionne ton quartier</option>
+                <option value="Al Ferdaous">Al Ferdaous</option>
+                <option value="hay-bientot" disabled>
+                  Hay Hassani — Bientôt disponible
+                </option>
+                <option value="oulfa-bientot" disabled>
+                  Oulfa — Bientôt disponible
+                </option>
+                <option value="maarif-bientot" disabled>
+                  Maarif — Bientôt disponible
+                </option>
+              </select>
+              <div class="info-box info-box--delivery" id="quartier-info">
+                <span class="info-box-icon" aria-hidden="true"
+                  ><i class="ph-fill ph-check"></i
+                ></span>
+                <p class="info-box-copy">
+                  Livraison : <strong>8 MAD</strong>
+                  <span class="info-box-sep" aria-hidden="true">·</span>
+                  Délai moyen estimé : <strong>~20 min</strong>
+                </p>
+              </div>
+              <p class="form-error" id="err-quartier">Choisis ton quartier.</p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="especes"
+                >Quel montant avez-vous sur vous ?</label
+              >
+              <input
+                type="number"
+                id="especes"
+                class="order-especes-field"
+                placeholder="Exemple : 50"
+                min="0"
+              />
+              <p class="form-hint">Votre Helper vous rendra la monnaie.</p>
+              <p class="form-error" id="err-cash">
+                Indique un montant en espèces (MAD).
+              </p>
+            </div>
+
+            <div class="form-actions">
+              <button type="button" class="btn btn-primary btn-block" id="to-step-2">
+                Continuer →
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="form-step step-2" id="step-2" data-step="2">
+            <h2 class="form-step-title">Étape 2 : Contact</h2>
+
+            <div class="form-group">
+              <label class="form-label" for="whatsapp-input"
+                >Numéro WhatsApp</label
+              >
+              <div class="whatsapp-field" id="whatsapp-wrap">
+                <span class="whatsapp-prefix">+212</span>
+                <input
+                  type="tel"
+                  id="whatsapp-input"
+                  class="form-input"
+                  placeholder="6XXXXXXXXX"
+                  autocomplete="tel"
+                />
+              </div>
+              <p class="form-hint">
+                Nous utiliserons WhatsApp uniquement pour le suivi de ta
+                commande.
+              </p>
+              <p class="form-error" id="err-whatsapp">
+                Entre un numéro valide (9 à 10 chiffres après +212).
+              </p>
+            </div>
+
+            <div class="form-actions row">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                id="back-to-1"
+              >
+                ← Retour
+              </button>
+              <button type="button" class="btn btn-primary" id="to-step-3">
+                Continuer →
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="form-step step-3" id="step-3" data-step="3">
+            <h2 class="form-step-title">Étape 3 : Récapitulatif</h2>
+
+            <div class="summary-box" id="summary-box">
+              <div class="summary-row">
+                <strong>Catégorie :</strong>
+                <span class="summary-row-value" id="sum-category">—</span>
+              </div>
+              <div class="summary-row">
+                <strong>Produit :</strong>
+                <span class="summary-row-value" id="sum-details">—</span>
+              </div>
+              <div class="summary-row">
+                <strong>Prix estimé du produit :</strong>
+                <span class="summary-row-value" id="sum-price">—</span>
+              </div>
+              <div class="summary-row">
+                <strong>Quartier :</strong>
+                <span class="summary-row-value" id="sum-quartier">—</span>
+              </div>
+              <div class="summary-row">
+                <strong>WhatsApp :</strong>
+                <span class="summary-row-value" id="sum-whatsapp">—</span>
+              </div>
+              <div class="summary-row">
+                <strong>Livraison :</strong>
+                <span class="summary-row-value">8 MAD</span>
+              </div>
+            </div>
+
+            <p class="summary-total" id="sum-total-line">
+              Total estimé : — MAD
+            </p>
+
+            <div class="note-box">
+              <span class="note-box-icon" aria-hidden="true"
+                ><i class="ph-fill ph-info"></i
+              ></span>
+              <p class="note-box-text">
+                Toute différence de prix supérieure à 2 MAD devra être
+                confirmée avant achat.
+              </p>
+            </div>
+
+            <div class="form-actions">
+              <button
+                type="submit"
+                class="btn btn-primary btn-block btn-lg btn-submit-order"
+                id="submit-order"
+              >
+                <span class="btn-spinner" aria-hidden="true"></span>
+                <span class="btn-text">
+                  <span class="btn-submit-check-wrap" aria-hidden="true">
+                    <svg
+                      class="btn-submit-check-svg"
+                      width="22"
+                      height="22"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect
+                        x="4"
+                        y="4"
+                        width="16"
+                        height="16"
+                        rx="2.75"
+                        ry="2.75"
+                        fill="rgba(255,255,255,0.16)"
+                        stroke="rgba(255,255,255,0.38)"
+                        stroke-width="1"
+                      />
+                      <path
+                        d="M8 12.25 L11.1 15.35 L16.35 8.65"
+                        stroke="#ffffff"
+                        stroke-width="2.15"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </span>
+                  Confirmer la commande
+                </span>
+              </button>
+              <button type="button" class="btn btn-secondary btn-block" id="back-to-2">
+                ← Modifier
+              </button>
+            </div>
+          </div>
+        </form>
+        </div>
+      </main>
+
+      <!-- Confirmation -->
+      <div class="confirmation-panel" id="confirmation-panel" aria-live="polite">
+        <div class="container">
+          <svg
+            class="checkmark-svg"
+            id="confirmation-check"
+            viewBox="0 0 100 100"
+            aria-hidden="true"
+          >
+            <circle cx="50" cy="50" r="44" />
+            <path d="M28 52 L45 68 L72 38" />
+          </svg>
+          <h2 class="confirmation-title">Commande confirmée ! 🎉</h2>
+          <p class="confirmation-text">
+            Ton Helper est en route. Il te contactera sur WhatsApp dès que ta
+            commande est prête.
+          </p>
+          <p class="badge-time">⏱ Délai moyen estimé : ~20 min</p>
+          <p class="confirmation-text" style="font-size: 14px">
+            Une confirmation a été envoyée. Reste disponible sur WhatsApp.
+          </p>
+          <a href="index.html" class="btn btn-primary btn-lg">Revenir à l'accueil</a>
+        </div>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      HelperGo © 2026 — Casablanca, Maroc
+    </footer>
+
+    <script src="main.js"></script>
+    <script>
+      (function () {
+        "use strict";
+
+        var FORMSPREE_URL = "https://formspree.io/f/xkoyqlgz";
+
+        var state = {
+          category: "",
+          productDetails: "",
+          estimatedPrice: "",
+          quartier: "",
+          cash: "",
+          whatsapp: "",
+        };
+
+        var currentStep = 1;
+        var quartierInfoRevealTimer = null;
+
+        var els = {
+          form: document.getElementById("order-form"),
+          main: document.getElementById("order-main"),
+          confirmation: document.getElementById("confirmation-panel"),
+          progressFill: document.getElementById("progress-line-fill"),
+          categoryGrid: document.getElementById("category-grid"),
+          quartier: document.getElementById("quartier"),
+          quartierInfo: document.getElementById("quartier-info"),
+          to2: document.getElementById("to-step-2"),
+          to3: document.getElementById("to-step-3"),
+          back1: document.getElementById("back-to-1"),
+          back2: document.getElementById("back-to-2"),
+          submitBtn: document.getElementById("submit-order"),
+          checkSvg: document.getElementById("confirmation-check"),
+        };
+
+        function showStep(n) {
+          currentStep = n;
+          document.querySelectorAll(".form-step").forEach(function (step) {
+            step.classList.toggle(
+              "active",
+              Number(step.getAttribute("data-step")) === n
+            );
+          });
+
+          document.querySelectorAll("[data-step-indicator]").forEach(function (el) {
+            var num = Number(el.getAttribute("data-step-indicator"));
+            el.classList.remove("active", "done");
+            if (num < n) el.classList.add("done");
+            else if (num === n) el.classList.add("active");
+          });
+
+          /* Line track is 10%–90% of bar; fill grows to match steps */
+          var pct = n <= 1 ? 0 : n === 2 ? 40 : 80;
+          if (els.progressFill) els.progressFill.style.width = pct + "%";
+
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        function clearErrors() {
+          document.querySelectorAll(".form-error").forEach(function (e) {
+            e.classList.remove("visible");
+          });
+          document
+            .querySelectorAll(
+              ".form-input.error, .form-textarea.error, .order-especes-field.error, .form-select.error"
+            )
+            .forEach(function (el) {
+              el.classList.remove("error");
+            });
+          var w = document.getElementById("whatsapp-wrap");
+          if (w) w.classList.remove("error");
+        }
+
+        function showErr(id, inputEl) {
+          var e = document.getElementById(id);
+          if (e) e.classList.add("visible");
+          if (inputEl) inputEl.classList.add("error");
+        }
+
+        /* Category selection */
+        if (els.categoryGrid) {
+          els.categoryGrid.querySelectorAll(".category-card").forEach(function (btn) {
+            btn.addEventListener("click", function () {
+              els.categoryGrid.querySelectorAll(".category-card").forEach(function (b) {
+                b.classList.remove("selected");
+                b.classList.remove("is-picking");
+              });
+              btn.classList.add("selected");
+              void btn.offsetWidth;
+              btn.classList.add("is-picking");
+              window.clearTimeout(btn._pickAnimTimer);
+              btn._pickAnimTimer = window.setTimeout(function () {
+                btn.classList.remove("is-picking");
+              }, 600);
+              state.category = btn.getAttribute("data-category") || "";
+              var ec = document.getElementById("err-category");
+              if (ec) ec.classList.remove("visible");
+            });
+          });
+        }
+
+        /* Quartier */
+        if (els.quartier) {
+          els.quartier.addEventListener("change", function () {
+            var opt = els.quartier.options[els.quartier.selectedIndex];
+            if (quartierInfoRevealTimer) {
+              window.clearTimeout(quartierInfoRevealTimer);
+              quartierInfoRevealTimer = null;
+            }
+            if (els.quartier.value && opt && !opt.disabled) {
+              var wasVisible =
+                els.quartierInfo && els.quartierInfo.classList.contains("visible");
+              if (!wasVisible) {
+                els.quartierInfo.classList.remove("visible");
+                void els.quartierInfo.offsetWidth;
+                quartierInfoRevealTimer = window.setTimeout(function () {
+                  quartierInfoRevealTimer = null;
+                  els.quartierInfo.classList.add("visible");
+                }, 200);
+              } else {
+                els.quartierInfo.classList.add("visible");
+              }
+            } else {
+              els.quartierInfo.classList.remove("visible");
+            }
+          });
+        }
+
+        (function () {
+          var esp = document.getElementById("especes");
+          if (esp) {
+            esp.addEventListener("input", function () {
+              var ek = document.getElementById("err-cash");
+              if (ek) ek.classList.remove("visible");
+              esp.classList.remove("error");
+            });
+          }
+        })();
+
+        function validateStep1() {
+          clearErrors();
+          var ok = true;
+          if (!state.category) {
+            showErr("err-category");
+            ok = false;
+          }
+          var details = (document.getElementById("product-details").value || "").trim();
+          if (details.length < 3) {
+            showErr("err-details", document.getElementById("product-details"));
+            ok = false;
+          }
+          var priceRaw = document.getElementById("estimated-price").value;
+          var price = parseFloat(priceRaw, 10);
+          if (!priceRaw || isNaN(price) || price <= 0) {
+            showErr("err-price", document.getElementById("estimated-price"));
+            ok = false;
+          }
+          var q = els.quartier.value;
+          var qOpt = els.quartier.options[els.quartier.selectedIndex];
+          if (!q || !qOpt || qOpt.disabled) {
+            showErr("err-quartier", els.quartier);
+            ok = false;
+          }
+          var cashRaw = (document.getElementById("especes").value || "").trim();
+          var cashVal = parseFloat(cashRaw, 10);
+          if (!cashRaw || isNaN(cashVal) || cashVal < 0) {
+            showErr("err-cash", document.getElementById("especes"));
+            ok = false;
+          }
+          return ok;
+        }
+
+        function normalizeWhatsAppLocal(input) {
+          var d = (input || "").replace(/\D/g, "");
+          if (d.startsWith("212")) d = d.slice(3);
+          if (d.startsWith("0")) d = d.slice(1);
+          return d;
+        }
+
+        function validateStep2() {
+          clearErrors();
+          var local = normalizeWhatsAppLocal(
+            document.getElementById("whatsapp-input").value
+          );
+          if (local.length < 9 || local.length > 10 || !/^\d+$/.test(local)) {
+            showErr("err-whatsapp", document.getElementById("whatsapp-input"));
+            document.getElementById("whatsapp-wrap").classList.add("error");
+            return false;
+          }
+          state.whatsapp = "+212" + local;
+          return true;
+        }
+
+        function categoryForSummary(cat) {
+          if (cat === "Eau & Boissons") return "Eau/boissons";
+          return cat;
+        }
+
+        function formatWhatsAppDisplay(full) {
+          if (!full) return "—";
+          var m = String(full).match(/^\+212(\d{9,10})$/);
+          if (m) return "+212 " + m[1];
+          return full;
+        }
+
+        function quartierLabelForSummary() {
+          var sel = els.quartier;
+          var opt = sel.options[sel.selectedIndex];
+          if (!sel.value || !opt) return "—";
+          return opt.textContent.trim();
+        }
+
+        function fillSummary() {
+          state.productDetails = (
+            document.getElementById("product-details").value || ""
+          ).trim();
+          state.estimatedPrice = document.getElementById("estimated-price").value;
+          state.quartier = els.quartier.value;
+          state.cash = (document.getElementById("especes").value || "").trim();
+
+          document.getElementById("sum-category").textContent =
+            categoryForSummary(state.category) || "—";
+          document.getElementById("sum-details").textContent =
+            state.productDetails || "—";
+          var priceNum = parseFloat(state.estimatedPrice, 10);
+          document.getElementById("sum-price").textContent =
+            !state.estimatedPrice || isNaN(priceNum)
+              ? "—"
+              : String(Math.round(priceNum * 100) / 100) + " MAD";
+          document.getElementById("sum-quartier").textContent =
+            quartierLabelForSummary();
+          document.getElementById("sum-whatsapp").textContent =
+            formatWhatsAppDisplay(state.whatsapp);
+          var total =
+            parseFloat(state.estimatedPrice, 10) + 8;
+          document.getElementById("sum-total-line").textContent = isNaN(total)
+            ? "Total estimé : — MAD"
+            : "Total estimé : " +
+              String(Math.round(total * 100) / 100) +
+              " MAD";
+
+          document.getElementById("field-category").value = state.category;
+          document.getElementById("field-product-details").value =
+            state.productDetails;
+          document.getElementById("field-estimated-price").value =
+            state.estimatedPrice;
+          document.getElementById("field-quartier").value = state.quartier;
+          document.getElementById("field-cash").value = state.cash;
+          document.getElementById("field-whatsapp").value = state.whatsapp;
+        }
+
+        els.to2.addEventListener("click", function () {
+          if (validateStep1()) showStep(2);
+        });
+
+        els.back1.addEventListener("click", function () {
+          showStep(1);
+        });
+
+        els.to3.addEventListener("click", function () {
+          if (validateStep2()) {
+            fillSummary();
+            showStep(3);
+          }
+        });
+
+        els.back2.addEventListener("click", function () {
+          showStep(2);
+        });
+
+        els.form.setAttribute("action", FORMSPREE_URL);
+
+        els.form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          if (!validateStep2()) {
+            showStep(2);
+            return;
+          }
+          fillSummary();
+
+          var btn = els.submitBtn;
+          btn.classList.add("loading");
+          btn.disabled = true;
+
+          var fd = new FormData(els.form);
+
+          fetch(FORMSPREE_URL, {
+            method: "POST",
+            body: fd,
+            headers: { Accept: "application/json" },
+          })
+            .then(function (res) {
+              if (!res.ok) throw new Error("Network error");
+              els.main.classList.add("hidden");
+              document.querySelector(".progress-wrap").style.display = "none";
+              els.confirmation.classList.add("visible");
+              els.checkSvg.classList.add("animate");
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            })
+            .catch(function () {
+              alert(
+                "Envoi impossible pour le moment. Vérifie ta connexion ou réessaie plus tard."
+              );
+            })
+            .finally(function () {
+              btn.classList.remove("loading");
+              btn.disabled = false;
+            });
+        });
+
+        showStep(1);
+      })();
+    </script>
+  </body>
+</html>
