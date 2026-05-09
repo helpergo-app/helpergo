@@ -20,17 +20,28 @@
   onScroll();
 
   if (navToggle && header) {
-    navToggle.addEventListener("click", function () {
+    navToggle.addEventListener("click", function (e) {
+      e.stopPropagation();
       header.classList.toggle("nav-open");
       var open = header.classList.contains("nav-open");
       navToggle.setAttribute("aria-expanded", open ? "true" : "false");
+      navToggle.setAttribute("aria-label", open ? "Fermer le menu" : "Ouvrir le menu");
     });
 
     document.querySelectorAll(".nav-mobile a").forEach(function (link) {
       link.addEventListener("click", function () {
         header.classList.remove("nav-open");
         navToggle.setAttribute("aria-expanded", "false");
+        navToggle.setAttribute("aria-label", "Ouvrir le menu");
       });
+    });
+
+    document.addEventListener("click", function (e) {
+      if (!header.classList.contains("nav-open")) return;
+      if (header.contains(e.target)) return;
+      header.classList.remove("nav-open");
+      navToggle.setAttribute("aria-expanded", "false");
+      navToggle.setAttribute("aria-label", "Ouvrir le menu");
     });
   }
 

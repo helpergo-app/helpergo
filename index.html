@@ -349,8 +349,10 @@
         background: rgba(255, 255, 255, 0.25);
       }
 
-      .nav-pills-mobile {
-        display: none;
+      @media (max-width: 480px) {
+        .badge-dot {
+          display: none;
+        }
       }
 
       @media (max-width: 768px) {
@@ -388,29 +390,6 @@
           display: none !important;
         }
 
-        .nav-pills-mobile {
-          display: flex !important;
-          align-items: center;
-          gap: 8px;
-        }
-
-        .nav-pills-mobile a {
-          border: 1.5px solid rgba(15, 23, 42, 0.18);
-          border-radius: 999px;
-          padding: 6px 14px;
-          font-size: 13px;
-          font-weight: 600;
-          color: #0f172a;
-          background: transparent;
-          text-decoration: none;
-          white-space: nowrap;
-        }
-
-        .nav-pills-mobile a:hover {
-          text-decoration: none;
-          color: #1d9e75;
-        }
-
         .phone-mockup-wrap {
           display: flex !important;
           justify-content: center;
@@ -425,7 +404,7 @@
           height: 410px;
           max-width: 216px;
           border-radius: 32px;
-          margin: 32px auto 0;
+          margin: 20px auto 0;
           flex-shrink: 0;
         }
 
@@ -556,10 +535,21 @@
         <nav class="nav-desktop" aria-label="Navigation principale">
           <a href="helper.html">Devenir Helper</a>
         </nav>
-        <nav class="nav-pills-mobile" aria-label="Navigation mobile">
-          <a href="helper.html">Devenir Helper</a>
-        </nav>
+        <button
+          type="button"
+          class="nav-toggle"
+          aria-label="Ouvrir le menu"
+          aria-expanded="false"
+        >
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </button>
       </div>
+      <nav class="nav-mobile" aria-label="Navigation mobile">
+        <a href="order.html">Commander</a>
+        <a href="helper.html">Devenir Helper</a>
+      </nav>
     </header>
 
     <main>
