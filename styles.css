@@ -1516,6 +1516,36 @@ p {
   transform: scale(0.98);
 }
 
+.btn-submit-order .btn-submit-label--short {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .btn-submit-order.btn-lg {
+    padding: 15px 28px;
+    font-size: 16px;
+    line-height: 1.35;
+    border-radius: 12px;
+  }
+
+  .btn-submit-order .btn-text {
+    gap: 10px;
+  }
+
+  .btn-submit-order .btn-submit-check-svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .btn-submit-order .btn-submit-label--full {
+    display: none;
+  }
+
+  .btn-submit-order .btn-submit-label--short {
+    display: inline;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .btn-submit-order .btn-submit-check-svg,
   .btn-submit-order:hover:not(:disabled) .btn-submit-check-svg,
