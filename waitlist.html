@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HelperGo | Liste d'attente</title>
+    <meta
+      name="description"
+      content="Inscris-toi pour être parmi les premiers à tester HelperGo à Al Ferdaous, Casablanca."
+    />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .waitlist-hero {
+        min-height: auto;
+        padding: 48px 0 40px;
+        align-items: flex-start;
+      }
+
+      @media (min-width: 769px) {
+        .waitlist-hero {
+          padding: 56px 0 48px;
+        }
+      }
+
+      .waitlist-hero .hero-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(46, 204, 143, 0.1);
+        border: 1px solid rgba(46, 204, 143, 0.25);
+        border-radius: 999px;
+        padding: 6px 16px;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #2ecc8f;
+        margin-bottom: 16px;
+      }
+
+      @media (max-width: 768px) {
+        .waitlist-hero .hero-label {
+          white-space: normal;
+          text-align: center;
+          max-width: 280px;
+          line-height: 1.4;
+          margin-left: auto;
+          margin-right: auto;
+        }
+      }
+
+      @media (min-width: 769px) {
+        .waitlist-hero .hero-label {
+          font-size: 11px;
+        }
+      }
+
+      .waitlist-hero .hero-title {
+        margin-bottom: 12px;
+      }
+
+      .waitlist-hero .hero-subtitle {
+        color: rgba(255, 255, 255, 0.72);
+        max-width: 520px;
+        margin-bottom: 0;
+      }
+
+      @media (max-width: 768px) {
+        .waitlist-hero .container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+        }
+      }
+
+      .waitlist-page {
+        background: #f4f4f5;
+      }
+
+      .waitlist-form-section {
+        margin-top: -24px;
+        padding: 0 16px 64px;
+      }
+
+      @media (min-width: 640px) {
+        .waitlist-form-section {
+          padding-left: 24px;
+          padding-right: 24px;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .waitlist-form-section {
+          padding-left: 32px;
+          padding-right: 32px;
+        }
+      }
+
+      .waitlist-form-card {
+        --radius-input: 10px;
+        max-width: 720px;
+        width: 100%;
+        margin: 0 auto;
+        background: var(--color-white);
+        border-radius: 20px;
+        box-shadow: 0 8px 40px rgba(15, 23, 42, 0.08),
+          0 2px 8px rgba(15, 23, 42, 0.04);
+        border: 1px solid rgba(15, 23, 42, 0.06);
+        padding: 28px 18px 36px;
+        box-sizing: border-box;
+      }
+
+      @media (min-width: 768px) {
+        .waitlist-form-card {
+          padding: 36px 32px 44px;
+          max-width: 760px;
+        }
+      }
+
+      .waitlist-form-card * {
+        box-sizing: border-box;
+      }
+
+      .waitlist-form-card .form-label {
+        font-weight: 700;
+        font-size: 15px;
+        margin-bottom: 10px;
+      }
+
+      .waitlist-form-card .form-group {
+        margin-bottom: 22px;
+      }
+
+      .waitlist-form-card .form-input,
+      .waitlist-form-card .form-select {
+        padding: 15px 14px;
+        font-size: 15px;
+        border-width: 1.5px;
+      }
+
+      .waitlist-form-card .form-input::placeholder {
+        font-size: 15px;
+        font-weight: 400;
+      }
+
+      .waitlist-form-card .whatsapp-field {
+        border-width: 1.5px;
+        border-radius: var(--radius-input);
+      }
+
+      .waitlist-form-card .whatsapp-prefix {
+        padding: 0 14px;
+        min-width: 4.25rem;
+        justify-content: center;
+      }
+
+      .waitlist-form-card .form-actions {
+        margin-top: 0;
+      }
+
+      .waitlist-whatsapp-hint {
+        font-size: 12px;
+        color: #6b7280;
+        margin-top: 6px;
+      }
+
+      .waitlist-btn {
+        background: #1d9e75;
+        color: white;
+        border: none;
+        border-radius: 12px;
+        padding: 16px 32px;
+        font-size: 16px;
+        font-weight: 700;
+        width: 100%;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        box-shadow: 0 4px 16px rgba(29, 158, 117, 0.25);
+      }
+
+      .waitlist-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 24px rgba(29, 158, 117, 0.35);
+      }
+
+      .waitlist-btn:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: 0 4px 16px rgba(29, 158, 117, 0.25);
+      }
+
+      /* Confirmation success — same checkmark SVG + animation as order.html (styles.css) */
+      .waitlist-success .checkmark-svg {
+        width: 100px;
+        height: 100px;
+        margin: 0 auto 24px;
+      }
+
+      .waitlist-success .checkmark-svg circle {
+        fill: none;
+        stroke: var(--color-primary);
+        stroke-width: 3;
+        opacity: 0.2;
+      }
+
+      .waitlist-success .checkmark-svg path {
+        fill: none;
+        stroke: var(--color-primary);
+        stroke-width: 4;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-dasharray: 100;
+        stroke-dashoffset: 100;
+      }
+
+      .waitlist-success .checkmark-svg.animate path {
+        animation: waitlist-draw-check 0.8s ease forwards 0.2s,
+          waitlist-pulse-check 1.5s ease-in-out 1s infinite;
+      }
+
+      @keyframes waitlist-draw-check {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+
+      @keyframes waitlist-pulse-check {
+        0%,
+        100% {
+          filter: drop-shadow(0 0 0 rgba(29, 158, 117, 0));
+        }
+        50% {
+          filter: drop-shadow(0 0 12px rgba(29, 158, 117, 0.6));
+        }
+      }
+
+      .waitlist-success {
+        display: none;
+        text-align: center;
+        padding: 16px 0 8px;
+      }
+
+      .waitlist-success.visible {
+        display: block;
+      }
+
+      .waitlist-success .waitlist-confirmation-title {
+        font-size: 24px;
+        font-weight: 800;
+        color: #0f172a;
+        margin-bottom: 12px;
+        text-align: center;
+      }
+
+      .waitlist-success .waitlist-confirmation-text {
+        font-size: 15px;
+        color: #6b7280;
+        text-align: center;
+        max-width: 400px;
+        margin: 0 auto 20px;
+      }
+
+      .waitlist-success .waitlist-offer-badge {
+        display: inline-block;
+        padding: 8px 20px;
+        background: rgba(29, 158, 117, 0.1);
+        border: 1px solid #1d9e75;
+        border-radius: 999px;
+        color: #1d9e75;
+        font-weight: 600;
+        margin: 0;
+      }
+
+      .waitlist-form-wrap.hidden {
+        display: none;
+      }
+
+      .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+    </style>
+  </head>
+  <body class="waitlist-page">
+    <header class="site-header">
+      <div class="header-inner">
+        <a href="index.html" class="logo-link" aria-label="HelperGo accueil">
+          <svg
+            class="logo-mark"
+            width="44"
+            height="44"
+            viewBox="0 0 44 44"
+            aria-hidden="true"
+          >
+            <circle cx="22" cy="22" r="22" fill="#1D9E75" />
+            <g fill="#ffffff">
+              <rect x="10" y="12" width="4" height="20" rx="1" />
+              <rect x="18" y="12" width="4" height="20" rx="1" />
+              <rect x="10" y="20" width="12" height="4" rx="1" />
+            </g>
+            <path
+              d="M26 14 L34 22 L26 30"
+              fill="none"
+              stroke="#ffffff"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <span class="logo-text"
+            ><span class="logo-helper">Helper</span
+            ><span class="logo-go">Go</span></span
+          >
+        </a>
+        <nav class="nav-desktop" aria-label="Navigation principale">
+          <a href="helper.html">Devenir Helper</a>
+        </nav>
+        <button
+          type="button"
+          class="nav-toggle"
+          aria-label="Ouvrir le menu"
+          aria-expanded="false"
+        >
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </button>
+      </div>
+      <nav class="nav-mobile" aria-label="Navigation mobile">
+        <a href="index.html">Accueil</a>
+        <a href="helper.html">Devenir Helper</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero waitlist-hero">
+        <div class="container">
+          <div class="hero-label">Lancement à Al Ferdaous, Casablanca</div>
+          <h1 class="hero-title">HelperGo arrive dans ton quartier</h1>
+          <p class="hero-subtitle">
+            Inscris-toi maintenant et sois parmi les premiers à tester le
+            service. 3 livraisons offertes pour les premiers inscrits.
+          </p>
+        </div>
+      </section>
+
+      <section class="waitlist-form-section" aria-labelledby="waitlist-form-heading">
+        <div class="waitlist-form-card">
+          <h2 id="waitlist-form-heading" class="visually-hidden">
+            Inscription à la liste d'attente
+          </h2>
+          <div
+            id="waitlist-success"
+            class="waitlist-success"
+            role="status"
+            aria-live="polite"
+          >
+            <svg
+              class="checkmark-svg"
+              id="waitlist-check"
+              viewBox="0 0 100 100"
+              aria-hidden="true"
+            >
+              <circle cx="50" cy="50" r="44" />
+              <path d="M28 52 L45 68 L72 38" />
+            </svg>
+            <h2 class="confirmation-title waitlist-confirmation-title">
+              Inscription confirmée !
+            </h2>
+            <p class="confirmation-text waitlist-confirmation-text">
+              On te contacte sur WhatsApp dès que HelperGo est disponible dans
+              ton quartier.
+            </p>
+            <p class="waitlist-offer-badge">🎁 3 livraisons offertes</p>
+          </div>
+          <div id="waitlist-form-wrap" class="waitlist-form-wrap">
+            <form
+              id="waitlist-form"
+              action="https://formspree.io/f/xykoblod"
+              method="POST"
+            >
+              <input type="hidden" name="whatsapp" id="waitlist-whatsapp-hidden" />
+              <div class="form-group">
+                <label class="form-label" for="waitlist-prenom"
+                  >Prénom et nom</label
+                >
+                <input
+                  type="text"
+                  id="waitlist-prenom"
+                  name="nom_complet"
+                  class="form-input"
+                  autocomplete="name"
+                  placeholder="Votre nom complet"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="waitlist-whatsapp-input"
+                  >Numéro WhatsApp</label
+                >
+                <div class="whatsapp-field" id="waitlist-whatsapp-wrap">
+                  <span class="whatsapp-prefix">+212</span>
+                  <input
+                    type="tel"
+                    id="waitlist-whatsapp-input"
+                    class="form-input"
+                    placeholder="6XXXXXXXXX"
+                    autocomplete="tel"
+                    required
+                  />
+                </div>
+                <p class="waitlist-whatsapp-hint">
+                  Utilisé uniquement pour te prévenir du lancement dans ton
+                  quartier.
+                </p>
+                <p class="form-error" id="waitlist-err-whatsapp">
+                  Entre un numéro valide (9 à 10 chiffres après +212).
+                </p>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="waitlist-quartier"
+                  >Ton quartier</label
+                >
+                <input
+                  type="text"
+                  id="waitlist-quartier"
+                  name="quartier"
+                  class="form-input"
+                  placeholder="Ex: Al Ferdaous, Hay Hassani..."
+                  autocomplete="address-level3"
+                  required
+                />
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="waitlist-btn">
+                  Je veux tester HelperGo →
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      HelperGo © 2026 — Casablanca, Maroc
+    </footer>
+
+    <script src="main.js"></script>
+    <script>
+      (function () {
+        "use strict";
+
+        var FORMSPREE_URL = "https://formspree.io/f/xykoblod";
+        var form = document.getElementById("waitlist-form");
+        var formWrap = document.getElementById("waitlist-form-wrap");
+        var successEl = document.getElementById("waitlist-success");
+        var checkSvg = document.getElementById("waitlist-check");
+        var whatsappInput = document.getElementById("waitlist-whatsapp-input");
+        var whatsappHidden = document.getElementById("waitlist-whatsapp-hidden");
+        var whatsappWrap = document.getElementById("waitlist-whatsapp-wrap");
+        var errWhatsapp = document.getElementById("waitlist-err-whatsapp");
+
+        if (!form) return;
+
+        function normalizeWhatsAppLocal(input) {
+          var d = (input || "").replace(/\D/g, "");
+          if (d.indexOf("212") === 0) d = d.slice(3);
+          if (d.indexOf("0") === 0) d = d.slice(1);
+          return d;
+        }
+
+        function validateWhatsApp() {
+          errWhatsapp.classList.remove("visible");
+          whatsappWrap.classList.remove("error");
+          var local = normalizeWhatsAppLocal(whatsappInput.value);
+          if (local.length < 9 || local.length > 10 || !/^\d+$/.test(local)) {
+            errWhatsapp.classList.add("visible");
+            whatsappWrap.classList.add("error");
+            return false;
+          }
+          whatsappHidden.value = "+212" + local;
+          return true;
+        }
+
+        form.setAttribute("action", FORMSPREE_URL);
+
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          if (!validateWhatsApp()) {
+            whatsappInput.focus();
+            return;
+          }
+
+          var btn = form.querySelector('button[type="submit"]');
+          btn.disabled = true;
+
+          var fd = new FormData(form);
+
+          fetch(FORMSPREE_URL, {
+            method: "POST",
+            body: fd,
+            headers: { Accept: "application/json" },
+          })
+            .then(function (res) {
+              if (!res.ok) throw new Error("fail");
+              formWrap.classList.add("hidden");
+              successEl.classList.add("visible");
+              if (checkSvg) checkSvg.classList.add("animate");
+              successEl.scrollIntoView({ behavior: "smooth", block: "center" });
+            })
+            .catch(function () {
+              alert(
+                "Envoi impossible pour le moment. Vérifie ta connexion ou réessaie plus tard."
+              );
+            })
+            .finally(function () {
+              btn.disabled = false;
+            });
+        });
+      })();
+    </script>
+  </body>
+</html>
