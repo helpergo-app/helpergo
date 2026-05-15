@@ -311,9 +311,10 @@
       }
 
       .whatsapp-btn-primary {
-        display: flex;
+        display: inline-flex;
         align-items: center;
         justify-content: center;
+        flex-wrap: nowrap;
         gap: 10px;
         background: #1d9e75;
         color: white;
@@ -324,10 +325,23 @@
         border-radius: 14px;
         text-decoration: none;
         width: 100%;
+        max-width: 100%;
         box-shadow: 0 4px 20px rgba(29, 158, 117, 0.3);
         transition: transform 0.2s ease, box-shadow 0.2s ease;
         margin-bottom: 20px;
         letter-spacing: -0.3px;
+        white-space: nowrap;
+      }
+
+      .whatsapp-btn-primary svg {
+        flex-shrink: 0;
+      }
+
+      @media (max-width: 400px) {
+        .whatsapp-btn-primary {
+          font-size: 14px;
+          padding: 18px 20px;
+        }
       }
 
       .whatsapp-btn-primary:hover {
@@ -483,7 +497,7 @@
                 d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.118 1.532 5.845L.057 23.428a.75.75 0 0 0 .916.916l5.638-1.473A11.952 11.952 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.523-5.184-1.432l-.371-.22-3.851 1.006 1.028-3.742-.242-.386A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"
               />
             </svg>
-            Rejoindre via WhatsApp
+            Je veux tester gratuitement
           </a>
           <div class="or-divider">
             <span class="or-line"></span>
