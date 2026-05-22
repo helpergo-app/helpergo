@@ -329,18 +329,40 @@
       }
 
       .team-role {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
         color: #1d9e75;
         font-weight: 600;
         font-size: 15px;
         margin-bottom: 16px;
       }
 
+      .team-role::before,
+      .team-role::after {
+        content: "";
+        flex-shrink: 0;
+        width: 28px;
+        height: 2px;
+        background: #1d9e75;
+        border-radius: 1px;
+        opacity: 0.9;
+      }
+
       .team-desc {
+        width: 100%;
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
         font-size: 15px;
         line-height: 1.65;
         color: var(--color-text-secondary);
-        margin: 0;
-        text-align: left;
+        text-align: justify;
+        text-justify: inter-word;
+        hyphens: auto;
+        -webkit-hyphens: auto;
+        text-align-last: left;
       }
 
       .about-cta .cta-subtitle {
