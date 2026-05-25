@@ -200,6 +200,14 @@
       .order-especes-field.error {
         border-color: #dc2626;
       }
+
+      #cash-amount-wrap {
+        margin-top: 16px;
+      }
+
+      #cash-amount-wrap[hidden] {
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -302,6 +310,7 @@
           <input type="hidden" name="estimated_price_mad" id="field-estimated-price" />
           <input type="hidden" name="quartier" id="field-quartier" />
           <input type="hidden" name="cash_available_mad" id="field-cash" />
+          <input type="hidden" name="has_change" id="field-has-change" />
           <input type="hidden" name="delivery_fee_mad" value="8" />
           <input type="hidden" name="whatsapp" id="field-whatsapp" />
 
@@ -420,20 +429,37 @@
             </div>
 
             <div class="form-group">
-              <label class="form-label" for="especes"
-                >Quel montant avez-vous sur vous ?</label
+              <span class="form-label">Est-ce que vous avez de la monnaie ?</span>
+              <div
+                class="toggle-row"
+                id="change-toggle"
+                role="group"
+                aria-label="Avez-vous de la monnaie ?"
               >
-              <input
-                type="number"
-                id="especes"
-                class="order-especes-field"
-                placeholder="Exemple : 50"
-                min="0"
-              />
-              <p class="form-hint">Votre Helper vous rendra la monnaie.</p>
-              <p class="form-error" id="err-cash">
-                Indique un montant en espèces (MAD).
-              </p>
+                <button type="button" class="toggle-btn" data-change="oui">
+                  Oui
+                </button>
+                <button type="button" class="toggle-btn" data-change="non">
+                  Non
+                </button>
+              </div>
+              <p class="form-error" id="err-change">Choisissez Oui ou Non.</p>
+              <div id="cash-amount-wrap" hidden>
+                <label class="form-label" for="especes"
+                  >Quel montant avez-vous sur vous ?</label
+                >
+                <input
+                  type="number"
+                  id="especes"
+                  class="order-especes-field"
+                  placeholder="Exemple : 50"
+                  min="0"
+                />
+                <p class="form-hint">Votre Helper vous rendra la monnaie.</p>
+                <p class="form-error" id="err-cash">
+                  Indique un montant en espèces (MAD).
+                </p>
+              </div>
             </div>
 
             <div class="form-actions">
@@ -525,7 +551,7 @@
               ></span>
               <p class="note-box-text">
                 Si le prix en boutique dépasse de plus de 2 MAD, on te demande
-                confirmation avant d'acheter.
+                confirmation avant l'achat.
               </p>
             </div>
 
@@ -626,6 +652,7 @@
           estimatedPrice: "",
           quartier: "",
           cash: "",
+          hasChange: "",
           whatsapp: "",
         };
 
@@ -742,7 +769,35 @@
         }
 
         (function () {
+          var changeToggle = document.getElementById("change-toggle");
+          var cashWrap = document.getElementById("cash-amount-wrap");
           var esp = document.getElementById("especes");
+
+          if (changeToggle && cashWrap) {
+            changeToggle.querySelectorAll(".toggle-btn").forEach(function (btn) {
+              btn.addEventListener("click", function () {
+                changeToggle.querySelectorAll(".toggle-btn").forEach(function (b) {
+                  b.classList.remove("selected");
+                });
+                btn.classList.add("selected");
+                state.hasChange = btn.getAttribute("data-change") || "";
+                var errChange = document.getElementById("err-change");
+                if (errChange) errChange.classList.remove("visible");
+
+                if (state.hasChange === "oui") {
+                  cashWrap.hidden = true;
+                  if (esp) esp.value = "";
+                  var errCash = document.getElementById("err-cash");
+                  if (errCash) errCash.classList.remove("visible");
+                  if (esp) esp.classList.remove("error");
+                } else if (state.hasChange === "non") {
+                  cashWrap.hidden = false;
+                  if (esp) esp.focus();
+                }
+              });
+            });
+          }
+
           if (esp) {
             esp.addEventListener("input", function () {
               var ek = document.getElementById("err-cash");
@@ -776,11 +831,16 @@
             showErr("err-quartier", els.quartier);
             ok = false;
           }
-          var cashRaw = (document.getElementById("especes").value || "").trim();
-          var cashVal = parseFloat(cashRaw, 10);
-          if (!cashRaw || isNaN(cashVal) || cashVal < 0) {
-            showErr("err-cash", document.getElementById("especes"));
+          if (!state.hasChange) {
+            showErr("err-change");
             ok = false;
+          } else if (state.hasChange === "non") {
+            var cashRaw = (document.getElementById("especes").value || "").trim();
+            var cashVal = parseFloat(cashRaw, 10);
+            if (!cashRaw || isNaN(cashVal) || cashVal < 0) {
+              showErr("err-cash", document.getElementById("especes"));
+              ok = false;
+            }
           }
           return ok;
         }
@@ -831,7 +891,11 @@
           ).trim();
           state.estimatedPrice = document.getElementById("estimated-price").value;
           state.quartier = els.quartier.value;
-          state.cash = (document.getElementById("especes").value || "").trim();
+          if (state.hasChange === "oui") {
+            state.cash = "Monnaie disponible";
+          } else {
+            state.cash = (document.getElementById("especes").value || "").trim();
+          }
 
           document.getElementById("sum-category").textContent =
             categoryForSummary(state.category) || "—";
@@ -861,6 +925,8 @@
             state.estimatedPrice;
           document.getElementById("field-quartier").value = state.quartier;
           document.getElementById("field-cash").value = state.cash;
+          document.getElementById("field-has-change").value =
+            state.hasChange === "oui" ? "Oui" : state.hasChange === "non" ? "Non" : "";
           document.getElementById("field-whatsapp").value = state.whatsapp;
         }
 
