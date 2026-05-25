@@ -432,10 +432,10 @@
       }
     </style>
   </head>
-  <body>
+  <body data-page="about">
     <header class="site-header">
       <div class="header-inner">
-        <a href="index.html" class="logo-link" aria-label="HelperGo accueil">
+        <a href="index.html" class="logo-link" data-i18n-aria="common.logoAria">
           <svg
             class="logo-mark"
             width="44"
@@ -463,34 +463,58 @@
             ><span class="logo-go">Go</span></span
           >
         </a>
-        <nav class="nav-desktop" aria-label="Navigation principale">
-          <a href="about.html" aria-current="page">À propos</a>
-          <a href="helper.html">Devenir Helper</a>
-        </nav>
-        <button
-          type="button"
-          class="nav-toggle"
-          aria-label="Ouvrir le menu"
-          aria-expanded="false"
-        >
-          <span class="nav-toggle-bar"></span>
-          <span class="nav-toggle-bar"></span>
-          <span class="nav-toggle-bar"></span>
-        </button>
+        <div class="header-actions">
+          <nav class="nav-desktop" data-i18n-aria="common.nav.ariaDesktop">
+            <a href="about.html" aria-current="page" data-i18n="common.nav.about">À propos</a>
+            <a href="helper.html" data-i18n="common.nav.helper">Devenir Helper</a>
+          </nav>
+          <div class="lang-dropdown">
+            <button
+              type="button"
+              class="lang-trigger"
+              aria-expanded="false"
+              aria-haspopup="listbox"
+              data-i18n-aria="common.langAria"
+            >
+              <i class="ph-fill ph-globe-hemisphere-west" aria-hidden="true"></i>
+            </button>
+            <div class="lang-menu" role="listbox">
+              <button type="button" class="lang-option" data-lang="fr" role="option">
+                Français
+              </button>
+              <button type="button" class="lang-option" data-lang="en" role="option">
+                English
+              </button>
+              <button type="button" class="lang-option" data-lang="ar" role="option">
+                العربية
+              </button>
+            </div>
+          </div>
+          <button
+            type="button"
+            class="nav-toggle"
+            data-i18n-aria="common.menu.open"
+            aria-expanded="false"
+          >
+            <span class="nav-toggle-bar"></span>
+            <span class="nav-toggle-bar"></span>
+            <span class="nav-toggle-bar"></span>
+          </button>
+        </div>
       </div>
-      <nav class="nav-mobile" aria-label="Navigation mobile">
-        <a href="index.html">Accueil</a>
-        <a href="order.html">Commander</a>
-        <a href="helper.html">Devenir Helper</a>
+      <nav class="nav-mobile" data-i18n-aria="common.nav.ariaMobile">
+        <a href="index.html" data-i18n="common.nav.home">Accueil</a>
+        <a href="order.html" data-i18n="common.nav.order">Commander</a>
+        <a href="helper.html" data-i18n="common.nav.helper">Devenir Helper</a>
       </nav>
     </header>
 
     <main>
       <section class="hero about-hero">
         <div class="container">
-          <div class="hero-label" data-reveal>Le point de départ</div>
-          <h1 class="hero-title" data-reveal>Et si sortir devenait optionnel ?</h1>
-          <p class="hero-subtitle" data-reveal>
+          <div class="hero-label" data-reveal data-i18n="about.hero.label">Le point de départ</div>
+          <h1 class="hero-title" data-reveal data-i18n="about.hero.title">Et si sortir devenait optionnel ?</h1>
+          <p class="hero-subtitle" data-reveal data-i18n="about.hero.subtitle">
             HelperGo est né d'un constat simple : parfois, on est juste
             fatigué, occupé ou pas motivé à sortir… mais on doit quand même
             ressortir pour un besoin du quotidien.
@@ -500,13 +524,13 @@
 
       <section class="section concept-section">
         <div class="container">
-          <h2 class="section-title" data-reveal>Ce qu'on construit</h2>
+          <h2 class="section-title" data-reveal data-i18n="about.build.title">Ce qu'on construit</h2>
           <div class="concept-statement-block" data-reveal>
             <span class="concept-statement-accent" aria-hidden="true"></span>
-            <p class="section-subtitle concept-statement-line concept-statement-line--lead">
+            <p class="section-subtitle concept-statement-line concept-statement-line--lead" data-i18n="about.build.lead">
               Pas une simple livraison.
             </p>
-            <p class="section-subtitle concept-statement-line concept-statement-line--accent">
+            <p class="section-subtitle concept-statement-line concept-statement-line--accent" data-i18n="about.build.accent">
               Une nouvelle façon de ne plus devoir ressortir.
             </p>
           </div>
@@ -515,8 +539,8 @@
               <span class="why-icon"
                 ><i class="ph-fill ph-storefront" aria-hidden="true"></i
               ></span>
-              <h3 class="why-title">N'importe quelle boutique</h3>
-              <p class="why-description">
+              <h3 class="why-title" data-i18n="about.card.1.title">N'importe quelle boutique</h3>
+              <p class="why-description" data-i18n="about.card.1.desc">
                 Épicerie, pharmacie, supermarché, hanout du coin… HelperGo ne se
                 limite pas à quelques commerces. Tout commerce de proximité est
                 accessible.
@@ -526,8 +550,8 @@
               <span class="why-icon"
                 ><i class="ph-fill ph-handshake" aria-hidden="true"></i
               ></span>
-              <h3 class="why-title">Des Helpers de confiance</h3>
-              <p class="why-description">
+              <h3 class="why-title" data-i18n="about.card.2.title">Des Helpers de confiance</h3>
+              <p class="why-description" data-i18n="about.card.2.desc">
                 On ne les appelle pas des livreurs. Chez HelperGo, ce sont des
                 Helpers : des personnes de confiance disponibles pour aider
                 localement et simplifier le quotidien.
@@ -537,8 +561,8 @@
               <span class="why-icon"
                 ><i class="ph-fill ph-tag" aria-hidden="true"></i
               ></span>
-              <h3 class="why-title">Un prix honnête</h3>
-              <p class="why-description">
+              <h3 class="why-title" data-i18n="about.card.3.title">Un prix honnête</h3>
+              <p class="why-description" data-i18n="about.card.3.desc">
                 8 MAD fixe, paiement à la livraison, zéro frais cachés. Ce que tu
                 vois est ce que tu paies.
               </p>
@@ -549,13 +573,13 @@
 
       <section class="section team-section">
         <div class="container">
-          <h2 class="section-title" data-reveal>L'équipe</h2>
+          <h2 class="section-title" data-reveal data-i18n="about.team.title">L'équipe</h2>
           <div class="concept-statement-block" data-reveal>
             <span class="concept-statement-accent" aria-hidden="true"></span>
-            <p class="section-subtitle concept-statement-line concept-statement-line--lead">
+            <p class="section-subtitle concept-statement-line concept-statement-line--lead" data-i18n="about.team.lead">
               Une idée née à Casablanca,
             </p>
-            <p class="section-subtitle concept-statement-line concept-statement-line--accent">
+            <p class="section-subtitle concept-statement-line concept-statement-line--accent" data-i18n="about.team.accent">
               portée par des gens qui y croient.
             </p>
           </div>
@@ -564,7 +588,7 @@
               <div class="team-avatar" aria-hidden="true">MK</div>
               <h3 class="team-name">Modibo Keïta</h3>
               <p class="team-role">Founder &amp; CEO</p>
-              <p class="team-desc">
+              <p class="team-desc" data-i18n="about.team.mk.desc">
                 Étudiant en Master Finance à l'ESCA Casablanca et à l'origine de
                 l'idée HelperGo. Parti d'un constat simple : parfois, on est
                 fatigué, occupé ou malade… mais on doit quand même ressortir pour
@@ -576,7 +600,7 @@
               <div class="team-avatar" aria-hidden="true">MN</div>
               <h3 class="team-name">Mouad Nacif</h3>
               <p class="team-role">Strategic Business Partner</p>
-              <p class="team-desc">
+              <p class="team-desc" data-i18n="about.team.mn.desc">
                 Rejoint HelperGo en phase de lancement pour apporter son regard
                 stratégique et ses conseils business. Contribue à affiner la
                 vision et garder le cap.
@@ -588,8 +612,8 @@
 
       <section class="cta-band about-cta" data-reveal>
         <div class="container">
-          <h2>Prêt à essayer HelperGo ?</h2>
-          <a href="order.html" class="btn btn-primary btn-lg"
+          <h2 data-i18n="about.cta.title">Prêt à essayer HelperGo ?</h2>
+          <a href="order.html" class="btn btn-primary btn-lg" data-i18n="about.cta.btn"
             >Commander maintenant</a
           >
         </div>
@@ -597,9 +621,54 @@
     </main>
 
     <footer class="site-footer">
-      HelperGo © 2026 — Casablanca, Maroc
+      <div class="footer-inner">
+        <p class="footer-social-title" data-i18n="common.social.title">Suivez-nous</p>
+        <div class="footer-social">
+          <a
+            href="https://www.facebook.com/joinhelpergo"
+            class="footer-social-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-i18n-aria="common.social.facebook"
+          >
+            <i class="ph-fill ph-facebook-logo" aria-hidden="true"></i>
+          </a>
+          <a
+            href="https://www.instagram.com/helpergo.app"
+            class="footer-social-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-i18n-aria="common.social.instagram"
+          >
+            <i class="ph-fill ph-instagram-logo" aria-hidden="true"></i>
+          </a>
+          <a
+            href="https://x.com/HelperGo_App"
+            class="footer-social-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-i18n-aria="common.social.twitter"
+          >
+            <i class="ph-fill ph-twitter-logo" aria-hidden="true"></i>
+          </a>
+          <a
+            href="https://www.tiktok.com/@helpergo.app"
+            class="footer-social-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-i18n-aria="common.social.tiktok"
+          >
+            <i class="ph-fill ph-tiktok-logo" aria-hidden="true"></i>
+          </a>
+        </div>
+        <p class="footer-copy" data-i18n="common.footer">
+          HelperGo © 2026 — Casablanca, Maroc
+        </p>
+      </div>
     </footer>
 
+    <script src="translations.js"></script>
+    <script src="i18n.js"></script>
     <script src="main.js"></script>
   </body>
 </html>

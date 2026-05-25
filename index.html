@@ -554,10 +554,10 @@
       }
     </style>
   </head>
-  <body>
+  <body data-page="index">
     <header class="site-header">
       <div class="header-inner">
-        <a href="index.html" class="logo-link" aria-label="HelperGo accueil">
+        <a href="index.html" class="logo-link" data-i18n-aria="common.logoAria">
           <svg
             class="logo-mark"
             width="44"
@@ -586,25 +586,49 @@
             ><span class="logo-go">Go</span></span
           >
         </a>
-        <nav class="nav-desktop" aria-label="Navigation principale">
-          <a href="about.html">À propos</a>
-          <a href="helper.html">Devenir Helper</a>
-        </nav>
-        <button
-          type="button"
-          class="nav-toggle"
-          aria-label="Ouvrir le menu"
-          aria-expanded="false"
-        >
-          <span class="nav-toggle-bar"></span>
-          <span class="nav-toggle-bar"></span>
-          <span class="nav-toggle-bar"></span>
-        </button>
+        <div class="header-actions">
+          <nav class="nav-desktop" data-i18n-aria="common.nav.ariaDesktop">
+            <a href="about.html" data-i18n="common.nav.about">À propos</a>
+            <a href="helper.html" data-i18n="common.nav.helper">Devenir Helper</a>
+          </nav>
+          <div class="lang-dropdown">
+            <button
+              type="button"
+              class="lang-trigger"
+              aria-expanded="false"
+              aria-haspopup="listbox"
+              data-i18n-aria="common.langAria"
+            >
+              <i class="ph-fill ph-globe-hemisphere-west" aria-hidden="true"></i>
+            </button>
+            <div class="lang-menu" role="listbox">
+              <button type="button" class="lang-option" data-lang="fr" role="option">
+                Français
+              </button>
+              <button type="button" class="lang-option" data-lang="en" role="option">
+                English
+              </button>
+              <button type="button" class="lang-option" data-lang="ar" role="option">
+                العربية
+              </button>
+            </div>
+          </div>
+          <button
+            type="button"
+            class="nav-toggle"
+            data-i18n-aria="common.menu.open"
+            aria-expanded="false"
+          >
+            <span class="nav-toggle-bar"></span>
+            <span class="nav-toggle-bar"></span>
+            <span class="nav-toggle-bar"></span>
+          </button>
+        </div>
       </div>
-      <nav class="nav-mobile" aria-label="Navigation mobile">
-        <a href="order.html">Commander</a>
-        <a href="helper.html">Devenir Helper</a>
-        <a href="about.html">À propos</a>
+      <nav class="nav-mobile" data-i18n-aria="common.nav.ariaMobile">
+        <a href="order.html" data-i18n="common.nav.order">Commander</a>
+        <a href="helper.html" data-i18n="common.nav.helper">Devenir Helper</a>
+        <a href="about.html" data-i18n="common.nav.about">À propos</a>
       </nav>
     </header>
 
@@ -613,22 +637,22 @@
       <section class="hero landing-hero">
         <div class="container hero-grid">
           <div>
-            <div class="hero-label">Livraison express de proximité</div>
+            <div class="hero-label" data-i18n="index.hero.label">Livraison express de proximité</div>
             <div
               class="hero-animated-text"
               id="hero-animated-text"
               aria-live="polite"
             >
-              <span class="active">Rentré fatigué du boulot ?</span>
-              <span>Il te manque quelque chose ?</span>
-              <span>Malade et besoin d'une course rapide ?</span>
+              <span class="active" data-i18n="index.hero.phrase0">Rentré fatigué du boulot ?</span>
+              <span data-i18n="index.hero.phrase1">Il te manque quelque chose ?</span>
+              <span data-i18n="index.hero.phrase2">Malade et besoin d'une course rapide ?</span>
             </div>
-            <h1 class="hero-title">Un Helper s'en occupe en 20 min.</h1>
-            <p class="hero-subtitle">
+            <h1 class="hero-title" data-i18n="index.hero.title">Un Helper s'en occupe en 20 min.</h1>
+            <p class="hero-subtitle" data-i18n="index.hero.subtitle">
               Depuis n'importe quelle boutique, épicerie ou supermarché de ton
               quartier.
             </p>
-            <a href="order.html" class="btn btn-primary btn-lg btn-pulse"
+            <a href="order.html" class="btn btn-primary btn-lg btn-pulse" data-i18n="index.hero.cta"
               >Commander maintenant</a
             >
             <div class="hero-badges">
@@ -636,21 +660,21 @@
                 <span class="badge-icon"
                   ><i class="ph-fill ph-tag" aria-hidden="true"></i
                 ></span>
-                <span class="badge-text">8 MAD fixe</span>
+                <span class="badge-text" data-i18n="index.badge.fee">8 MAD fixe</span>
               </div>
               <div class="badge-dot"></div>
               <div class="hero-badge">
                 <span class="badge-icon"
                   ><i class="ph-fill ph-timer" aria-hidden="true"></i
                 ></span>
-                <span class="badge-text">~20 min</span>
+                <span class="badge-text" data-i18n="index.badge.time">~20 min</span>
               </div>
               <div class="badge-dot"></div>
               <div class="hero-badge">
                 <span class="badge-icon"
                   ><i class="ph-fill ph-map-pin" aria-hidden="true"></i
                 ></span>
-                <span class="badge-text">Casablanca</span>
+                <span class="badge-text" data-i18n="index.badge.city">Casablanca</span>
               </div>
             </div>
           </div>
@@ -666,7 +690,7 @@
                   <div class="phone-app-card">
                     <div class="phone-skeleton phone-skeleton-lg"></div>
                     <div class="phone-skeleton phone-skeleton-sm"></div>
-                    <div class="phone-app-cta">Commander</div>
+                    <div class="phone-app-cta" data-i18n="index.phone.order">Commander</div>
                   </div>
                   <div class="phone-app-card">
                     <div class="phone-skeleton phone-skeleton-line"></div>
@@ -684,8 +708,8 @@
       <!-- Comment ça marche -->
       <section class="section section-alt" id="comment">
         <div class="container">
-          <h2 class="section-title" data-reveal>Comment ça marche ?</h2>
-          <p class="section-subtitle" data-reveal>
+          <h2 class="section-title" data-reveal data-i18n="index.steps.title">Comment ça marche ?</h2>
+          <p class="section-subtitle" data-reveal data-i18n="index.steps.subtitle">
             Ta commande en 3 étapes simples.
           </p>
           <div class="steps-grid">
@@ -693,8 +717,8 @@
               <span class="step-icon"
                 ><i class="ph-fill ph-shopping-bag" aria-hidden="true"></i
               ></span>
-              <h3 class="step-title">Passe ta commande</h3>
-              <p class="step-description">
+              <h3 class="step-title" data-i18n="index.steps.1.title">Passe ta commande</h3>
+              <p class="step-description" data-i18n="index.steps.1.desc">
                 Choisis ton produit et indique ton quartier.
               </p>
             </article>
@@ -705,8 +729,8 @@
                   aria-hidden="true"
                 ></i
               ></span>
-              <h3 class="step-title">Un Helper se met en route</h3>
-              <p class="step-description">
+              <h3 class="step-title" data-i18n="index.steps.2.title">Un Helper se met en route</h3>
+              <p class="step-description" data-i18n="index.steps.2.desc">
                 Un Helper proche achète ce dont tu as besoin.
               </p>
             </article>
@@ -714,8 +738,8 @@
               <span class="step-icon"
                 ><i class="ph-fill ph-package" aria-hidden="true"></i
               ></span>
-              <h3 class="step-title">Livré chez toi</h3>
-              <p class="step-description">
+              <h3 class="step-title" data-i18n="index.steps.3.title">Livré chez toi</h3>
+              <p class="step-description" data-i18n="index.steps.3.desc">
                 En moins de 20 min, paiement à la livraison.
               </p>
             </article>
@@ -726,14 +750,14 @@
       <!-- Pourquoi HelperGo -->
       <section class="section" id="pourquoi">
         <div class="container">
-          <h2 class="section-title" data-reveal>Pourquoi choisir HelperGo ?</h2>
+          <h2 class="section-title" data-reveal data-i18n="index.why.title">Pourquoi choisir HelperGo ?</h2>
           <div class="why-grid">
             <article class="card why-card" data-reveal>
               <span class="why-icon"
                 ><i class="ph-fill ph-couch" aria-hidden="true"></i
               ></span>
-              <h3 class="why-title">Confort immédiat</h3>
-              <p class="why-description">
+              <h3 class="why-title" data-i18n="index.why.1.title">Confort immédiat</h3>
+              <p class="why-description" data-i18n="index.why.1.desc">
                 Plus besoin de ressortir pour les petites urgences du quotidien.
               </p>
             </article>
@@ -741,8 +765,8 @@
               <span class="why-icon"
                 ><i class="ph-fill ph-clock" aria-hidden="true"></i
               ></span>
-              <h3 class="why-title">Plus qu'une livraison</h3>
-              <p class="why-description">
+              <h3 class="why-title" data-i18n="index.why.2.title">Plus qu'une livraison</h3>
+              <p class="why-description" data-i18n="index.why.2.desc">
                 Du temps gagné et le confort de rester chez toi.
               </p>
             </article>
@@ -750,8 +774,8 @@
               <span class="why-icon"
                 ><i class="ph-fill ph-shield-check" aria-hidden="true"></i
               ></span>
-              <h3 class="why-title">L'esprit tranquille</h3>
-              <p class="why-description">
+              <h3 class="why-title" data-i18n="index.why.3.title">L'esprit tranquille</h3>
+              <p class="why-description" data-i18n="index.why.3.desc">
                 Des Helpers vérifiés pour gérer les petits besoins du quotidien,
                 en toute sécurité.
               </p>
@@ -763,8 +787,8 @@
       <!-- CTA final -->
       <section class="cta-band" data-reveal>
         <div class="container">
-          <h2>Besoin de quelque chose ?</h2>
-          <a href="order.html" class="btn btn-primary btn-lg"
+          <h2 data-i18n="index.cta.title">Besoin de quelque chose ?</h2>
+          <a href="order.html" class="btn btn-primary btn-lg" data-i18n="index.cta.btn"
             >Commander maintenant</a
           >
         </div>
@@ -772,31 +796,90 @@
     </main>
 
     <footer class="site-footer">
-      HelperGo © 2026 — Casablanca, Maroc
+      <div class="footer-inner">
+        <p class="footer-social-title" data-i18n="common.social.title">Suivez-nous</p>
+        <div class="footer-social">
+          <a
+            href="https://www.facebook.com/joinhelpergo"
+            class="footer-social-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-i18n-aria="common.social.facebook"
+          >
+            <i class="ph-fill ph-facebook-logo" aria-hidden="true"></i>
+          </a>
+          <a
+            href="https://www.instagram.com/helpergo.app"
+            class="footer-social-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-i18n-aria="common.social.instagram"
+          >
+            <i class="ph-fill ph-instagram-logo" aria-hidden="true"></i>
+          </a>
+          <a
+            href="https://x.com/HelperGo_App"
+            class="footer-social-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-i18n-aria="common.social.twitter"
+          >
+            <i class="ph-fill ph-twitter-logo" aria-hidden="true"></i>
+          </a>
+          <a
+            href="https://www.tiktok.com/@helpergo.app"
+            class="footer-social-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-i18n-aria="common.social.tiktok"
+          >
+            <i class="ph-fill ph-tiktok-logo" aria-hidden="true"></i>
+          </a>
+        </div>
+        <p class="footer-copy" data-i18n="common.footer">
+          HelperGo © 2026 — Casablanca, Maroc
+        </p>
+      </div>
     </footer>
 
+    <script src="translations.js"></script>
+    <script src="i18n.js"></script>
     <script src="main.js"></script>
     <script>
       (function () {
-        var phrases = [
-          "Rentré fatigué du boulot ?",
-          "Il te manque quelque chose ?",
-          "Malade et besoin d'une course rapide ?",
-        ];
         var container = document.getElementById("hero-animated-text");
         if (!container) return;
         var spans = container.querySelectorAll("span");
         var i = 0;
+        var timerId = null;
 
-        setInterval(function () {
-          var current = spans[i];
-          current.classList.add("exit");
-          setTimeout(function () {
-            current.classList.remove("active", "exit");
-            i = (i + 1) % phrases.length;
-            spans[i].classList.add("active");
-          }, 700);
-        }, 3000);
+        function refreshPhrases() {
+          if (window.HelperGoI18n) {
+            var phrases = window.HelperGoI18n.getHeroPhrases();
+            spans.forEach(function (span, idx) {
+              if (phrases[idx]) span.textContent = phrases[idx];
+            });
+          }
+        }
+
+        function startRotation() {
+          if (timerId) window.clearInterval(timerId);
+          timerId = window.setInterval(function () {
+            var current = spans[i];
+            current.classList.add("exit");
+            window.setTimeout(function () {
+              current.classList.remove("active", "exit");
+              i = (i + 1) % spans.length;
+              spans[i].classList.add("active");
+            }, 700);
+          }, 3000);
+        }
+
+        refreshPhrases();
+        startRotation();
+        window.addEventListener("helpergo:langchange", function () {
+          refreshPhrases();
+        });
       })();
     </script>
   </body>

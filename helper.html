@@ -21,10 +21,10 @@
       href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.0.3/src/fill/style.css"
     />
   </head>
-  <body>
+  <body data-page="helper">
     <header class="site-header">
       <div class="header-inner">
-        <a href="index.html" class="logo-link" aria-label="HelperGo accueil">
+        <a href="index.html" class="logo-link" data-i18n-aria="common.logoAria">
           <svg
             class="logo-mark"
             width="44"
@@ -52,32 +52,56 @@
             ><span class="logo-go">Go</span></span
           >
         </a>
-        <nav class="nav-desktop" aria-label="Navigation principale">
-          <a href="about.html">À propos</a>
-          <a href="helper.html" aria-current="page">Devenir Helper</a>
-        </nav>
-        <button
-          type="button"
-          class="nav-toggle"
-          aria-label="Ouvrir le menu"
-          aria-expanded="false"
-        >
-          <span class="nav-toggle-bar"></span>
-          <span class="nav-toggle-bar"></span>
-          <span class="nav-toggle-bar"></span>
-        </button>
+        <div class="header-actions">
+          <nav class="nav-desktop" data-i18n-aria="common.nav.ariaDesktop">
+            <a href="about.html" data-i18n="common.nav.about">À propos</a>
+            <a href="helper.html" aria-current="page" data-i18n="common.nav.helper">Devenir Helper</a>
+          </nav>
+          <div class="lang-dropdown">
+            <button
+              type="button"
+              class="lang-trigger"
+              aria-expanded="false"
+              aria-haspopup="listbox"
+              data-i18n-aria="common.langAria"
+            >
+              <i class="ph-fill ph-globe-hemisphere-west" aria-hidden="true"></i>
+            </button>
+            <div class="lang-menu" role="listbox">
+              <button type="button" class="lang-option" data-lang="fr" role="option">
+                Français
+              </button>
+              <button type="button" class="lang-option" data-lang="en" role="option">
+                English
+              </button>
+              <button type="button" class="lang-option" data-lang="ar" role="option">
+                العربية
+              </button>
+            </div>
+          </div>
+          <button
+            type="button"
+            class="nav-toggle"
+            data-i18n-aria="common.menu.open"
+            aria-expanded="false"
+          >
+            <span class="nav-toggle-bar"></span>
+            <span class="nav-toggle-bar"></span>
+            <span class="nav-toggle-bar"></span>
+          </button>
+        </div>
       </div>
-      <nav class="nav-mobile" aria-label="Navigation mobile">
-        <a href="index.html">Accueil</a>
-        <a href="order.html">Commander</a>
-        <a href="about.html">À propos</a>
+      <nav class="nav-mobile" data-i18n-aria="common.nav.ariaMobile">
+        <a href="index.html" data-i18n="common.nav.home">Accueil</a>
+        <a href="order.html" data-i18n="common.nav.order">Commander</a>
+        <a href="about.html" data-i18n="common.nav.about">À propos</a>
       </nav>
     </header>
 
     <section class="hero helper-hero">
       <div class="container">
-        <h1 class="hero-title">Devenez Helper</h1>
-        <p class="hero-subtitle" style="margin-bottom: 0">
+        <h1 class="hero-title" data-i18n="helper.hero.title">Devenez Helper</h1>
+        <p class="hero-subtitle" style="margin-bottom: 0" data-i18n="helper.hero.subtitle">
           Rejoignez le réseau et commencez à livrer près de chez vous.
         </p>
         <div class="helper-stats" role="list">
@@ -85,19 +109,19 @@
             <span class="helper-stat-icon" aria-hidden="true"
               ><i class="ph-fill ph-clock"></i
             ></span>
-            <span>Flexible</span>
+            <span data-i18n="helper.stat.flex">Flexible</span>
           </div>
           <div class="helper-stat" role="listitem">
             <span class="helper-stat-icon" aria-hidden="true"
               ><i class="ph-fill ph-money"></i
             ></span>
-            <span>Payé en cash</span>
+            <span data-i18n="helper.stat.cash">Payé en cash</span>
           </div>
           <div class="helper-stat" role="listitem">
             <span class="helper-stat-icon" aria-hidden="true"
               ><i class="ph-fill ph-map-pin"></i
             ></span>
-            <span>Dans votre quartier</span>
+            <span data-i18n="helper.stat.area">Dans votre quartier</span>
           </div>
         </div>
       </div>
@@ -120,21 +144,22 @@
             <input type="hidden" name="transport_modes" id="field-transport" />
 
             <div class="form-group">
-              <label class="form-label" for="helper-name">Prénom et nom</label>
+              <label class="form-label" for="helper-name" data-i18n="helper.form.name">Prénom et nom</label>
               <input
                 type="text"
                 id="helper-name"
                 name="full_name"
                 class="form-input"
+                data-i18n-placeholder="helper.form.namePh"
                 placeholder="Votre nom complet"
                 autocomplete="name"
                 required
               />
-              <p class="form-error" id="err-name">Indique ton prénom et nom.</p>
+              <p class="form-error" id="err-name" data-i18n="helper.err.name">Indique ton prénom et nom.</p>
             </div>
 
             <div class="form-group">
-              <label class="form-label" for="helper-whatsapp"
+              <label class="form-label" for="helper-whatsapp" data-i18n="helper.form.wa"
                 >Numéro WhatsApp</label
               >
               <div class="whatsapp-field" id="helper-whatsapp-wrap">
@@ -149,33 +174,33 @@
                   required
                 />
               </div>
-              <p class="form-error" id="err-helper-wa">
+              <p class="form-error" id="err-helper-wa" data-i18n="helper.err.wa">
                 Entre un numéro valide (9 à 10 chiffres après +212).
               </p>
             </div>
 
             <div class="form-group">
-              <label class="form-label" for="helper-quartier">Votre quartier</label>
+              <label class="form-label" for="helper-quartier" data-i18n="helper.form.quartier">Votre quartier</label>
               <select
                 id="helper-quartier"
                 name="quartier"
                 class="form-select"
                 required
               >
-                <option value="">Sélectionnez votre quartier</option>
+                <option value="" data-i18n="helper.form.quartierPh">Sélectionnez votre quartier</option>
                 <option value="Al Ferdaous">Al Ferdaous</option>
                 <option value="Maarif">Maarif</option>
                 <option value="Hay Hassani">Hay Hassani</option>
                 <option value="Oulfa">Oulfa</option>
               </select>
-              <p class="form-hint">
+              <p class="form-hint" data-i18n="helper.form.quartierHint">
                 On arrive progressivement quartier par quartier
               </p>
-              <p class="form-error" id="err-q">Choisissez un quartier.</p>
+              <p class="form-error" id="err-q" data-i18n="helper.err.q">Choisissez un quartier.</p>
             </div>
 
             <div class="form-group">
-              <span class="form-label">Moyen de déplacement</span>
+              <span class="form-label" data-i18n="helper.form.transport">Moyen de déplacement</span>
               <div class="toggle-row toggle-row-transport" id="transport-toggle">
                 <button
                   type="button"
@@ -185,7 +210,7 @@
                   <span class="toggle-btn-ico" aria-hidden="true"
                     ><i class="ph-fill ph-person-simple-walk"></i
                   ></span>
-                  <span class="toggle-btn-txt">À pied</span>
+                  <span class="toggle-btn-txt" data-i18n="helper.transport.walk">À pied</span>
                 </button>
                 <button
                   type="button"
@@ -195,7 +220,7 @@
                   <span class="toggle-btn-ico" aria-hidden="true"
                     ><i class="ph-fill ph-bicycle"></i
                   ></span>
-                  <span class="toggle-btn-txt">Vélo</span>
+                  <span class="toggle-btn-txt" data-i18n="helper.transport.bike">Vélo</span>
                 </button>
                 <button
                   type="button"
@@ -205,7 +230,7 @@
                   <span class="toggle-btn-ico" aria-hidden="true"
                     ><i class="ph-fill ph-scooter"></i
                   ></span>
-                  <span class="toggle-btn-txt">Trottinette</span>
+                  <span class="toggle-btn-txt" data-i18n="helper.transport.scooter">Trottinette</span>
                 </button>
                 <button
                   type="button"
@@ -215,10 +240,10 @@
                   <span class="toggle-btn-ico" aria-hidden="true"
                     ><i class="ph-fill ph-motorcycle"></i
                   ></span>
-                  <span class="toggle-btn-txt">Moto</span>
+                  <span class="toggle-btn-txt" data-i18n="helper.transport.moto">Moto</span>
                 </button>
               </div>
-              <p class="form-error" id="err-transport">
+              <p class="form-error" id="err-transport" data-i18n="helper.err.transport">
                 Sélectionne au moins un moyen de déplacement.
               </p>
             </div>
@@ -229,7 +254,7 @@
               id="helper-submit"
             >
               <span class="btn-spinner" aria-hidden="true"></span>
-              <span class="btn-text">Je veux devenir Helper →</span>
+              <span class="btn-text" data-i18n="helper.form.submit">Je veux devenir Helper →</span>
             </button>
           </form>
         </div>
@@ -244,20 +269,65 @@
             <circle cx="50" cy="50" r="44" />
             <path d="M28 52 L45 68 L72 38" />
           </svg>
-          <h2 class="confirmation-title">Candidature envoyée !</h2>
-          <p class="confirmation-text">
+          <h2 class="confirmation-title" data-i18n="helper.success.title">Candidature envoyée !</h2>
+          <p class="confirmation-text" data-i18n="helper.success.text">
             On te contacte sur WhatsApp dans les 24h. Merci de rejoindre
             HelperGo !
           </p>
-          <a href="index.html" class="btn btn-primary">Retour à l'accueil</a>
+          <a href="index.html" class="btn btn-primary" data-i18n="helper.success.back">Retour à l'accueil</a>
         </div>
       </div>
     </section>
 
     <footer class="site-footer">
-      HelperGo © 2026 — Casablanca, Maroc
+      <div class="footer-inner">
+        <p class="footer-social-title" data-i18n="common.social.title">Suivez-nous</p>
+        <div class="footer-social">
+          <a
+            href="https://www.facebook.com/joinhelpergo"
+            class="footer-social-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-i18n-aria="common.social.facebook"
+          >
+            <i class="ph-fill ph-facebook-logo" aria-hidden="true"></i>
+          </a>
+          <a
+            href="https://www.instagram.com/helpergo.app"
+            class="footer-social-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-i18n-aria="common.social.instagram"
+          >
+            <i class="ph-fill ph-instagram-logo" aria-hidden="true"></i>
+          </a>
+          <a
+            href="https://x.com/HelperGo_App"
+            class="footer-social-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-i18n-aria="common.social.twitter"
+          >
+            <i class="ph-fill ph-twitter-logo" aria-hidden="true"></i>
+          </a>
+          <a
+            href="https://www.tiktok.com/@helpergo.app"
+            class="footer-social-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-i18n-aria="common.social.tiktok"
+          >
+            <i class="ph-fill ph-tiktok-logo" aria-hidden="true"></i>
+          </a>
+        </div>
+        <p class="footer-copy" data-i18n="common.footer">
+          HelperGo © 2026 — Casablanca, Maroc
+        </p>
+      </div>
     </footer>
 
+    <script src="translations.js"></script>
+    <script src="i18n.js"></script>
     <script src="main.js"></script>
     <script>
       (function () {

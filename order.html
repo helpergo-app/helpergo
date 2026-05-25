@@ -210,10 +210,10 @@
       }
     </style>
   </head>
-  <body>
+  <body data-page="order">
     <header class="site-header">
       <div class="header-inner">
-        <a href="index.html" class="logo-link" aria-label="HelperGo accueil">
+        <a href="index.html" class="logo-link" data-i18n-aria="common.logoAria">
           <svg
             class="logo-mark"
             width="44"
@@ -241,25 +241,49 @@
             ><span class="logo-go">Go</span></span
           >
         </a>
-        <nav class="nav-desktop" aria-label="Navigation principale">
-          <a href="about.html">À propos</a>
-          <a href="helper.html">Devenir Helper</a>
-        </nav>
-        <button
-          type="button"
-          class="nav-toggle"
-          aria-label="Ouvrir le menu"
-          aria-expanded="false"
-        >
-          <span class="nav-toggle-bar"></span>
-          <span class="nav-toggle-bar"></span>
-          <span class="nav-toggle-bar"></span>
-        </button>
+        <div class="header-actions">
+          <nav class="nav-desktop" data-i18n-aria="common.nav.ariaDesktop">
+            <a href="about.html" data-i18n="common.nav.about">À propos</a>
+            <a href="helper.html" data-i18n="common.nav.helper">Devenir Helper</a>
+          </nav>
+          <div class="lang-dropdown">
+            <button
+              type="button"
+              class="lang-trigger"
+              aria-expanded="false"
+              aria-haspopup="listbox"
+              data-i18n-aria="common.langAria"
+            >
+              <i class="ph-fill ph-globe-hemisphere-west" aria-hidden="true"></i>
+            </button>
+            <div class="lang-menu" role="listbox">
+              <button type="button" class="lang-option" data-lang="fr" role="option">
+                Français
+              </button>
+              <button type="button" class="lang-option" data-lang="en" role="option">
+                English
+              </button>
+              <button type="button" class="lang-option" data-lang="ar" role="option">
+                العربية
+              </button>
+            </div>
+          </div>
+          <button
+            type="button"
+            class="nav-toggle"
+            data-i18n-aria="common.menu.open"
+            aria-expanded="false"
+          >
+            <span class="nav-toggle-bar"></span>
+            <span class="nav-toggle-bar"></span>
+            <span class="nav-toggle-bar"></span>
+          </button>
+        </div>
       </div>
-      <nav class="nav-mobile" aria-label="Navigation mobile">
-        <a href="index.html">Accueil</a>
-        <a href="helper.html">Devenir Helper</a>
-        <a href="about.html">À propos</a>
+      <nav class="nav-mobile" data-i18n-aria="common.nav.ariaMobile">
+        <a href="index.html" data-i18n="common.nav.home">Accueil</a>
+        <a href="helper.html" data-i18n="common.nav.helper">Devenir Helper</a>
+        <a href="about.html" data-i18n="common.nav.about">À propos</a>
       </nav>
     </header>
 
@@ -267,8 +291,8 @@
       <div class="progress-wrap">
         <div class="container">
           <div class="order-header">
-            <h1 class="order-title">Passez votre commande</h1>
-            <p class="order-subtitle">
+            <h1 class="order-title" data-i18n="order.title">Passez votre commande</h1>
+            <p class="order-subtitle" data-i18n="order.subtitle">
               3 étapes simples pour être livré rapidement
             </p>
           </div>
@@ -282,15 +306,15 @@
             ></div>
             <div class="progress-step active" data-step-indicator="1">
               <div class="progress-dot">1</div>
-              <span class="progress-label">Commande</span>
+              <span class="progress-label" data-i18n="order.progress.1">Commande</span>
             </div>
             <div class="progress-step" data-step-indicator="2">
               <div class="progress-dot">2</div>
-              <span class="progress-label">Contact</span>
+              <span class="progress-label" data-i18n="order.progress.2">Contact</span>
             </div>
             <div class="progress-step" data-step-indicator="3">
               <div class="progress-dot">3</div>
-              <span class="progress-label">Confirmation</span>
+              <span class="progress-label" data-i18n="order.progress.3">Confirmation</span>
             </div>
           </div>
         </div>
@@ -316,10 +340,10 @@
 
           <!-- Step 1 -->
           <div class="form-step active" data-step="1">
-            <h2 class="form-step-title">Étape 1 : Produit et quartier</h2>
+            <h2 class="form-step-title" data-i18n="order.step1.title">Étape 1 : Produit et quartier</h2>
 
             <div class="form-group">
-              <span class="form-label">Catégorie</span>
+              <span class="form-label" data-i18n="order.cat.label">Catégorie</span>
               <div class="category-grid" id="category-grid">
                 <button
                   type="button"
@@ -329,7 +353,7 @@
                   <span class="category-card-icon" aria-hidden="true"
                     ><i class="ph-fill ph-drop-half"></i
                   ></span>
-                  <span class="category-card-text">Eau &amp; Boissons</span>
+                  <span class="category-card-text" data-i18n="order.cat.water">Eau &amp; Boissons</span>
                 </button>
                 <button
                   type="button"
@@ -339,32 +363,32 @@
                   <span class="category-card-icon" aria-hidden="true"
                     ><i class="ph-fill ph-shopping-bag"></i
                   ></span>
-                  <span class="category-card-text">Alimentation</span>
+                  <span class="category-card-text" data-i18n="order.cat.food">Alimentation</span>
                 </button>
                 <button
                   type="button"
                   class="category-card"
-                  data-category="Pharmacie"
+                  data-category="Parapharmacie"
                 >
                   <span class="category-card-icon" aria-hidden="true"
                     ><i class="ph-fill ph-first-aid"></i
                   ></span>
-                  <span class="category-card-text">Pharmacie</span>
+                  <span class="category-card-text" data-i18n="order.cat.pharma">Parapharmacie</span>
                 </button>
                 <button type="button" class="category-card" data-category="Autre">
                   <span class="category-card-icon" aria-hidden="true"
                     ><i class="ph-fill ph-plus-circle"></i
                   ></span>
-                  <span class="category-card-text">Autre</span>
+                  <span class="category-card-text" data-i18n="order.cat.other">Autre</span>
                 </button>
               </div>
-              <p class="form-error" id="err-category">
+              <p class="form-error" id="err-category" data-i18n="order.err.category">
                 Choisis une catégorie.
               </p>
             </div>
 
             <div class="form-group">
-              <label class="form-label" for="product-details"
+              <label class="form-label" for="product-details" data-i18n="order.product.label"
                 >Produit :</label
               >
               <input
@@ -373,15 +397,16 @@
                 class="form-input"
                 maxlength="500"
                 autocomplete="off"
+                data-i18n-placeholder="order.product.ph"
                 placeholder="Exemple: 2 bouteilles d'eau"
               />
-              <p class="form-error" id="err-details">
+              <p class="form-error" id="err-details" data-i18n="order.err.details">
                 Indique ta commande (au moins 3 caractères).
               </p>
             </div>
 
             <div class="form-group">
-              <label class="form-label" for="estimated-price"
+              <label class="form-label" for="estimated-price" data-i18n="order.price.label"
                 >Prix estimé du produit (MAD)</label
               >
               <input
@@ -390,26 +415,27 @@
                 class="form-input"
                 min="0"
                 step="0.01"
+                data-i18n-placeholder="order.price.ph"
                 placeholder="Exemple: 15"
               />
-              <p class="form-hint">
+              <p class="form-hint" data-i18n="order.price.hint">
                 Mets le prix approximatif que tu connais.
               </p>
-              <p class="form-error" id="err-price">
+              <p class="form-error" id="err-price" data-i18n="order.err.price">
                 Indique un prix estimé valide (nombre positif).
               </p>
             </div>
 
             <div class="form-group">
-              <label class="form-label" for="quartier">Votre quartier</label>
+              <label class="form-label" for="quartier" data-i18n="order.quartier.label">Votre quartier</label>
               <select id="quartier" class="form-select">
-                <option value="">Sélectionne ton quartier</option>
+                <option value="" data-i18n="order.quartier.ph">Sélectionne ton quartier</option>
                 <option value="Al Ferdaous">Al Ferdaous</option>
                 <option value="Maarif">Maarif</option>
-                <option value="hay-bientot" disabled>
+                <option value="hay-bientot" disabled data-i18n="order.quartier.hay">
                   Hay Hassani — Bientôt disponible
                 </option>
-                <option value="oulfa-bientot" disabled>
+                <option value="oulfa-bientot" disabled data-i18n="order.quartier.oulfa">
                   Oulfa — Bientôt disponible
                 </option>
               </select>
@@ -417,51 +443,52 @@
                 <span class="info-box-icon" aria-hidden="true"
                   ><i class="ph-fill ph-check"></i
                 ></span>
-                <p class="info-box-copy">
+                <p class="info-box-copy" data-i18n-html="order.quartier.info">
                   Livraison : <strong>8 MAD</strong>
                   <span class="info-box-sep" aria-hidden="true">·</span>
                   Délai moyen estimé : <strong>~20 min</strong>
                 </p>
               </div>
-              <p class="form-error" id="err-quartier">Choisis ton quartier.</p>
+              <p class="form-error" id="err-quartier" data-i18n="order.err.quartier">Choisis ton quartier.</p>
             </div>
 
             <div class="form-group">
-              <span class="form-label">Est-ce que vous avez de la monnaie ?</span>
+              <span class="form-label" data-i18n="order.change.label">Est-ce que vous avez de la monnaie ?</span>
               <div
                 class="toggle-row"
                 id="change-toggle"
                 role="group"
-                aria-label="Avez-vous de la monnaie ?"
+                data-i18n-aria="order.change.aria"
               >
-                <button type="button" class="toggle-btn" data-change="oui">
+                <button type="button" class="toggle-btn" data-change="oui" data-i18n="common.yes">
                   Oui
                 </button>
-                <button type="button" class="toggle-btn" data-change="non">
+                <button type="button" class="toggle-btn" data-change="non" data-i18n="common.no">
                   Non
                 </button>
               </div>
-              <p class="form-error" id="err-change">Choisissez Oui ou Non.</p>
+              <p class="form-error" id="err-change" data-i18n="order.err.change">Choisissez Oui ou Non.</p>
               <div id="cash-amount-wrap" hidden>
-                <label class="form-label" for="especes"
+                <label class="form-label" for="especes" data-i18n="order.cash.label"
                   >Quel montant avez-vous sur vous ?</label
                 >
                 <input
                   type="number"
                   id="especes"
                   class="order-especes-field"
+                  data-i18n-placeholder="order.cash.ph"
                   placeholder="Exemple : 50"
                   min="0"
                 />
-                <p class="form-hint">Votre Helper vous rendra la monnaie.</p>
-                <p class="form-error" id="err-cash">
+                <p class="form-hint" data-i18n="order.cash.hint">Votre Helper vous rendra la monnaie.</p>
+                <p class="form-error" id="err-cash" data-i18n="order.err.cash">
                   Indique un montant en espèces (MAD).
                 </p>
               </div>
             </div>
 
             <div class="form-actions">
-              <button type="button" class="btn btn-primary btn-block" id="to-step-2">
+              <button type="button" class="btn btn-primary btn-block" id="to-step-2" data-i18n="common.continue">
                 Continuer
               </button>
             </div>
@@ -469,10 +496,10 @@
 
           <!-- Step 2 -->
           <div class="form-step step-2" id="step-2" data-step="2">
-            <h2 class="form-step-title">Étape 2 : Contact</h2>
+            <h2 class="form-step-title" data-i18n="order.step2.title">Étape 2 : Contact</h2>
 
             <div class="form-group">
-              <label class="form-label" for="whatsapp-input"
+              <label class="form-label" for="whatsapp-input" data-i18n="order.wa.label"
                 >Numéro WhatsApp</label
               >
               <div class="whatsapp-field" id="whatsapp-wrap">
@@ -485,11 +512,11 @@
                   autocomplete="tel"
                 />
               </div>
-              <p class="form-hint">
+              <p class="form-hint" data-i18n="order.wa.hint">
                 Nous utiliserons WhatsApp uniquement pour le suivi de ta
                 commande.
               </p>
-              <p class="form-error" id="err-whatsapp">
+              <p class="form-error" id="err-whatsapp" data-i18n="order.err.whatsapp">
                 Entre un numéro valide (9 à 10 chiffres après +212).
               </p>
             </div>
@@ -499,10 +526,11 @@
                 type="button"
                 class="btn btn-secondary"
                 id="back-to-1"
+                data-i18n="common.back"
               >
                 Retour
               </button>
-              <button type="button" class="btn btn-primary" id="to-step-3">
+              <button type="button" class="btn btn-primary" id="to-step-3" data-i18n="common.continue">
                 Continuer
               </button>
             </div>
@@ -510,36 +538,36 @@
 
           <!-- Step 3 -->
           <div class="form-step step-3" id="step-3" data-step="3">
-            <h2 class="form-step-title">Étape 3 : Récapitulatif</h2>
+            <h2 class="form-step-title" data-i18n="order.step3.title">Étape 3 : Récapitulatif</h2>
 
             <div class="summary-box" id="summary-box">
               <div class="summary-row">
-                <strong>Catégorie :</strong>
+                <strong data-i18n="order.sum.category">Catégorie :</strong>
                 <span class="summary-row-value" id="sum-category">—</span>
               </div>
               <div class="summary-row">
-                <strong>Produit :</strong>
+                <strong data-i18n="order.sum.product">Produit :</strong>
                 <span class="summary-row-value" id="sum-details">—</span>
               </div>
               <div class="summary-row">
-                <strong>Prix estimé du produit :</strong>
+                <strong data-i18n="order.sum.price">Prix estimé du produit :</strong>
                 <span class="summary-row-value" id="sum-price">—</span>
               </div>
               <div class="summary-row">
-                <strong>Quartier :</strong>
+                <strong data-i18n="order.sum.quartier">Quartier :</strong>
                 <span class="summary-row-value" id="sum-quartier">—</span>
               </div>
               <div class="summary-row">
-                <strong>WhatsApp :</strong>
+                <strong data-i18n="order.sum.wa">WhatsApp :</strong>
                 <span class="summary-row-value" id="sum-whatsapp">—</span>
               </div>
               <div class="summary-row">
-                <strong>Livraison :</strong>
+                <strong data-i18n="order.sum.delivery">Livraison :</strong>
                 <span class="summary-row-value">8 MAD</span>
               </div>
             </div>
 
-            <p class="summary-total" id="sum-total-line">
+            <p class="summary-total" id="sum-total-line" data-i18n="order.sum.totalEmpty">
               Total estimé : — MAD
             </p>
 
@@ -547,7 +575,7 @@
               <span class="note-box-icon" aria-hidden="true"
                 ><i class="ph-fill ph-info"></i
               ></span>
-              <p class="note-box-text">
+              <p class="note-box-text" data-i18n="order.note">
                 Si le prix en boutique dépasse de plus de 2 MAD, on te demande
                 confirmation avant l'achat.
               </p>
@@ -590,15 +618,15 @@
                       />
                     </svg>
                   </span>
-                  <span class="btn-submit-label btn-submit-label--full"
+                  <span class="btn-submit-label btn-submit-label--full" data-i18n="order.submit.full"
                     >Confirmer la commande</span
                   >
-                  <span class="btn-submit-label btn-submit-label--short"
+                  <span class="btn-submit-label btn-submit-label--short" data-i18n="order.submit.short"
                     >Confirmer</span
                   >
                 </span>
               </button>
-              <button type="button" class="btn btn-secondary btn-block" id="back-to-2">
+              <button type="button" class="btn btn-secondary btn-block" id="back-to-2" data-i18n="common.edit">
                 Modifier
               </button>
             </div>
@@ -619,28 +647,77 @@
             <circle cx="50" cy="50" r="44" />
             <path d="M28 52 L45 68 L72 38" />
           </svg>
-          <h2 class="confirmation-title">Commande confirmée ! 🎉</h2>
-          <p class="confirmation-text">
+          <h2 class="confirmation-title" data-i18n="order.confirm.title">Commande confirmée ! 🎉</h2>
+          <p class="confirmation-text" data-i18n="order.confirm.text">
             Notre équipe prend en charge ta commande et te contactera sur
             WhatsApp très prochainement.
           </p>
-          <p class="badge-time">⏱ Délai moyen estimé : ~20 min</p>
-          <p class="confirmation-text" style="font-size: 14px">
+          <p class="badge-time" data-i18n="order.confirm.badge">⏱ Délai moyen estimé : ~20 min</p>
+          <p class="confirmation-text" style="font-size: 14px" data-i18n="order.confirm.stay">
             Reste disponible sur WhatsApp.
           </p>
-          <a href="index.html" class="btn btn-primary btn-lg">Revenir à l'accueil</a>
+          <a href="index.html" class="btn btn-primary btn-lg" data-i18n="order.confirm.back">Revenir à l'accueil</a>
         </div>
       </div>
     </div>
 
     <footer class="site-footer">
-      HelperGo © 2026 — Casablanca, Maroc
+      <div class="footer-inner">
+        <p class="footer-social-title" data-i18n="common.social.title">Suivez-nous</p>
+        <div class="footer-social">
+          <a
+            href="https://www.facebook.com/joinhelpergo"
+            class="footer-social-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-i18n-aria="common.social.facebook"
+          >
+            <i class="ph-fill ph-facebook-logo" aria-hidden="true"></i>
+          </a>
+          <a
+            href="https://www.instagram.com/helpergo.app"
+            class="footer-social-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-i18n-aria="common.social.instagram"
+          >
+            <i class="ph-fill ph-instagram-logo" aria-hidden="true"></i>
+          </a>
+          <a
+            href="https://x.com/HelperGo_App"
+            class="footer-social-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-i18n-aria="common.social.twitter"
+          >
+            <i class="ph-fill ph-twitter-logo" aria-hidden="true"></i>
+          </a>
+          <a
+            href="https://www.tiktok.com/@helpergo.app"
+            class="footer-social-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-i18n-aria="common.social.tiktok"
+          >
+            <i class="ph-fill ph-tiktok-logo" aria-hidden="true"></i>
+          </a>
+        </div>
+        <p class="footer-copy" data-i18n="common.footer">
+          HelperGo © 2026 — Casablanca, Maroc
+        </p>
+      </div>
     </footer>
 
+    <script src="translations.js"></script>
+    <script src="i18n.js"></script>
     <script src="main.js"></script>
     <script>
       (function () {
         "use strict";
+
+        function t(key) {
+          return window.HelperGoI18n ? window.HelperGoI18n.t(key) : key;
+        }
 
         var FORMSPREE_URL = "https://formspree.io/f/xkoyqlgz";
 
@@ -865,8 +942,14 @@
         }
 
         function categoryForSummary(cat) {
-          if (cat === "Eau & Boissons") return "Eau/boissons";
-          return cat;
+          var keys = {
+            "Eau & Boissons": "order.catSummary.water",
+            Alimentation: "order.cat.food",
+            Parapharmacie: "order.cat.pharma",
+            Autre: "order.cat.other",
+          };
+          var key = keys[cat];
+          return key ? t(key) : cat;
         }
 
         function formatWhatsAppDisplay(full) {
@@ -890,7 +973,7 @@
           state.estimatedPrice = document.getElementById("estimated-price").value;
           state.quartier = els.quartier.value;
           if (state.hasChange === "oui") {
-            state.cash = "Monnaie disponible";
+            state.cash = t("order.cash.ok");
           } else {
             state.cash = (document.getElementById("especes").value || "").trim();
           }
@@ -911,10 +994,11 @@
           var total =
             parseFloat(state.estimatedPrice, 10) + 8;
           document.getElementById("sum-total-line").textContent = isNaN(total)
-            ? "Total estimé : — MAD"
-            : "Total estimé : " +
-              String(Math.round(total * 100) / 100) +
-              " MAD";
+            ? t("order.sum.totalEmpty")
+            : t("order.sum.total").replace(
+                "{total}",
+                String(Math.round(total * 100) / 100)
+              );
 
           document.getElementById("field-category").value = state.category;
           document.getElementById("field-product-details").value =
@@ -924,7 +1008,11 @@
           document.getElementById("field-quartier").value = state.quartier;
           document.getElementById("field-cash").value = state.cash;
           document.getElementById("field-has-change").value =
-            state.hasChange === "oui" ? "Oui" : state.hasChange === "non" ? "Non" : "";
+            state.hasChange === "oui"
+              ? t("common.yes")
+              : state.hasChange === "non"
+                ? t("common.no")
+                : "";
           document.getElementById("field-whatsapp").value = state.whatsapp;
         }
 
@@ -945,6 +1033,10 @@
 
         els.back2.addEventListener("click", function () {
           showStep(2);
+        });
+
+        window.addEventListener("helpergo:langchange", function () {
+          if (currentStep === 3) fillSummary();
         });
 
         els.form.setAttribute("action", FORMSPREE_URL);
