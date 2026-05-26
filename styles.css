@@ -1962,3 +1962,8 @@
   html[dir="rtl"] .team-desc {
     text-align: justify;
   }
+
+  html[dir="rtl"] .step-icon-runner {
+    display: inline-block;
+    transform: scaleX(-1);
+  }
