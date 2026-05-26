@@ -42,11 +42,25 @@
       }
 
       .order-title {
-        font-size: 28px;
+        font-size: clamp(21px, 5.5vw, 28px);
         font-weight: 800;
         color: #0f172a;
         letter-spacing: -0.02em;
         margin-bottom: 6px;
+        line-height: 1.2;
+      }
+
+      @media (min-width: 361px) {
+        .order-title {
+          white-space: nowrap;
+        }
+      }
+
+      @media (max-width: 360px) {
+        .order-title {
+          white-space: normal;
+          font-size: 22px;
+        }
       }
 
       .order-subtitle {
