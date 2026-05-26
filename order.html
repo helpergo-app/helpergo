@@ -20,6 +20,12 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.0.3/src/fill/style.css"
     />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
     <style>
       .order-page {
         background: #f4f4f5;
@@ -208,6 +214,386 @@
       #cash-amount-wrap[hidden] {
         display: none;
       }
+
+      .order-items-section {
+        margin-bottom: 4px;
+      }
+
+      .order-items-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 6px;
+      }
+
+      .order-items-count {
+        display: inline-flex;
+        align-items: center;
+        gap: 1px;
+        padding: 6px 13px;
+        border-radius: 999px;
+        background: linear-gradient(135deg, rgba(29, 158, 117, 0.12) 0%, rgba(29, 158, 117, 0.06) 100%);
+        border: 1.5px solid rgba(29, 158, 117, 0.28);
+        box-shadow: 0 1px 3px rgba(29, 158, 117, 0.08);
+        white-space: nowrap;
+        line-height: 1;
+      }
+
+      .order-items-count-num {
+        font-size: 15px;
+        font-weight: 800;
+        color: #1d9e75;
+        letter-spacing: -0.02em;
+      }
+
+      .order-items-count-sep {
+        font-size: 12px;
+        font-weight: 500;
+        color: #9ca3af;
+        margin: 0 2px;
+      }
+
+      .order-items-count-max {
+        font-size: 13px;
+        font-weight: 700;
+        color: #4b5563;
+      }
+
+      .order-items-list {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        margin: 12px 0 14px;
+      }
+
+      .order-item-card {
+        border: 1.5px solid #e5e7eb;
+        border-radius: 14px;
+        padding: 16px;
+        background: #fafafa;
+      }
+
+      .order-item-card-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        margin-bottom: 12px;
+      }
+
+      .order-item-num {
+        font-size: 14px;
+        font-weight: 700;
+        color: #0f172a;
+      }
+
+      .order-item-remove {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        border: 1.5px solid #e5e7eb;
+        background: #ffffff;
+        color: #64748b;
+        font-size: 12px;
+        font-weight: 600;
+        font-family: inherit;
+        cursor: pointer;
+        padding: 7px 14px;
+        border-radius: 999px;
+        line-height: 1;
+        transition:
+          color 0.15s ease,
+          background 0.15s ease,
+          border-color 0.15s ease,
+          box-shadow 0.15s ease;
+        box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+      }
+
+      .order-item-remove i {
+        font-size: 15px;
+        color: #94a3b8;
+        transition: color 0.15s ease;
+      }
+
+      .order-item-remove:hover {
+        color: #dc2626;
+        background: #fef2f2;
+        border-color: #fecaca;
+        box-shadow: 0 2px 8px rgba(220, 38, 38, 0.1);
+      }
+
+      .order-item-remove:hover i {
+        color: #dc2626;
+      }
+
+      .order-item-remove:active {
+        transform: scale(0.98);
+      }
+
+      .order-item-card .form-group {
+        margin-bottom: 18px;
+      }
+
+      .order-item-card .form-group:last-child {
+        margin-bottom: 0;
+      }
+
+      .order-item-card .form-label {
+        display: block;
+        margin: 0 0 8px;
+      }
+
+      .order-item-card .form-input {
+        margin-top: 0;
+      }
+
+      .order-item-cat-wrap .form-label {
+        margin-bottom: 8px;
+      }
+
+      .order-item-card .form-input.error,
+      .order-item-card .form-select.error {
+        border-color: #dc2626;
+      }
+
+      .order-item-cat-wrap {
+        margin-bottom: 18px;
+      }
+
+      .category-grid--item {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin: 10px 0 0;
+        width: 100%;
+      }
+
+      .category-grid--item .category-card {
+        padding: 14px 12px 13px;
+        gap: 8px;
+        border-width: 1.5px;
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 1.3;
+        min-height: 82px;
+        aspect-ratio: auto;
+      }
+
+      .category-grid--item .category-card-icon .ph-fill {
+        font-size: 24px;
+      }
+
+      .category-grid--item .category-card-text {
+        font-size: 12px;
+        line-height: 1.25;
+      }
+
+      .category-grid--item.error .category-card {
+        border-color: #fca5a5;
+      }
+
+      .category-grid--item.error .category-card:not(.selected) {
+        background: #fffbfb;
+      }
+
+      @media (min-width: 768px) {
+        .category-grid--item {
+          gap: 12px;
+        }
+
+        .category-grid--item .category-card {
+          padding: 18px 14px 16px;
+          gap: 10px;
+          min-height: 96px;
+        }
+
+        .category-grid--item .category-card-icon .ph-fill {
+          font-size: 30px;
+        }
+
+        .category-grid--item .category-card-text {
+          font-size: 13px;
+        }
+      }
+
+      .btn-add-item {
+        margin-top: 4px;
+        font-weight: 600;
+      }
+
+      .btn-add-item:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+
+      .order-items-subtotal {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 12px;
+        margin-top: 14px;
+        padding: 12px 14px;
+        border-radius: 12px;
+        background: #f0fdf4;
+        border: 1px solid #bbf7d0;
+        font-size: 14px;
+        color: #166534;
+      }
+
+      .order-items-subtotal strong {
+        font-size: 16px;
+        font-weight: 700;
+        color: #15803d;
+      }
+
+      .summary-items-list {
+        list-style: none;
+        margin: 8px 0 0;
+        padding: 0;
+        width: 100%;
+      }
+
+      .summary-items-list li {
+        font-size: 14px;
+        color: #374151;
+        line-height: 1.45;
+        margin-bottom: 8px;
+        padding-left: 0;
+      }
+
+      .summary-items-list li:last-child {
+        margin-bottom: 0;
+      }
+
+      .summary-row--items {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .delivery-location-section {
+        margin-top: 8px;
+      }
+
+      .delivery-map-wrap {
+        border: 1.5px solid #e5e7eb;
+        border-radius: 14px;
+        overflow: hidden;
+        margin: 12px 0 14px;
+        background: #f3f4f6;
+      }
+
+      .delivery-map-wrap.error {
+        border-color: #dc2626;
+      }
+
+      .delivery-map {
+        width: 100%;
+        height: 260px;
+        z-index: 0;
+      }
+
+      .delivery-map-wrap .leaflet-control-attribution {
+        font-size: 10px;
+      }
+
+      .btn-geolocate {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+        margin: 2px 0 4px;
+        padding: 12px 18px !important;
+        font-size: 14px !important;
+        font-weight: 600 !important;
+        line-height: 1.25;
+        border-radius: 12px !important;
+        border: 1.5px solid #e2e8f0 !important;
+        background: #f8fafc !important;
+        color: #0f172a !important;
+        box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+        transform: none !important;
+      }
+
+      .btn-geolocate i {
+        font-size: 18px;
+        color: #1d9e75;
+        flex-shrink: 0;
+        line-height: 1;
+      }
+
+      .btn-geolocate span {
+        display: block;
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .btn-geolocate:hover {
+        background: #f0fdf4 !important;
+        border-color: rgba(29, 158, 117, 0.35) !important;
+        color: #0f172a !important;
+        transform: none !important;
+      }
+
+      .btn-geolocate.is-loading {
+        opacity: 0.7;
+        pointer-events: none;
+      }
+
+      @media (max-width: 767px) {
+        .btn-geolocate {
+          padding: 10px 14px !important;
+          font-size: 13px !important;
+          gap: 7px;
+          border-radius: 11px !important;
+        }
+
+        .btn-geolocate i {
+          font-size: 17px;
+        }
+
+        .btn-geolocate span {
+          white-space: nowrap;
+          line-height: 1.25;
+          font-size: 13px;
+        }
+      }
+
+      .delivery-location-status {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 10px;
+        padding: 10px 12px;
+        border-radius: 10px;
+        background: #f0fdf4;
+        border: 1px solid #bbf7d0;
+        color: #15803d;
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .delivery-location-status[hidden] {
+        display: none;
+      }
+
+      .delivery-location-status i {
+        font-size: 18px;
+      }
+
+      .summary-maps-link {
+        color: #1d9e75;
+        font-weight: 600;
+        text-decoration: none;
+      }
+
+      .summary-maps-link:hover {
+        text-decoration: underline;
+      }
     </style>
   </head>
   <body data-page="order">
@@ -337,93 +723,41 @@
           <input type="hidden" name="has_change" id="field-has-change" />
           <input type="hidden" name="delivery_fee_mad" value="8" />
           <input type="hidden" name="whatsapp" id="field-whatsapp" />
+          <input type="hidden" name="delivery_lat" id="field-delivery-lat" />
+          <input type="hidden" name="delivery_lng" id="field-delivery-lng" />
+          <input type="hidden" name="delivery_address" id="field-delivery-address" />
+          <input type="hidden" name="delivery_notes" id="field-delivery-notes" />
+          <input type="hidden" name="delivery_maps_url" id="field-delivery-maps-url" />
 
           <!-- Step 1 -->
           <div class="form-step active" data-step="1">
-            <h2 class="form-step-title" data-i18n="order.step1.title">Étape 1 : Produit et quartier</h2>
+            <h2 class="form-step-title" data-i18n="order.step1.title">Étape 1 : Commande et quartier</h2>
 
-            <div class="form-group">
-              <span class="form-label" data-i18n="order.cat.label">Catégorie</span>
-              <div class="category-grid" id="category-grid">
-                <button
-                  type="button"
-                  class="category-card"
-                  data-category="Eau & Boissons"
+            <div class="form-group order-items-section">
+              <div class="order-items-head">
+                <span class="form-label" data-i18n="order.items.label">Vos articles</span>
+                <span class="order-items-count" id="order-items-count" aria-live="polite"
+                  ><span class="order-items-count-num">1</span
+                  ><span class="order-items-count-sep">/</span
+                  ><span class="order-items-count-max">3</span></span
                 >
-                  <span class="category-card-icon" aria-hidden="true"
-                    ><i class="ph-fill ph-drop-half"></i
-                  ></span>
-                  <span class="category-card-text" data-i18n="order.cat.water">Eau &amp; Boissons</span>
-                </button>
-                <button
-                  type="button"
-                  class="category-card"
-                  data-category="Alimentation"
-                >
-                  <span class="category-card-icon" aria-hidden="true"
-                    ><i class="ph-fill ph-shopping-bag"></i
-                  ></span>
-                  <span class="category-card-text" data-i18n="order.cat.food">Alimentation</span>
-                </button>
-                <button
-                  type="button"
-                  class="category-card"
-                  data-category="Parapharmacie"
-                >
-                  <span class="category-card-icon" aria-hidden="true"
-                    ><i class="ph-fill ph-first-aid"></i
-                  ></span>
-                  <span class="category-card-text" data-i18n="order.cat.pharma">Parapharmacie</span>
-                </button>
-                <button type="button" class="category-card" data-category="Autre">
-                  <span class="category-card-icon" aria-hidden="true"
-                    ><i class="ph-fill ph-plus-circle"></i
-                  ></span>
-                  <span class="category-card-text" data-i18n="order.cat.other">Autre</span>
-                </button>
               </div>
-              <p class="form-error" id="err-category" data-i18n="order.err.category">
-                Choisis une catégorie.
+              <p class="form-hint" data-i18n="order.items.hint">
+                Ajoutez jusqu'à 3 articles différents
               </p>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="product-details" data-i18n="order.product.label"
-                >Produit :</label
+              <div class="order-items-list" id="order-items-list" role="list"></div>
+              <button
+                type="button"
+                class="btn btn-secondary btn-block btn-add-item"
+                id="add-order-item"
+                data-i18n="order.items.add"
               >
-              <input
-                type="text"
-                id="product-details"
-                class="form-input"
-                maxlength="500"
-                autocomplete="off"
-                data-i18n-placeholder="order.product.ph"
-                placeholder="Exemple: 2 bouteilles d'eau"
-              />
-              <p class="form-error" id="err-details" data-i18n="order.err.details">
-                Indique ta commande (au moins 3 caractères).
-              </p>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="estimated-price" data-i18n="order.price.label"
-                >Prix estimé du produit (MAD)</label
-              >
-              <input
-                type="number"
-                id="estimated-price"
-                class="form-input"
-                min="0"
-                step="0.01"
-                data-i18n-placeholder="order.price.ph"
-                placeholder="Exemple: 15"
-              />
-              <p class="form-hint" data-i18n="order.price.hint">
-                Mets le prix approximatif que tu connais.
-              </p>
-              <p class="form-error" id="err-price" data-i18n="order.err.price">
-                Indique un prix estimé valide (nombre positif).
-              </p>
+                + Ajouter un article
+              </button>
+              <div class="order-items-subtotal" id="order-items-subtotal" hidden>
+                <span id="order-items-subtotal-label">Prix estimé de l'article</span>
+                <strong id="order-items-subtotal-value">0 MAD</strong>
+              </div>
             </div>
 
             <div class="form-group">
@@ -478,7 +812,9 @@
                   class="order-especes-field"
                   data-i18n-placeholder="order.cash.ph"
                   placeholder="Exemple : 50"
-                  min="0"
+                  min="1"
+                  step="1"
+                  inputmode="numeric"
                 />
                 <p class="form-hint" data-i18n="order.cash.hint">Votre Helper vous rendra la monnaie.</p>
                 <p class="form-error" id="err-cash" data-i18n="order.err.cash">
@@ -496,7 +832,7 @@
 
           <!-- Step 2 -->
           <div class="form-step step-2" id="step-2" data-step="2">
-            <h2 class="form-step-title" data-i18n="order.step2.title">Étape 2 : Contact</h2>
+            <h2 class="form-step-title" data-i18n="order.step2.title">Étape 2 : Contact et adresse</h2>
 
             <div class="form-group">
               <label class="form-label" for="whatsapp-input" data-i18n="order.wa.label"
@@ -521,6 +857,59 @@
               </p>
             </div>
 
+            <div class="form-group delivery-location-section">
+              <span class="form-label" data-i18n="order.loc.label">Point de livraison</span>
+              <p class="form-hint" data-i18n="order.loc.hint">
+                Positionnez le marqueur sur votre porte ou immeuble. Vous pouvez
+                aussi déplacer le point sur la carte.
+              </p>
+              <button
+                type="button"
+                class="btn btn-secondary btn-block btn-geolocate"
+                id="btn-geolocate"
+              >
+                <i class="ph-fill ph-crosshair" aria-hidden="true"></i>
+                <span data-i18n="order.loc.useGps">Utiliser ma position actuelle</span>
+              </button>
+              <p class="form-error" id="err-geo" data-i18n="order.err.geo.denied"></p>
+              <div class="delivery-map-wrap" id="delivery-map-wrap">
+                <div id="delivery-map" class="delivery-map" role="application" aria-label="Carte de livraison"></div>
+              </div>
+              <p class="form-error" id="err-location" data-i18n="order.err.location">
+                Placez un point sur la carte ou utilisez votre position.
+              </p>
+              <label class="form-label" for="delivery-address" data-i18n="order.loc.address"
+                >Adresse</label
+              >
+              <input
+                type="text"
+                id="delivery-address"
+                class="form-input"
+                maxlength="300"
+                autocomplete="street-address"
+                data-i18n-placeholder="order.loc.addressPh"
+                placeholder="Adresse détectée ou saisie manuellement"
+              />
+              <p class="form-error" id="err-address" data-i18n="order.err.address">
+                Confirmez ou complétez l'adresse de livraison.
+              </p>
+              <label class="form-label" for="delivery-notes" data-i18n="order.loc.notes"
+                >Précisions (facultatif)</label
+              >
+              <input
+                type="text"
+                id="delivery-notes"
+                class="form-input"
+                maxlength="200"
+                data-i18n-placeholder="order.loc.notesPh"
+                placeholder="Bâtiment, étage, code porte, repères…"
+              />
+              <div class="delivery-location-status" id="delivery-location-status" hidden>
+                <i class="ph-fill ph-check-circle" aria-hidden="true"></i>
+                <span data-i18n="order.loc.confirmed">Position confirmée</span>
+              </div>
+            </div>
+
             <div class="form-actions row">
               <button
                 type="button"
@@ -541,21 +930,25 @@
             <h2 class="form-step-title" data-i18n="order.step3.title">Étape 3 : Récapitulatif</h2>
 
             <div class="summary-box" id="summary-box">
-              <div class="summary-row">
-                <strong data-i18n="order.sum.category">Catégorie :</strong>
-                <span class="summary-row-value" id="sum-category">—</span>
+              <div class="summary-row summary-row--items">
+                <strong data-i18n="order.sum.items">Articles :</strong>
+                <ul class="summary-items-list" id="sum-items-list"></ul>
               </div>
               <div class="summary-row">
-                <strong data-i18n="order.sum.product">Produit :</strong>
-                <span class="summary-row-value" id="sum-details">—</span>
-              </div>
-              <div class="summary-row">
-                <strong data-i18n="order.sum.price">Prix estimé du produit :</strong>
+                <strong id="sum-subtotal-label">Prix estimé de l'article :</strong>
                 <span class="summary-row-value" id="sum-price">—</span>
               </div>
               <div class="summary-row">
                 <strong data-i18n="order.sum.quartier">Quartier :</strong>
                 <span class="summary-row-value" id="sum-quartier">—</span>
+              </div>
+              <div class="summary-row summary-row--stack">
+                <strong data-i18n="order.sum.address">Adresse :</strong>
+                <span class="summary-row-value" id="sum-address">—</span>
+              </div>
+              <div class="summary-row" id="sum-notes-row" hidden>
+                <strong data-i18n="order.sum.locationNotes">Précisions :</strong>
+                <span class="summary-row-value" id="sum-location-notes">—</span>
               </div>
               <div class="summary-row">
                 <strong data-i18n="order.sum.wa">WhatsApp :</strong>
@@ -713,6 +1106,11 @@
       </div>
     </footer>
 
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
     <script src="translations.js"></script>
     <script src="i18n.js"></script>
     <script src="main.js"></script>
@@ -726,7 +1124,16 @@
 
         var FORMSPREE_URL = "https://formspree.io/f/xkoyqlgz";
 
+        var MAX_ORDER_ITEMS = 3;
+        var ITEM_CATEGORIES = [
+          { value: "Eau & Boissons", key: "order.cat.water", icon: "ph-drop-half" },
+          { value: "Alimentation", key: "order.cat.food", icon: "ph-shopping-bag" },
+          { value: "Parapharmacie", key: "order.cat.pharma", icon: "ph-first-aid" },
+          { value: "Autre", key: "order.cat.other", icon: "ph-plus-circle" },
+        ];
+
         var state = {
+          items: [],
           category: "",
           productDetails: "",
           estimatedPrice: "",
@@ -734,17 +1141,39 @@
           cash: "",
           hasChange: "",
           whatsapp: "",
+          delivery: {
+            lat: null,
+            lng: null,
+            address: "",
+            notes: "",
+            mapsUrl: "",
+          },
         };
 
         var currentStep = 1;
         var quartierInfoRevealTimer = null;
+        var deliveryMap = null;
+        var deliveryMarker = null;
+        var deliveryMapReady = false;
+        var reverseGeocodeTimer = null;
+
+        var CASA_CENTER = [33.5731, -7.5898];
+        var QUARTIER_CENTERS = {
+          "Al Ferdaous": [33.5528, -7.6764],
+          Maarif: [33.5831, -7.6234],
+        };
 
         var els = {
           form: document.getElementById("order-form"),
           main: document.getElementById("order-main"),
           confirmation: document.getElementById("confirmation-panel"),
           progressFill: document.getElementById("progress-line-fill"),
-          categoryGrid: document.getElementById("category-grid"),
+          orderItemsList: document.getElementById("order-items-list"),
+          addOrderItem: document.getElementById("add-order-item"),
+          orderItemsCount: document.getElementById("order-items-count"),
+          orderItemsSubtotal: document.getElementById("order-items-subtotal"),
+          orderItemsSubtotalLabel: document.getElementById("order-items-subtotal-label"),
+          orderItemsSubtotalValue: document.getElementById("order-items-subtotal-value"),
           quartier: document.getElementById("quartier"),
           quartierInfo: document.getElementById("quartier-info"),
           to2: document.getElementById("to-step-2"),
@@ -753,7 +1182,172 @@
           back2: document.getElementById("back-to-2"),
           submitBtn: document.getElementById("submit-order"),
           checkSvg: document.getElementById("confirmation-check"),
+          btnGeolocate: document.getElementById("btn-geolocate"),
+          deliveryMapWrap: document.getElementById("delivery-map-wrap"),
+          deliveryAddress: document.getElementById("delivery-address"),
+          deliveryNotes: document.getElementById("delivery-notes"),
+          deliveryLocationStatus: document.getElementById("delivery-location-status"),
         };
+
+        function mapsUrlForCoords(lat, lng) {
+          return "https://www.google.com/maps?q=" + lat + "," + lng;
+        }
+
+        function syncDeliveryFromDom() {
+          if (els.deliveryAddress) {
+            state.delivery.address = els.deliveryAddress.value.trim();
+          }
+          if (els.deliveryNotes) {
+            state.delivery.notes = els.deliveryNotes.value.trim();
+          }
+        }
+
+        function updateDeliveryStatus() {
+          var ok = state.delivery.lat != null && state.delivery.lng != null;
+          if (els.deliveryLocationStatus) {
+            els.deliveryLocationStatus.hidden = !ok;
+          }
+        }
+
+        function reverseGeocodeDelivery(lat, lng) {
+          if (reverseGeocodeTimer) window.clearTimeout(reverseGeocodeTimer);
+          reverseGeocodeTimer = window.setTimeout(function () {
+            reverseGeocodeTimer = null;
+            var lang = window.HelperGoI18n ? window.HelperGoI18n.getLang() : "fr";
+            var acceptLang = lang === "ar" ? "ar" : lang === "en" ? "en" : "fr";
+            fetch(
+              "https://nominatim.openstreetmap.org/reverse?format=json&lat=" +
+                lat +
+                "&lon=" +
+                lng +
+                "&accept-language=" +
+                acceptLang,
+              { headers: { Accept: "application/json" } }
+            )
+              .then(function (res) {
+                return res.json();
+              })
+              .then(function (data) {
+                if (!data || !els.deliveryAddress) return;
+                if (state.delivery.lat !== lat || state.delivery.lng !== lng) return;
+                if (data.display_name) {
+                  els.deliveryAddress.value = data.display_name;
+                  state.delivery.address = data.display_name;
+                }
+              })
+              .catch(function () {});
+          }, 500);
+        }
+
+        function setDeliveryPosition(lat, lng, skipGeocode) {
+          state.delivery.lat = Math.round(lat * 1e6) / 1e6;
+          state.delivery.lng = Math.round(lng * 1e6) / 1e6;
+          state.delivery.mapsUrl = mapsUrlForCoords(
+            state.delivery.lat,
+            state.delivery.lng
+          );
+          if (deliveryMap) {
+            if (!deliveryMarker) {
+              deliveryMarker = L.marker([state.delivery.lat, state.delivery.lng], {
+                draggable: true,
+              }).addTo(deliveryMap);
+              deliveryMarker.on("dragend", function (e) {
+                var pos = e.target.getLatLng();
+                setDeliveryPosition(pos.lat, pos.lng);
+              });
+            } else {
+              deliveryMarker.setLatLng([state.delivery.lat, state.delivery.lng]);
+            }
+            deliveryMap.setView([state.delivery.lat, state.delivery.lng], 17);
+          }
+          updateDeliveryStatus();
+          if (els.deliveryMapWrap) els.deliveryMapWrap.classList.remove("error");
+          var errLoc = document.getElementById("err-location");
+          if (errLoc) errLoc.classList.remove("visible");
+          if (!skipGeocode) reverseGeocodeDelivery(state.delivery.lat, state.delivery.lng);
+        }
+
+        function centerMapOnQuartier() {
+          if (!deliveryMap) return;
+          var q = els.quartier ? els.quartier.value : "";
+          var center = QUARTIER_CENTERS[q] || CASA_CENTER;
+          deliveryMap.setView(center, state.delivery.lat == null ? 14 : deliveryMap.getZoom());
+        }
+
+        function initDeliveryMap() {
+          if (deliveryMapReady || typeof L === "undefined") return;
+          var mapEl = document.getElementById("delivery-map");
+          if (!mapEl) return;
+          deliveryMap = L.map(mapEl, { zoomControl: true }).setView(CASA_CENTER, 13);
+          L.tileLayer(
+            "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
+            {
+              attribution:
+                '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+              subdomains: "abcd",
+              maxZoom: 20,
+            }
+          ).addTo(deliveryMap);
+          deliveryMap.on("click", function (e) {
+            setDeliveryPosition(e.latlng.lat, e.latlng.lng);
+          });
+          deliveryMapReady = true;
+          centerMapOnQuartier();
+          if (state.delivery.lat != null && state.delivery.lng != null) {
+            setDeliveryPosition(state.delivery.lat, state.delivery.lng, true);
+          }
+          window.setTimeout(function () {
+            if (deliveryMap) deliveryMap.invalidateSize();
+          }, 200);
+        }
+
+        function requestGeolocation() {
+          if (!navigator.geolocation) {
+            var errGeo = document.getElementById("err-geo");
+            if (errGeo) {
+              errGeo.textContent = t("order.err.geo.unavailable");
+              errGeo.classList.add("visible");
+            }
+            return;
+          }
+          if (els.btnGeolocate) els.btnGeolocate.classList.add("is-loading");
+          var errGeo = document.getElementById("err-geo");
+          if (errGeo) errGeo.classList.remove("visible");
+          navigator.geolocation.getCurrentPosition(
+            function (pos) {
+              if (els.btnGeolocate) els.btnGeolocate.classList.remove("is-loading");
+              initDeliveryMap();
+              setDeliveryPosition(pos.coords.latitude, pos.coords.longitude);
+            },
+            function (err) {
+              if (els.btnGeolocate) els.btnGeolocate.classList.remove("is-loading");
+              if (!errGeo) return;
+              var key = "order.err.geo.unavailable";
+              if (err.code === 1) key = "order.err.geo.denied";
+              else if (err.code === 3) key = "order.err.geo.timeout";
+              errGeo.textContent = t(key);
+              errGeo.classList.add("visible");
+            },
+            { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
+          );
+        }
+
+        if (els.btnGeolocate) {
+          els.btnGeolocate.addEventListener("click", function () {
+            initDeliveryMap();
+            requestGeolocation();
+          });
+        }
+        if (els.deliveryAddress) {
+          els.deliveryAddress.addEventListener("input", function () {
+            els.deliveryAddress.classList.remove("error");
+            var err = document.getElementById("err-address");
+            if (err) err.classList.remove("visible");
+          });
+        }
+        if (els.deliveryNotes) {
+          els.deliveryNotes.addEventListener("input", syncDeliveryFromDom);
+        }
 
         function showStep(n) {
           currentStep = n;
@@ -776,6 +1370,13 @@
           if (els.progressFill) els.progressFill.style.width = pct + "%";
 
           window.scrollTo({ top: 0, behavior: "smooth" });
+
+          if (n === 2) {
+            window.setTimeout(function () {
+              initDeliveryMap();
+              centerMapOnQuartier();
+            }, 180);
+          }
         }
 
         function clearErrors() {
@@ -799,27 +1400,313 @@
           if (inputEl) inputEl.classList.add("error");
         }
 
-        /* Category selection */
-        if (els.categoryGrid) {
-          els.categoryGrid.querySelectorAll(".category-card").forEach(function (btn) {
-            btn.addEventListener("click", function () {
-              els.categoryGrid.querySelectorAll(".category-card").forEach(function (b) {
-                b.classList.remove("selected");
-                b.classList.remove("is-picking");
-              });
-              btn.classList.add("selected");
-              void btn.offsetWidth;
-              btn.classList.add("is-picking");
-              window.clearTimeout(btn._pickAnimTimer);
-              btn._pickAnimTimer = window.setTimeout(function () {
-                btn.classList.remove("is-picking");
-              }, 600);
-              state.category = btn.getAttribute("data-category") || "";
-              var ec = document.getElementById("err-category");
-              if (ec) ec.classList.remove("visible");
+        function emptyOrderItem() {
+          return { category: "", details: "", price: "" };
+        }
+
+        function syncOrderItemsFromDom() {
+          if (!els.orderItemsList) return;
+          var cards = els.orderItemsList.querySelectorAll(".order-item-card");
+          var next = [];
+          cards.forEach(function (card) {
+            var cat = card.querySelector(".order-item-category");
+            var det = card.querySelector(".order-item-details");
+            var pr = card.querySelector(".order-item-price");
+            next.push({
+              category: cat ? cat.value : "",
+              details: det ? det.value.trim() : "",
+              price: pr ? pr.value : "",
             });
           });
+          state.items = next.length ? next : [emptyOrderItem()];
         }
+
+        function parseMadToCents(raw) {
+          if (raw == null || raw === "") return NaN;
+          var s = String(raw).trim().replace(/\s/g, "").replace(",", ".");
+          if (!s || s === ".") return NaN;
+          var parts = s.split(".");
+          var intPart = parseInt(parts[0], 10);
+          if (isNaN(intPart)) return NaN;
+          var decPart = parts[1] || "";
+          if (decPart.length > 2) decPart = decPart.slice(0, 2);
+          while (decPart.length < 2) decPart += "0";
+          var dec = decPart ? parseInt(decPart, 10) : 0;
+          if (isNaN(dec)) return NaN;
+          return intPart * 100 + dec;
+        }
+
+        function formatMadFromCents(cents) {
+          if (isNaN(cents)) return "—";
+          if (cents % 100 === 0) return String(cents / 100);
+          var whole = Math.floor(cents / 100);
+          var frac = cents % 100;
+          return whole + "." + (frac < 10 ? "0" + frac : String(frac));
+        }
+
+        function formatMadWithUnit(cents) {
+          if (isNaN(cents) || cents <= 0) return "—";
+          return formatMadFromCents(cents) + " MAD";
+        }
+
+        function normalizePriceField(inputEl) {
+          if (!inputEl) return;
+          var cents = parseMadToCents(inputEl.value);
+          if (isNaN(cents) || cents <= 0) return;
+          inputEl.value = formatMadFromCents(cents);
+        }
+
+        function itemsSubtotalCents(items) {
+          var sum = 0;
+          items.forEach(function (item) {
+            var c = parseMadToCents(item.price);
+            if (!isNaN(c) && c > 0) sum += c;
+          });
+          return sum;
+        }
+
+        function estimatedPriceLabelKey(forSummary) {
+          var one = state.items.length === 1;
+          if (forSummary) {
+            return one ? "order.sum.subtotalOne" : "order.sum.subtotalMany";
+          }
+          return one ? "order.items.subtotalOne" : "order.items.subtotalMany";
+        }
+
+        function updateEstimatedPriceLabels() {
+          var labelKey = estimatedPriceLabelKey(false);
+          if (els.orderItemsSubtotalLabel) {
+            els.orderItemsSubtotalLabel.textContent = t(labelKey);
+          }
+          if (currentStep === 3) {
+            var sumLabel = document.getElementById("sum-subtotal-label");
+            if (sumLabel) {
+              sumLabel.textContent = t(estimatedPriceLabelKey(true));
+            }
+          }
+        }
+
+        function updateItemsSubtotalPreview() {
+          syncOrderItemsFromDom();
+          var totalCents = itemsSubtotalCents(state.items);
+          var wrap = els.orderItemsSubtotal;
+          var val = els.orderItemsSubtotalValue;
+          updateEstimatedPriceLabels();
+          if (!wrap || !val) return;
+          if (totalCents > 0) {
+            wrap.hidden = false;
+            val.textContent = formatMadWithUnit(totalCents);
+          } else {
+            wrap.hidden = true;
+          }
+        }
+
+        function updateOrderItemsCountDisplay() {
+          if (!els.orderItemsCount) return;
+          var n = state.items.length;
+          els.orderItemsCount.innerHTML =
+            '<span class="order-items-count-num">' +
+            n +
+            '</span><span class="order-items-count-sep">/</span><span class="order-items-count-max">' +
+            MAX_ORDER_ITEMS +
+            "</span>";
+        }
+
+        function renderOrderItems() {
+          if (!els.orderItemsList) return;
+          if (!state.items.length) state.items = [emptyOrderItem()];
+
+          els.orderItemsList.innerHTML = "";
+          state.items.forEach(function (item, index) {
+            var card = document.createElement("article");
+            card.className = "order-item-card";
+            card.setAttribute("role", "listitem");
+            card.setAttribute("data-index", String(index));
+
+            var head = document.createElement("div");
+            head.className = "order-item-card-head";
+            var num = document.createElement("span");
+            num.className = "order-item-num";
+            num.textContent = t("order.items.articleNum").replace("{n}", String(index + 1));
+            head.appendChild(num);
+
+            if (state.items.length > 1) {
+              var removeBtn = document.createElement("button");
+              removeBtn.type = "button";
+              removeBtn.className = "order-item-remove";
+              removeBtn.setAttribute("data-remove-index", String(index));
+              removeBtn.setAttribute("aria-label", t("order.items.remove"));
+              removeBtn.innerHTML =
+                '<i class="ph-fill ph-trash" aria-hidden="true"></i><span>' +
+                t("order.items.remove") +
+                "</span>";
+              head.appendChild(removeBtn);
+            }
+            card.appendChild(head);
+
+            var catWrap = document.createElement("div");
+            catWrap.className = "order-item-cat-wrap";
+            var catLabel = document.createElement("span");
+            catLabel.className = "form-label";
+            catLabel.textContent = t("order.items.cat");
+            catWrap.appendChild(catLabel);
+
+            var catHidden = document.createElement("input");
+            catHidden.type = "hidden";
+            catHidden.className = "order-item-category";
+            catHidden.value = item.category || "";
+            catWrap.appendChild(catHidden);
+
+            var catGrid = document.createElement("div");
+            catGrid.className = "category-grid category-grid--item";
+            catGrid.setAttribute("role", "group");
+            catGrid.setAttribute("aria-label", t("order.items.cat"));
+
+            ITEM_CATEGORIES.forEach(function (c) {
+              var btn = document.createElement("button");
+              btn.type = "button";
+              btn.className = "category-card";
+              if (item.category === c.value) btn.classList.add("selected");
+              btn.setAttribute("data-category", c.value);
+              var iconSpan = document.createElement("span");
+              iconSpan.className = "category-card-icon";
+              iconSpan.setAttribute("aria-hidden", "true");
+              iconSpan.innerHTML =
+                '<i class="ph-fill ' + c.icon + '"></i>';
+              var textSpan = document.createElement("span");
+              textSpan.className = "category-card-text";
+              textSpan.textContent = t(c.key);
+              btn.appendChild(iconSpan);
+              btn.appendChild(textSpan);
+              catGrid.appendChild(btn);
+            });
+            catWrap.appendChild(catGrid);
+            card.appendChild(catWrap);
+
+            var detGroup = document.createElement("div");
+            detGroup.className = "form-group";
+            var detLabel = document.createElement("label");
+            detLabel.className = "form-label";
+            detLabel.setAttribute("for", "order-item-details-" + index);
+            detLabel.textContent = t("order.product.label");
+            var detInput = document.createElement("input");
+            detInput.type = "text";
+            detInput.id = "order-item-details-" + index;
+            detInput.className = "form-input order-item-details";
+            detInput.maxLength = 500;
+            detInput.autocomplete = "off";
+            detInput.setAttribute("data-i18n-placeholder", "order.items.detailsPh");
+            detInput.placeholder = t("order.items.detailsPh");
+            detInput.value = item.details || "";
+            detGroup.appendChild(detLabel);
+            detGroup.appendChild(detInput);
+            card.appendChild(detGroup);
+
+            var priceGroup = document.createElement("div");
+            priceGroup.className = "form-group";
+            var priceLabel = document.createElement("label");
+            priceLabel.className = "form-label";
+            priceLabel.setAttribute("for", "order-item-price-" + index);
+            priceLabel.textContent = t("order.price.label");
+            var priceInput = document.createElement("input");
+            priceInput.type = "number";
+            priceInput.id = "order-item-price-" + index;
+            priceInput.className = "form-input order-item-price";
+            priceInput.min = "1";
+            priceInput.step = "1";
+            priceInput.inputMode = "numeric";
+            priceInput.setAttribute("data-i18n-placeholder", "order.items.pricePh");
+            priceInput.placeholder = t("order.items.pricePh");
+            priceInput.value = item.price || "";
+            priceGroup.appendChild(priceLabel);
+            priceGroup.appendChild(priceInput);
+            var priceHint = document.createElement("p");
+            priceHint.className = "form-hint";
+            priceHint.setAttribute("data-i18n", "order.price.hint");
+            priceHint.textContent = t("order.price.hint");
+            priceGroup.appendChild(priceHint);
+            card.appendChild(priceGroup);
+
+            els.orderItemsList.appendChild(card);
+          });
+
+          if (els.addOrderItem) {
+            els.addOrderItem.disabled = state.items.length >= MAX_ORDER_ITEMS;
+          }
+          updateOrderItemsCountDisplay();
+
+          els.orderItemsList.querySelectorAll(".category-grid--item").forEach(function (grid) {
+            grid.querySelectorAll(".category-card").forEach(function (btn) {
+              btn.addEventListener("click", function () {
+                var card = btn.closest(".order-item-card");
+                var hidden = card && card.querySelector(".order-item-category");
+                grid.querySelectorAll(".category-card").forEach(function (b) {
+                  b.classList.remove("selected");
+                  b.classList.remove("is-picking");
+                });
+                btn.classList.add("selected");
+                void btn.offsetWidth;
+                btn.classList.add("is-picking");
+                window.clearTimeout(btn._pickAnimTimer);
+                btn._pickAnimTimer = window.setTimeout(function () {
+                  btn.classList.remove("is-picking");
+                }, 600);
+                if (hidden) hidden.value = btn.getAttribute("data-category") || "";
+                grid.classList.remove("error");
+                syncOrderItemsFromDom();
+              });
+            });
+          });
+
+          els.orderItemsList.querySelectorAll(".order-item-details, .order-item-price").forEach(function (el) {
+            el.addEventListener("input", function () {
+              el.classList.remove("error");
+              updateItemsSubtotalPreview();
+            });
+            el.addEventListener("change", updateItemsSubtotalPreview);
+          });
+
+          els.orderItemsList.querySelectorAll(".order-item-price").forEach(function (el) {
+            el.addEventListener("wheel", function (e) {
+              if (document.activeElement === el) e.preventDefault();
+            });
+            el.addEventListener("blur", function () {
+              normalizePriceField(el);
+              updateItemsSubtotalPreview();
+            });
+          });
+
+          els.orderItemsList.querySelectorAll(".order-item-remove").forEach(function (btn) {
+            btn.addEventListener("click", function () {
+              syncOrderItemsFromDom();
+              var idx = Number(btn.getAttribute("data-remove-index"));
+              if (state.items.length > 1 && !isNaN(idx)) {
+                state.items.splice(idx, 1);
+                renderOrderItems();
+                updateItemsSubtotalPreview();
+              }
+            });
+          });
+
+          updateItemsSubtotalPreview();
+        }
+
+        if (els.addOrderItem) {
+          els.addOrderItem.addEventListener("click", function () {
+            syncOrderItemsFromDom();
+            if (state.items.length < MAX_ORDER_ITEMS) {
+              state.items.push(emptyOrderItem());
+              renderOrderItems();
+              var cards = els.orderItemsList.querySelectorAll(".order-item-card");
+              var last = cards[cards.length - 1];
+              var focusEl = last && last.querySelector(".order-item-details");
+              if (focusEl) focusEl.focus();
+            }
+          });
+        }
+
+        state.items = [emptyOrderItem()];
+        renderOrderItems();
 
         /* Quartier */
         if (els.quartier) {
@@ -879,32 +1766,81 @@
           }
 
           if (esp) {
+            esp.addEventListener("wheel", function (e) {
+              if (document.activeElement === esp) e.preventDefault();
+            });
             esp.addEventListener("input", function () {
               var ek = document.getElementById("err-cash");
               if (ek) ek.classList.remove("visible");
               esp.classList.remove("error");
             });
+            esp.addEventListener("blur", function () {
+              normalizePriceField(esp);
+            });
           }
         })();
+
+        function validateOrderItems() {
+          syncOrderItemsFromDom();
+          var ok = true;
+          state.items.forEach(function (item, index) {
+            var card = els.orderItemsList.querySelector(
+              '.order-item-card[data-index="' + index + '"]'
+            );
+            if (!card) return;
+            var catGrid = card.querySelector(".category-grid--item");
+            var detEl = card.querySelector(".order-item-details");
+            var priceEl = card.querySelector(".order-item-price");
+            if (!item.category) {
+              if (catGrid) catGrid.classList.add("error");
+              ok = false;
+            }
+            if ((item.details || "").length < 3) {
+              if (detEl) detEl.classList.add("error");
+              ok = false;
+            }
+            var priceCents = parseMadToCents(item.price);
+            if (!item.price || isNaN(priceCents) || priceCents <= 0) {
+              if (priceEl) priceEl.classList.add("error");
+              ok = false;
+            }
+          });
+          return ok;
+        }
+
+        function buildItemsForSubmit(items) {
+          var lines = [];
+          var cats = {};
+          items.forEach(function (item, i) {
+            var cents = parseMadToCents(item.price);
+            var catLabel = categoryForSummary(item.category);
+            lines.push(
+              i +
+                1 +
+                ") [" +
+                catLabel +
+                "] " +
+                item.details +
+                " (~" +
+                formatMadFromCents(cents) +
+                " MAD)"
+            );
+            cats[item.category] = true;
+          });
+          var catKeys = Object.keys(cats);
+          var categoryField =
+            catKeys.length > 1 ? t("order.items.multiCat") : catKeys[0] || "";
+          return {
+            category: categoryField,
+            productDetails: lines.join("\n"),
+            estimatedPrice: formatMadFromCents(itemsSubtotalCents(items)),
+          };
+        }
 
         function validateStep1() {
           clearErrors();
           var ok = true;
-          if (!state.category) {
-            showErr("err-category");
-            ok = false;
-          }
-          var details = (document.getElementById("product-details").value || "").trim();
-          if (details.length < 3) {
-            showErr("err-details", document.getElementById("product-details"));
-            ok = false;
-          }
-          var priceRaw = document.getElementById("estimated-price").value;
-          var price = parseFloat(priceRaw, 10);
-          if (!priceRaw || isNaN(price) || price <= 0) {
-            showErr("err-price", document.getElementById("estimated-price"));
-            ok = false;
-          }
+          if (!validateOrderItems()) ok = false;
           var q = els.quartier.value;
           var qOpt = els.quartier.options[els.quartier.selectedIndex];
           if (!q || !qOpt || qOpt.disabled) {
@@ -915,10 +1851,12 @@
             showErr("err-change");
             ok = false;
           } else if (state.hasChange === "non") {
-            var cashRaw = (document.getElementById("especes").value || "").trim();
-            var cashVal = parseFloat(cashRaw, 10);
-            if (!cashRaw || isNaN(cashVal) || cashVal < 0) {
-              showErr("err-cash", document.getElementById("especes"));
+            var espEl = document.getElementById("especes");
+            normalizePriceField(espEl);
+            var cashRaw = (espEl && espEl.value ? espEl.value : "").trim();
+            var cashCents = parseMadToCents(cashRaw);
+            if (!cashRaw || isNaN(cashCents) || cashCents <= 0) {
+              showErr("err-cash", espEl);
               ok = false;
             }
           }
@@ -934,16 +1872,29 @@
 
         function validateStep2() {
           clearErrors();
+          var ok = true;
           var local = normalizeWhatsAppLocal(
             document.getElementById("whatsapp-input").value
           );
           if (local.length < 9 || local.length > 10 || !/^\d+$/.test(local)) {
             showErr("err-whatsapp", document.getElementById("whatsapp-input"));
             document.getElementById("whatsapp-wrap").classList.add("error");
-            return false;
+            ok = false;
+          } else {
+            state.whatsapp = "+212" + local;
           }
-          state.whatsapp = "+212" + local;
-          return true;
+
+          syncDeliveryFromDom();
+          if (state.delivery.lat == null || state.delivery.lng == null) {
+            showErr("err-location");
+            if (els.deliveryMapWrap) els.deliveryMapWrap.classList.add("error");
+            ok = false;
+          }
+          if (!state.delivery.address || state.delivery.address.length < 5) {
+            showErr("err-address", els.deliveryAddress);
+            ok = false;
+          }
+          return ok;
         }
 
         function categoryForSummary(cat) {
@@ -972,37 +1923,79 @@
         }
 
         function fillSummary() {
-          state.productDetails = (
-            document.getElementById("product-details").value || ""
-          ).trim();
-          state.estimatedPrice = document.getElementById("estimated-price").value;
+          syncOrderItemsFromDom();
+          syncDeliveryFromDom();
+          if (state.delivery.lat != null && state.delivery.lng != null) {
+            state.delivery.mapsUrl = mapsUrlForCoords(
+              state.delivery.lat,
+              state.delivery.lng
+            );
+          }
+          var built = buildItemsForSubmit(state.items);
+          state.category = built.category;
+          state.productDetails = built.productDetails;
+          state.estimatedPrice = built.estimatedPrice;
           state.quartier = els.quartier.value;
           if (state.hasChange === "oui") {
             state.cash = t("order.cash.ok");
           } else {
-            state.cash = (document.getElementById("especes").value || "").trim();
+            var espVal = (document.getElementById("especes").value || "").trim();
+            var cashCents = parseMadToCents(espVal);
+            state.cash =
+              espVal && !isNaN(cashCents) && cashCents > 0
+                ? formatMadFromCents(cashCents)
+                : espVal;
           }
 
-          document.getElementById("sum-category").textContent =
-            categoryForSummary(state.category) || "—";
-          document.getElementById("sum-details").textContent =
-            state.productDetails || "—";
-          var priceNum = parseFloat(state.estimatedPrice, 10);
+          var sumList = document.getElementById("sum-items-list");
+          if (sumList) {
+            sumList.innerHTML = "";
+            state.items.forEach(function (item, i) {
+              var li = document.createElement("li");
+              var cents = parseMadToCents(item.price);
+              li.textContent =
+                i +
+                1 +
+                ". " +
+                categoryForSummary(item.category) +
+                " — " +
+                item.details +
+                " (~" +
+                formatMadFromCents(cents) +
+                " MAD)";
+              sumList.appendChild(li);
+            });
+          }
+
+          var totalCents = itemsSubtotalCents(state.items);
           document.getElementById("sum-price").textContent =
-            !state.estimatedPrice || isNaN(priceNum)
-              ? "—"
-              : String(Math.round(priceNum * 100) / 100) + " MAD";
+            totalCents > 0 ? formatMadWithUnit(totalCents) : "—";
+          updateEstimatedPriceLabels();
           document.getElementById("sum-quartier").textContent =
             quartierLabelForSummary();
+          var sumAddr = document.getElementById("sum-address");
+          if (sumAddr) {
+            sumAddr.textContent = state.delivery.address || "—";
+          }
+          var notesRow = document.getElementById("sum-notes-row");
+          var sumNotes = document.getElementById("sum-location-notes");
+          if (notesRow && sumNotes) {
+            if (state.delivery.notes) {
+              notesRow.hidden = false;
+              sumNotes.textContent = state.delivery.notes;
+            } else {
+              notesRow.hidden = true;
+            }
+          }
           document.getElementById("sum-whatsapp").textContent =
             formatWhatsAppDisplay(state.whatsapp);
-          var total =
-            parseFloat(state.estimatedPrice, 10) + 8;
-          document.getElementById("sum-total-line").textContent = isNaN(total)
+          var grandTotalCents = totalCents + 800;
+          document.getElementById("sum-total-line").textContent =
+            totalCents <= 0
             ? t("order.sum.totalEmpty")
             : t("order.sum.total").replace(
                 "{total}",
-                String(Math.round(total * 100) / 100)
+                formatMadFromCents(grandTotalCents)
               );
 
           document.getElementById("field-category").value = state.category;
@@ -1019,6 +2012,16 @@
                 ? t("common.no")
                 : "";
           document.getElementById("field-whatsapp").value = state.whatsapp;
+          document.getElementById("field-delivery-lat").value =
+            state.delivery.lat != null ? String(state.delivery.lat) : "";
+          document.getElementById("field-delivery-lng").value =
+            state.delivery.lng != null ? String(state.delivery.lng) : "";
+          document.getElementById("field-delivery-address").value =
+            state.delivery.address;
+          document.getElementById("field-delivery-notes").value =
+            state.delivery.notes;
+          document.getElementById("field-delivery-maps-url").value =
+            state.delivery.mapsUrl;
         }
 
         els.to2.addEventListener("click", function () {
@@ -1041,6 +2044,8 @@
         });
 
         window.addEventListener("helpergo:langchange", function () {
+          syncOrderItemsFromDom();
+          renderOrderItems();
           if (currentStep === 3) fillSummary();
         });
 
