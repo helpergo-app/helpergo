@@ -78,7 +78,8 @@
       }
 
       .concept-section .section-title,
-      .team-section .section-title {
+      .team-section .section-title,
+      .faq-section .section-title {
         font-size: 24px;
         font-weight: 800;
         letter-spacing: -0.03em;
@@ -293,6 +294,162 @@
 
       .team-section {
         background: #f8f8f8;
+      }
+
+      .faq-section {
+        background: #f8f8f8;
+        padding-bottom: 56px;
+      }
+
+      .faq-wrap {
+        max-width: 720px;
+        margin: 0 auto;
+      }
+
+      .faq-section .section-title {
+        text-align: center;
+        margin-bottom: 32px;
+      }
+
+      .faq-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .faq-item {
+        background: #ffffff;
+        border: 1px solid rgba(15, 23, 42, 0.07);
+        border-radius: 14px;
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+        transition:
+          border-color 0.25s ease,
+          box-shadow 0.25s ease,
+          background 0.25s ease;
+      }
+
+      .faq-item:hover {
+        border-color: rgba(29, 158, 117, 0.18);
+        box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+      }
+
+      .faq-item.is-open {
+        border-color: rgba(29, 158, 117, 0.28);
+        background: linear-gradient(180deg, #ffffff 0%, #f9fdfb 100%);
+        box-shadow: 0 6px 20px rgba(29, 158, 117, 0.08);
+      }
+
+      .faq-trigger {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 16px 18px;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        text-align: left;
+        font-family: inherit;
+      }
+
+      .faq-trigger:focus-visible {
+        outline: 2px solid #1d9e75;
+        outline-offset: 2px;
+        border-radius: 12px;
+      }
+
+      .faq-q {
+        flex: 1;
+        font-size: 15px;
+        font-weight: 600;
+        color: #0f172a;
+        margin: 0;
+        letter-spacing: -0.015em;
+        line-height: 1.4;
+        transition: color 0.2s ease;
+      }
+
+      .faq-item.is-open .faq-q {
+        color: #15803d;
+      }
+
+      .faq-chevron {
+        flex-shrink: 0;
+        color: #94a3b8;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s ease;
+      }
+
+      .faq-chevron i {
+        font-size: 16px;
+        line-height: 1;
+      }
+
+      .faq-item.is-open .faq-chevron {
+        transform: rotate(180deg);
+        color: #1d9e75;
+      }
+
+      .faq-panel {
+        display: grid;
+        grid-template-rows: 0fr;
+        transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .faq-item.is-open .faq-panel {
+        grid-template-rows: 1fr;
+      }
+
+      .faq-panel-inner {
+        overflow: hidden;
+      }
+
+      .faq-a {
+        margin: 0;
+        padding: 2px 18px 16px 18px;
+        font-size: 14px;
+        line-height: 1.65;
+        color: #64748b;
+        text-align: left;
+      }
+
+      @media (min-width: 768px) {
+        .faq-list {
+          gap: 12px;
+        }
+
+        .faq-trigger {
+          padding: 18px 22px;
+        }
+
+        .faq-q {
+          font-size: 16px;
+        }
+
+        .faq-a {
+          padding: 2px 22px 18px 22px;
+          font-size: 15px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .faq-panel,
+        .faq-chevron,
+        .faq-item {
+          transition: none;
+        }
+      }
+
+      html[dir="rtl"] .faq-trigger {
+        text-align: right;
+        flex-direction: row-reverse;
+      }
+
+      html[dir="rtl"] .faq-a {
+        text-align: right;
       }
 
       .team-grid {
@@ -571,41 +728,257 @@
         </div>
       </section>
 
-      <section class="section team-section">
+      <section class="section faq-section">
         <div class="container">
-          <h2 class="section-title" data-reveal data-i18n="about.team.title">L'équipe</h2>
-          <div class="concept-statement-block" data-reveal>
-            <span class="concept-statement-accent" aria-hidden="true"></span>
-            <p class="section-subtitle concept-statement-line concept-statement-line--lead" data-i18n="about.team.lead">
-              Une idée née à Casablanca,
-            </p>
-            <p class="section-subtitle concept-statement-line concept-statement-line--accent" data-i18n="about.team.accent">
-              portée par des gens qui y croient.
-            </p>
-          </div>
-          <div class="team-grid">
-            <article class="team-card" data-reveal>
-              <div class="team-avatar" aria-hidden="true">MK</div>
-              <h3 class="team-name">Modibo Keïta</h3>
-              <p class="team-role">Founder &amp; CEO</p>
-              <p class="team-desc" data-i18n="about.team.mk.desc">
-                Étudiant en Master Finance à l'ESCA Casablanca et à l'origine de
-                l'idée HelperGo. Parti d'un constat simple : parfois, on est
-                fatigué, occupé ou malade… mais on doit quand même ressortir pour
-                un besoin du quotidien. C'est de cette frustration qu'est née
-                l'idée de HelperGo.
-              </p>
-            </article>
-            <article class="team-card" data-reveal>
-              <div class="team-avatar" aria-hidden="true">MN</div>
-              <h3 class="team-name">Mouad Nacif</h3>
-              <p class="team-role">Strategy Advisor</p>
-              <p class="team-desc" data-i18n="about.team.mn.desc">
-                Rejoint HelperGo en phase de lancement pour apporter son regard
-                stratégique et ses conseils business. Contribue à affiner la
-                vision et garder le cap.
-              </p>
-            </article>
+          <div class="faq-wrap">
+            <h2 class="section-title" data-reveal data-i18n="about.faq.title">FAQ</h2>
+            <div class="faq-list" data-reveal id="faq-accordion">
+              <div class="faq-item">
+                <button
+                  type="button"
+                  class="faq-trigger"
+                  aria-expanded="false"
+                  aria-controls="faq-panel-1"
+                  id="faq-trigger-1"
+                >
+                  <span class="faq-q" data-i18n="about.faq.q1">Pourquoi utiliser HelperGo si le hanout est juste à côté ?</span>
+                  <span class="faq-chevron" aria-hidden="true"
+                    ><i class="ph-fill ph-caret-down"></i
+                  ></span>
+                </button>
+                <div class="faq-panel" id="faq-panel-1" role="region" aria-labelledby="faq-trigger-1" hidden>
+                  <div class="faq-panel-inner">
+                    <p class="faq-a" data-i18n="about.faq.a1">
+                      Parce que parfois, le problème n’est pas la distance, mais le fait de devoir ressortir juste pour 1 ou 2 articles.
+                      Quand on est déjà posé chez soi, fatigué, occupé ou simplement sans envie de se rhabiller pour descendre acheter de l’eau,
+                      du Coca ou un petit besoin urgent… quelqu’un peut simplement le faire à votre place pour 8 MAD.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="faq-item">
+                <button
+                  type="button"
+                  class="faq-trigger"
+                  aria-expanded="false"
+                  aria-controls="faq-panel-2"
+                  id="faq-trigger-2"
+                >
+                  <span class="faq-q" data-i18n="about.faq.q2">C’est quoi la différence avec Glovo ?</span>
+                  <span class="faq-chevron" aria-hidden="true"
+                    ><i class="ph-fill ph-caret-down"></i
+                  ></span>
+                </button>
+                <div class="faq-panel" id="faq-panel-2" role="region" aria-labelledby="faq-trigger-2" hidden>
+                  <div class="faq-panel-inner">
+                    <p class="faq-a" data-i18n="about.faq.a2">
+                      HelperGo n’est pas pensé pour les restaurants ou les grosses courses. Le service est conçu pour les petites urgences du quotidien
+                      dans votre quartier : eau, alimentation, parapharmacie ou besoin rapide à proximité.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="faq-item">
+                <button
+                  type="button"
+                  class="faq-trigger"
+                  aria-expanded="false"
+                  aria-controls="faq-panel-3"
+                  id="faq-trigger-3"
+                >
+                  <span class="faq-q" data-i18n="about.faq.q3">Combien coûte une livraison ?</span>
+                  <span class="faq-chevron" aria-hidden="true"
+                    ><i class="ph-fill ph-caret-down"></i
+                  ></span>
+                </button>
+                <div class="faq-panel" id="faq-panel-3" role="region" aria-labelledby="faq-trigger-3" hidden>
+                  <div class="faq-panel-inner">
+                    <p class="faq-a" data-i18n="about.faq.a3">
+                      La livraison coûte actuellement 8 MAD, avec un prix clair et sans frais cachés.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="faq-item">
+                <button
+                  type="button"
+                  class="faq-trigger"
+                  aria-expanded="false"
+                  aria-controls="faq-panel-4"
+                  id="faq-trigger-4"
+                >
+                  <span class="faq-q" data-i18n="about.faq.q4">En combien de temps suis-je livré ?</span>
+                  <span class="faq-chevron" aria-hidden="true"
+                    ><i class="ph-fill ph-caret-down"></i
+                  ></span>
+                </button>
+                <div class="faq-panel" id="faq-panel-4" role="region" aria-labelledby="faq-trigger-4" hidden>
+                  <div class="faq-panel-inner">
+                    <p class="faq-a" data-i18n="about.faq.a4">
+                      La plupart des commandes sont livrées en environ 20 minutes selon votre quartier et la disponibilité des Helpers.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="faq-item">
+                <button
+                  type="button"
+                  class="faq-trigger"
+                  aria-expanded="false"
+                  aria-controls="faq-panel-5"
+                  id="faq-trigger-5"
+                >
+                  <span class="faq-q" data-i18n="about.faq.q5">Qui sont les Helpers ?</span>
+                  <span class="faq-chevron" aria-hidden="true"
+                    ><i class="ph-fill ph-caret-down"></i
+                  ></span>
+                </button>
+                <div class="faq-panel" id="faq-panel-5" role="region" aria-labelledby="faq-trigger-5" hidden>
+                  <div class="faq-panel-inner">
+                    <p class="faq-a" data-i18n="about.faq.a5">
+                      Les Helpers sont des personnes de votre quartier qui acceptent des demandes selon leur disponibilité : à pied, à vélo,
+                      en trottinette ou en moto.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="faq-item">
+                <button
+                  type="button"
+                  class="faq-trigger"
+                  aria-expanded="false"
+                  aria-controls="faq-panel-6"
+                  id="faq-trigger-6"
+                >
+                  <span class="faq-q" data-i18n="about.faq.q6">Comment fonctionne le paiement ?</span>
+                  <span class="faq-chevron" aria-hidden="true"
+                    ><i class="ph-fill ph-caret-down"></i
+                  ></span>
+                </button>
+                <div class="faq-panel" id="faq-panel-6" role="region" aria-labelledby="faq-trigger-6" hidden>
+                  <div class="faq-panel-inner">
+                    <p class="faq-a" data-i18n="about.faq.a6">
+                      Le paiement se fait actuellement en cash à la livraison.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="faq-item">
+                <button
+                  type="button"
+                  class="faq-trigger"
+                  aria-expanded="false"
+                  aria-controls="faq-panel-7"
+                  id="faq-trigger-7"
+                >
+                  <span class="faq-q" data-i18n="about.faq.q7">Puis-je commander plusieurs articles ?</span>
+                  <span class="faq-chevron" aria-hidden="true"
+                    ><i class="ph-fill ph-caret-down"></i
+                  ></span>
+                </button>
+                <div class="faq-panel" id="faq-panel-7" role="region" aria-labelledby="faq-trigger-7" hidden>
+                  <div class="faq-panel-inner">
+                    <p class="faq-a" data-i18n="about.faq.a7">
+                      Oui, vous pouvez ajouter jusqu’à 3 articles par commande.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="faq-item">
+                <button
+                  type="button"
+                  class="faq-trigger"
+                  aria-expanded="false"
+                  aria-controls="faq-panel-8"
+                  id="faq-trigger-8"
+                >
+                  <span class="faq-q" data-i18n="about.faq.q8">Que faire si je n’ai pas de monnaie ?</span>
+                  <span class="faq-chevron" aria-hidden="true"
+                    ><i class="ph-fill ph-caret-down"></i
+                  ></span>
+                </button>
+                <div class="faq-panel" id="faq-panel-8" role="region" aria-labelledby="faq-trigger-8" hidden>
+                  <div class="faq-panel-inner">
+                    <p class="faq-a" data-i18n="about.faq.a8">
+                      Vous pouvez l’indiquer lors de la commande afin que le Helper prévoie la monnaie nécessaire.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="faq-item">
+                <button
+                  type="button"
+                  class="faq-trigger"
+                  aria-expanded="false"
+                  aria-controls="faq-panel-9"
+                  id="faq-trigger-9"
+                >
+                  <span class="faq-q" data-i18n="about.faq.q9">Que se passe-t-il si le produit n’est pas disponible ?</span>
+                  <span class="faq-chevron" aria-hidden="true"
+                    ><i class="ph-fill ph-caret-down"></i
+                  ></span>
+                </button>
+                <div class="faq-panel" id="faq-panel-9" role="region" aria-labelledby="faq-trigger-9" hidden>
+                  <div class="faq-panel-inner">
+                    <p class="faq-a" data-i18n="about.faq.a9">
+                      Le Helper vous contacte directement pour proposer une alternative ou confirmer avec vous avant l’achat.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="faq-item">
+                <button
+                  type="button"
+                  class="faq-trigger"
+                  aria-expanded="false"
+                  aria-controls="faq-panel-10"
+                  id="faq-trigger-10"
+                >
+                  <span class="faq-q" data-i18n="about.faq.q10">Dans quels quartiers HelperGo est disponible ?</span>
+                  <span class="faq-chevron" aria-hidden="true"
+                    ><i class="ph-fill ph-caret-down"></i
+                  ></span>
+                </button>
+                <div class="faq-panel" id="faq-panel-10" role="region" aria-labelledby="faq-trigger-10" hidden>
+                  <div class="faq-panel-inner">
+                    <p class="faq-a" data-i18n="about.faq.a10">
+                      HelperGo est actuellement en phase de lancement dans certains quartiers de Casablanca, avec de nouvelles zones ajoutées progressivement.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="faq-item">
+                <button
+                  type="button"
+                  class="faq-trigger"
+                  aria-expanded="false"
+                  aria-controls="faq-panel-11"
+                  id="faq-trigger-11"
+                >
+                  <span class="faq-q" data-i18n="about.faq.q11">Puis-je devenir Helper ?</span>
+                  <span class="faq-chevron" aria-hidden="true"
+                    ><i class="ph-fill ph-caret-down"></i
+                  ></span>
+                </button>
+                <div class="faq-panel" id="faq-panel-11" role="region" aria-labelledby="faq-trigger-11" hidden>
+                  <div class="faq-panel-inner">
+                    <p class="faq-a" data-i18n="about.faq.a11">
+                      Oui 😊 Toute personne sérieuse et disponible peut rejoindre la plateforme et accepter des missions locales selon les zones disponibles.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -675,5 +1048,38 @@
     <script src="translations.js"></script>
     <script src="i18n.js"></script>
     <script src="main.js"></script>
+    <script>
+      (function () {
+        "use strict";
+        document.querySelectorAll(".faq-trigger").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            var item = btn.closest(".faq-item");
+            var panel = document.getElementById(btn.getAttribute("aria-controls"));
+            if (!item || !panel) return;
+            var open = !item.classList.contains("is-open");
+
+            if (open) {
+              panel.removeAttribute("hidden");
+              requestAnimationFrame(function () {
+                item.classList.add("is-open");
+              });
+              btn.setAttribute("aria-expanded", "true");
+            } else {
+              item.classList.remove("is-open");
+              btn.setAttribute("aria-expanded", "false");
+              panel.addEventListener(
+                "transitionend",
+                function (e) {
+                  if (e.propertyName === "grid-template-rows") {
+                    panel.setAttribute("hidden", "");
+                  }
+                },
+                { once: true }
+              );
+            }
+          });
+        });
+      })();
+    </script>
   </body>
 </html>
