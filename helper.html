@@ -180,24 +180,48 @@
             </div>
 
             <div class="form-group">
-              <label class="form-label" for="helper-quartier" data-i18n="helper.form.quartier">Votre quartier</label>
-              <select
-                id="helper-quartier"
-                name="quartier"
-                class="form-select"
-              >
-                <option value="" data-i18n="helper.form.quartierPh">Sélectionnez votre quartier</option>
-                <option value="Al Ferdaous">Al Ferdaous</option>
-                <option value="Maarif">Maarif</option>
-                <option value="Hay Hassani">Hay Hassani</option>
-                <option value="Oulfa">Oulfa</option>
-                <option disabled value="" class="helper-quartier-separator" aria-hidden="true">
-                  ────────────────
-                </option>
-                <option value="__other__" data-i18n="helper.form.quartierOther">
-                  Mon quartier n'est pas dans la liste
-                </option>
-              </select>
+              <label class="form-label" for="helper-quartier-trigger" data-i18n="helper.form.quartier">Votre quartier</label>
+              <div class="custom-select" data-custom-select>
+                <select
+                  id="helper-quartier"
+                  name="quartier"
+                  class="form-select custom-select-native"
+                  tabindex="-1"
+                  aria-hidden="true"
+                >
+                  <option value="" data-i18n="helper.form.quartierPh">Sélectionnez votre quartier</option>
+                  <option value="Al Ferdaous">Al Ferdaous</option>
+                  <option value="Maarif">Maarif</option>
+                  <option value="Hay Hassani">Hay Hassani</option>
+                  <option value="Oulfa">Oulfa</option>
+                  <option disabled value="" data-separator="true" aria-hidden="true"></option>
+                  <option value="__other__" data-i18n="helper.form.quartierOther">
+                    Mon quartier n'est pas dans la liste
+                  </option>
+                </select>
+                <button
+                  type="button"
+                  class="custom-select-trigger"
+                  id="helper-quartier-trigger"
+                  aria-haspopup="listbox"
+                  aria-expanded="false"
+                  aria-controls="helper-quartier-menu"
+                >
+                  <span class="custom-select-value is-placeholder" data-i18n="helper.form.quartierPh"
+                    >Sélectionnez votre quartier</span
+                  >
+                  <span class="custom-select-chevron" aria-hidden="true"
+                    ><i class="ph-fill ph-caret-down"></i
+                  ></span>
+                </button>
+                <div
+                  class="custom-select-menu"
+                  id="helper-quartier-menu"
+                  role="listbox"
+                  aria-labelledby="helper-quartier-trigger"
+                  hidden
+                ></div>
+              </div>
               <p class="form-hint" data-i18n="helper.form.quartierHint">
                 On arrive progressivement quartier par quartier.
               </p>
@@ -358,6 +382,7 @@
     <script src="translations.js"></script>
     <script src="i18n.js"></script>
     <script src="main.js"></script>
+    <script src="custom-select.js"></script>
     <script>
       (function () {
         "use strict";
