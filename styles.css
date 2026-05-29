@@ -1758,7 +1758,8 @@
     display: block;
   }
   
-  .btn.loading .btn-text {
+  .btn.loading .btn-text,
+  .btn.loading .btn-content {
     display: none;
   }
   
@@ -2014,6 +2015,28 @@
     padding-bottom: 17px;
     font-size: 17px;
     border-radius: var(--radius-btn);
+  }
+
+  .helper-form-card #helper-form .btn .btn-content {
+    display: inline;
+    text-align: center;
+  }
+
+  .helper-form-card #helper-form .btn .btn-text {
+    display: inline;
+  }
+
+  .helper-form-card #helper-form .btn .btn-arrow {
+    display: inline;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 420px) {
+    .helper-form-card #helper-form .btn.btn-lg {
+      font-size: 15px;
+      padding-left: 18px;
+      padding-right: 18px;
+    }
   }
   
   .helper-form-card .toggle-row-transport {
