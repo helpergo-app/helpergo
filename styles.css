@@ -1718,12 +1718,60 @@
   .helper-form-card .form-group {
     margin-bottom: 22px;
   }
-  
+
+  .helper-quartier-other-wrap {
+    margin-top: 0;
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition:
+      grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 0.3s ease,
+      margin-top 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .helper-quartier-other-wrap.is-open {
+    margin-top: 14px;
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+
+  .helper-quartier-other-wrap[hidden] {
+    display: none;
+  }
+
+  .helper-quartier-other-inner {
+    overflow: hidden;
+    transform: translateY(-8px);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .helper-quartier-other-wrap.is-open .helper-quartier-other-inner {
+    transform: translateY(0);
+  }
+
+  .helper-quartier-other-wrap .form-label {
+    margin-bottom: 8px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .helper-quartier-other-wrap,
+    .helper-quartier-other-inner {
+      transition: none;
+    }
+  }
+
   .helper-form-card .form-input,
   .helper-form-card .form-select {
     padding: 15px 14px;
     font-size: 15px;
     border-width: 1.5px;
+  }
+
+  .helper-form-card .form-select option.helper-quartier-separator {
+    color: #cbd5e1;
+    font-size: 12px;
+    text-align: center;
   }
   
   .helper-form-card .whatsapp-field {

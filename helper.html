@@ -185,17 +185,41 @@
                 id="helper-quartier"
                 name="quartier"
                 class="form-select"
-                required
               >
                 <option value="" data-i18n="helper.form.quartierPh">Sélectionnez votre quartier</option>
                 <option value="Al Ferdaous">Al Ferdaous</option>
                 <option value="Maarif">Maarif</option>
                 <option value="Hay Hassani">Hay Hassani</option>
                 <option value="Oulfa">Oulfa</option>
+                <option disabled value="" class="helper-quartier-separator" aria-hidden="true">
+                  ────────────────
+                </option>
+                <option value="__other__" data-i18n="helper.form.quartierOther">
+                  Mon quartier n'est pas dans la liste
+                </option>
               </select>
               <p class="form-hint" data-i18n="helper.form.quartierHint">
-                On arrive progressivement quartier par quartier
+                On arrive progressivement quartier par quartier.
               </p>
+              <div id="helper-quartier-other-wrap" class="helper-quartier-other-wrap" hidden>
+                <div class="helper-quartier-other-inner">
+                  <label class="form-label" for="helper-quartier-custom" data-i18n="helper.form.quartierCustom"
+                    >Indiquez votre quartier</label
+                  >
+                  <input
+                    type="text"
+                    id="helper-quartier-custom"
+                    class="form-input"
+                    maxlength="120"
+                    autocomplete="off"
+                    data-i18n-placeholder="helper.form.quartierCustomPh"
+                    placeholder="Ex. : Sidi Maarouf, Anfa…"
+                  />
+                  <p class="form-error" id="err-q-custom" data-i18n="helper.err.qCustom">
+                    Indiquez votre quartier (au moins 2 caractères).
+                  </p>
+                </div>
+              </div>
               <p class="form-error" id="err-q" data-i18n="helper.err.q">Choisissez un quartier.</p>
             </div>
 
@@ -340,6 +364,7 @@
 
         var FORMSPREE_URL = "https://formspree.io/f/xrejywbo";
         var transportSelected = [];
+        var QUARTIER_OTHER = "__other__";
 
         function normalizeWhatsAppLocal(input) {
           var d = (input || "").replace(/\D/g, "");
@@ -349,6 +374,72 @@
         }
 
         var toggle = document.getElementById("transport-toggle");
+        var qEl = document.getElementById("helper-quartier");
+        var qOtherWrap = document.getElementById("helper-quartier-other-wrap");
+        var qCustomEl = document.getElementById("helper-quartier-custom");
+
+        function syncQuartierOtherField() {
+          if (!qEl || !qOtherWrap) return;
+          var isOther = qEl.value === QUARTIER_OTHER;
+          var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+          if (isOther) {
+            qOtherWrap.removeAttribute("hidden");
+            if (reduceMotion) {
+              qOtherWrap.classList.add("is-open");
+            } else {
+              requestAnimationFrame(function () {
+                qOtherWrap.classList.add("is-open");
+              });
+            }
+            if (qCustomEl) {
+              window.setTimeout(
+                function () {
+                  qCustomEl.focus({ preventScroll: true });
+                },
+                reduceMotion ? 0 : 320
+              );
+            }
+          } else {
+            qOtherWrap.classList.remove("is-open");
+            if (reduceMotion) {
+              qOtherWrap.setAttribute("hidden", "");
+            } else {
+              qOtherWrap.addEventListener(
+                "transitionend",
+                function (e) {
+                  if (e.propertyName === "grid-template-rows" && !qOtherWrap.classList.contains("is-open")) {
+                    qOtherWrap.setAttribute("hidden", "");
+                  }
+                },
+                { once: true }
+              );
+            }
+            if (qCustomEl) {
+              qCustomEl.value = "";
+              qCustomEl.classList.remove("error");
+              var errCustom = document.getElementById("err-q-custom");
+              if (errCustom) errCustom.classList.remove("visible");
+            }
+          }
+        }
+
+        if (qEl) {
+          qEl.addEventListener("change", function () {
+            syncQuartierOtherField();
+            document.getElementById("err-q").classList.remove("visible");
+            qEl.classList.remove("error");
+          });
+        }
+
+        if (qCustomEl) {
+          qCustomEl.addEventListener("input", function () {
+            qCustomEl.classList.remove("error");
+            var errCustom = document.getElementById("err-q-custom");
+            if (errCustom) errCustom.classList.remove("visible");
+          });
+        }
+
         if (toggle) {
           toggle.querySelectorAll(".toggle-btn").forEach(function (btn) {
             btn.addEventListener("click", function () {
@@ -398,12 +489,21 @@
             ok = false;
           }
 
-          var qEl = document.getElementById("helper-quartier");
           var q = (qEl.value || "").trim();
+          var quartierValue = q;
           if (!q) {
             document.getElementById("err-q").classList.add("visible");
             qEl.classList.add("error");
             ok = false;
+          } else if (q === QUARTIER_OTHER) {
+            var customQ = (qCustomEl && qCustomEl.value ? qCustomEl.value : "").trim();
+            if (customQ.length < 2) {
+              document.getElementById("err-q-custom").classList.add("visible");
+              if (qCustomEl) qCustomEl.classList.add("error");
+              ok = false;
+            } else {
+              quartierValue = "Autre — " + customQ;
+            }
           }
 
           if (transportSelected.length === 0) {
@@ -421,7 +521,10 @@
           fd.append("_subject", "Candidature Helper HelperGo");
           fd.append("full_name", name);
           fd.append("whatsapp", fullWa);
-          fd.append("quartier", q);
+          fd.append("quartier", quartierValue);
+          if (q === QUARTIER_OTHER && qCustomEl) {
+            fd.append("quartier_custom", qCustomEl.value.trim());
+          }
           fd.append("transport_modes", transportSelected.join(", "));
 
           var btn = document.getElementById("helper-submit");
