@@ -154,44 +154,6 @@
         text-align: left;
       }
 
-      .form-container .summary-box .summary-row {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: flex-start;
-        align-items: baseline;
-        gap: 6px;
-        font-size: 15px;
-        color: #374151;
-        margin: 0 0 10px;
-        line-height: 1.5;
-      }
-
-      .form-container .summary-box .summary-row:last-child {
-        margin-bottom: 0;
-      }
-
-      .form-container .summary-box .summary-row strong {
-        font-weight: 700;
-        color: #0f172a;
-      }
-
-      .form-container .summary-box .summary-row-value {
-        font-weight: 400;
-        color: #374151;
-        text-align: left;
-        word-break: break-word;
-      }
-
-      .form-container .summary-total {
-        font-size: 17px;
-        font-weight: 700;
-        color: #0f172a;
-        margin: 16px 0 0;
-        line-height: 1.5;
-        text-align: left;
-      }
-
       .step-2,
       #step-2,
       [data-step="2"],
@@ -496,30 +458,6 @@
         color: #15803d;
       }
 
-      .summary-items-list {
-        list-style: none;
-        margin: 8px 0 0;
-        padding: 0;
-        width: 100%;
-      }
-
-      .summary-items-list li {
-        font-size: 14px;
-        color: #374151;
-        line-height: 1.45;
-        margin-bottom: 8px;
-        padding-left: 0;
-      }
-
-      .summary-items-list li:last-child {
-        margin-bottom: 0;
-      }
-
-      .summary-row--items {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
       .delivery-location-section {
         margin-top: 8px;
       }
@@ -731,14 +669,6 @@
 
         .form-container .info-box {
           margin-top: 12px;
-        }
-
-        .form-container .summary-box .summary-row {
-          margin-bottom: 12px;
-        }
-
-        .form-container .summary-total {
-          margin-top: 20px;
         }
 
         .form-container .note-box {
@@ -1114,42 +1044,78 @@
 
           <!-- Step 3 -->
           <div class="form-step step-3" id="step-3" data-step="3">
-            <h2 class="form-step-title" data-i18n="order.step3.title">Étape 3 : Récapitulatif</h2>
+            <h2 class="form-step-title" data-i18n="order.step3.title">Étape 3 : Vérifiez votre commande</h2>
 
             <div class="summary-box" id="summary-box">
-              <div class="summary-row summary-row--items">
-                <strong data-i18n="order.sum.items">Articles :</strong>
-                <ul class="summary-items-list" id="sum-items-list"></ul>
+              <div class="summary-box-body">
+                <div class="summary-line">
+                  <span class="summary-label" data-i18n="order.sum.items">Articles :</span>
+                  <div class="summary-value summary-value--items" id="sum-items-list"></div>
+                </div>
+
+                <div class="summary-line">
+                  <span class="summary-label" data-i18n="order.sum.quartier">Quartier :</span>
+                  <span class="summary-value" id="sum-quartier">—</span>
+                </div>
+
+                <div class="summary-line summary-line--address">
+                  <span class="summary-label" data-i18n="order.sum.address">Adresse :</span>
+                  <div class="summary-address-wrap">
+                    <span class="summary-value summary-address-short" id="sum-address-short">—</span>
+                    <div class="summary-address-expand" id="sum-address-expand" hidden>
+                      <div class="summary-address-expand-inner">
+                        <p class="summary-address-full" id="sum-address-full"></p>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      class="summary-address-toggle"
+                      id="sum-address-toggle"
+                      hidden
+                      aria-expanded="false"
+                      aria-controls="sum-address-expand"
+                    >
+                      <span class="summary-address-toggle-text" data-i18n="order.sum.addressShow"
+                        >Voir l'adresse complète</span
+                      >
+                      <span class="summary-address-chevron" aria-hidden="true"
+                        ><i class="ph-fill ph-caret-down"></i
+                      ></span>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="summary-line" id="sum-notes-row" hidden>
+                  <span class="summary-label" data-i18n="order.sum.locationNotes">Précisions :</span>
+                  <span class="summary-value" id="sum-location-notes">—</span>
+                </div>
+
+                <div class="summary-line">
+                  <span class="summary-label" data-i18n="order.sum.wa">WhatsApp :</span>
+                  <span class="summary-value" id="sum-whatsapp">—</span>
+                </div>
               </div>
-              <div class="summary-row">
-                <strong id="sum-subtotal-label">Prix estimé de l'article :</strong>
-                <span class="summary-row-value" id="sum-price">—</span>
-              </div>
-              <div class="summary-row">
-                <strong data-i18n="order.sum.quartier">Quartier :</strong>
-                <span class="summary-row-value" id="sum-quartier">—</span>
-              </div>
-              <div class="summary-row summary-row--stack">
-                <strong data-i18n="order.sum.address">Adresse :</strong>
-                <span class="summary-row-value" id="sum-address">—</span>
-              </div>
-              <div class="summary-row" id="sum-notes-row" hidden>
-                <strong data-i18n="order.sum.locationNotes">Précisions :</strong>
-                <span class="summary-row-value" id="sum-location-notes">—</span>
-              </div>
-              <div class="summary-row">
-                <strong data-i18n="order.sum.wa">WhatsApp :</strong>
-                <span class="summary-row-value" id="sum-whatsapp">—</span>
-              </div>
-              <div class="summary-row">
-                <strong data-i18n="order.sum.delivery">Livraison :</strong>
-                <span class="summary-row-value">8 MAD</span>
+
+              <div class="summary-pay" id="summary-pay">
+                <p class="summary-pay-lead" data-i18n="order.sum.payLead">
+                  À la livraison, vous payerez environ :
+                </p>
+                <div class="summary-pay-rows">
+                  <div class="summary-pay-row">
+                    <span class="summary-pay-label" id="sum-subtotal-label">Produits (estimation) :</span>
+                    <span class="summary-pay-value" id="sum-price">—</span>
+                  </div>
+                  <div class="summary-pay-row">
+                    <span class="summary-pay-label" data-i18n="order.sum.delivery">Livraison :</span>
+                    <span class="summary-pay-value">8 MAD</span>
+                  </div>
+                </div>
+                <div class="summary-pay-total">
+                  <span class="summary-pay-total-label" data-i18n="order.sum.payTotal">Total à payer</span>
+                  <span class="summary-pay-total-value" id="sum-total-value">—</span>
+                </div>
               </div>
             </div>
-
-            <p class="summary-total" id="sum-total-line" data-i18n="order.sum.totalEmpty">
-              Total estimé : — MAD
-            </p>
 
             <div class="note-box">
               <span class="note-box-icon" aria-hidden="true"
@@ -1636,6 +1602,139 @@
           return formatMadFromCents(cents) + " MAD";
         }
 
+        function formatAddressForSummary(full) {
+          var raw = (full || "").trim();
+          if (!raw) return "—";
+          if (raw.length <= 72) return raw;
+
+          var parts = raw
+            .split(",")
+            .map(function (p) {
+              return p.trim();
+            })
+            .filter(Boolean);
+
+          var skip =
+            /préfecture|prefecture|pachalik|arrondissement de|^\d{4,6}$|maroc$|morocco$|casablanca-settat/i;
+          var kept = [];
+          var seen = {};
+
+          parts.forEach(function (part) {
+            if (skip.test(part)) return;
+            var key = part.toLowerCase();
+            if (seen[key]) return;
+            seen[key] = true;
+            kept.push(part);
+          });
+
+          if (kept.length >= 2) {
+            return kept.slice(0, 3).join(", ");
+          }
+          return parts.slice(0, 2).join(", ");
+        }
+
+        function updateSummaryAddress() {
+          var shortEl = document.getElementById("sum-address-short");
+          var fullEl = document.getElementById("sum-address-full");
+          var expandEl = document.getElementById("sum-address-expand");
+          var toggleEl = document.getElementById("sum-address-toggle");
+          var toggleText = toggleEl && toggleEl.querySelector(".summary-address-toggle-text");
+          if (!shortEl) return;
+
+          var fullAddr = (state.delivery.address || "").trim();
+          if (!fullAddr) {
+            shortEl.textContent = "—";
+            if (fullEl) fullEl.textContent = "";
+            if (toggleEl) toggleEl.hidden = true;
+            if (expandEl) {
+              expandEl.classList.remove("is-open");
+              expandEl.setAttribute("hidden", "");
+            }
+            return;
+          }
+
+          var shortAddr = formatAddressForSummary(fullAddr);
+          var needsExpand = shortAddr !== fullAddr;
+
+          shortEl.textContent = needsExpand ? shortAddr : fullAddr;
+          if (fullEl) fullEl.textContent = fullAddr;
+
+          if (toggleEl) {
+            toggleEl.hidden = !needsExpand;
+            if (!needsExpand) {
+              toggleEl.setAttribute("aria-expanded", "false");
+              toggleEl.classList.remove("is-open");
+            } else if (toggleText && window.HelperGoI18n) {
+              toggleText.textContent = window.HelperGoI18n.t("order.sum.addressShow");
+            }
+          }
+
+          if (expandEl) {
+            expandEl.classList.remove("is-open");
+            if (!needsExpand || !toggleEl.classList.contains("is-open")) {
+              expandEl.setAttribute("hidden", "");
+            }
+          }
+        }
+
+        function initSummaryAddressToggle() {
+          var toggleEl = document.getElementById("sum-address-toggle");
+          var expandEl = document.getElementById("sum-address-expand");
+          var toggleText = toggleEl && toggleEl.querySelector(".summary-address-toggle-text");
+          if (!toggleEl || !expandEl) return;
+
+          function setToggleLabel(open) {
+            if (!toggleText || !window.HelperGoI18n) return;
+            toggleText.textContent = window.HelperGoI18n.t(
+              open ? "order.sum.addressHide" : "order.sum.addressShow"
+            );
+          }
+
+          function closeAddressExpand() {
+            expandEl.classList.remove("is-open");
+            toggleEl.classList.remove("is-open");
+            toggleEl.setAttribute("aria-expanded", "false");
+            setToggleLabel(false);
+            var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            if (reduceMotion) {
+              expandEl.setAttribute("hidden", "");
+            } else {
+              expandEl.addEventListener(
+                "transitionend",
+                function (e) {
+                  if (
+                    e.propertyName === "grid-template-rows" &&
+                    !expandEl.classList.contains("is-open")
+                  ) {
+                    expandEl.setAttribute("hidden", "");
+                  }
+                },
+                { once: true }
+              );
+            }
+          }
+
+          toggleEl.addEventListener("click", function () {
+            var open = !expandEl.classList.contains("is-open");
+            if (open) {
+              expandEl.removeAttribute("hidden");
+              var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+              if (reduceMotion) {
+                expandEl.classList.add("is-open");
+              } else {
+                requestAnimationFrame(function () {
+                  expandEl.classList.add("is-open");
+                });
+              }
+              toggleEl.classList.add("is-open");
+              toggleEl.setAttribute("aria-expanded", "true");
+              setToggleLabel(true);
+            } else {
+              closeAddressExpand();
+            }
+          });
+        }
+
         function normalizePriceField(inputEl) {
           if (!inputEl) return;
           var cents = parseMadToCents(inputEl.value);
@@ -1655,7 +1754,7 @@
         function estimatedPriceLabelKey(forSummary) {
           var one = state.items.length === 1;
           if (forSummary) {
-            return one ? "order.sum.subtotalOne" : "order.sum.subtotalMany";
+            return "order.sum.payProducts";
           }
           return one ? "order.items.subtotalOne" : "order.items.subtotalMany";
         }
@@ -2175,9 +2274,10 @@
           if (sumList) {
             sumList.innerHTML = "";
             state.items.forEach(function (item, i) {
-              var li = document.createElement("li");
+              var line = document.createElement("div");
+              line.className = "summary-item-line";
               var cents = parseMadToCents(item.price);
-              li.textContent =
+              line.textContent =
                 i +
                 1 +
                 ". " +
@@ -2187,7 +2287,7 @@
                 " (~" +
                 formatMadFromCents(cents) +
                 " MAD)";
-              sumList.appendChild(li);
+              sumList.appendChild(line);
             });
           }
 
@@ -2197,10 +2297,7 @@
           updateEstimatedPriceLabels();
           document.getElementById("sum-quartier").textContent =
             quartierLabelForSummary();
-          var sumAddr = document.getElementById("sum-address");
-          if (sumAddr) {
-            sumAddr.textContent = state.delivery.address || "—";
-          }
+          updateSummaryAddress();
           var notesRow = document.getElementById("sum-notes-row");
           var sumNotes = document.getElementById("sum-location-notes");
           if (notesRow && sumNotes) {
@@ -2214,13 +2311,15 @@
           document.getElementById("sum-whatsapp").textContent =
             formatWhatsAppDisplay(state.whatsapp);
           var grandTotalCents = totalCents + 800;
-          document.getElementById("sum-total-line").textContent =
-            totalCents <= 0
-            ? t("order.sum.totalEmpty")
-            : t("order.sum.total").replace(
-                "{total}",
-                formatMadFromCents(grandTotalCents)
-              );
+          var sumTotalValue = document.getElementById("sum-total-value");
+          var sumPay = document.getElementById("summary-pay");
+          if (sumTotalValue) {
+            sumTotalValue.textContent =
+              totalCents <= 0 ? "—" : formatMadWithUnit(grandTotalCents);
+          }
+          if (sumPay) {
+            sumPay.classList.toggle("is-empty", totalCents <= 0);
+          }
 
           document.getElementById("field-category").value = state.category;
           document.getElementById("field-product-details").value =
@@ -2314,6 +2413,7 @@
         });
 
         showStep(1);
+        initSummaryAddressToggle();
       })();
     </script>
   </body>
