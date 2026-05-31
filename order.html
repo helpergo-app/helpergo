@@ -225,6 +225,38 @@
         }
       }
 
+      .order-item-wrap {
+        display: grid;
+        grid-template-rows: 0fr;
+        opacity: 0;
+        transition:
+          grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+          opacity 0.3s ease;
+      }
+
+      .order-item-wrap.is-open {
+        grid-template-rows: 1fr;
+        opacity: 1;
+      }
+
+      .order-item-inner {
+        overflow: hidden;
+        min-height: 0;
+        transform: translateY(-8px);
+        transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .order-item-wrap.is-open .order-item-inner {
+        transform: translateY(0);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .order-item-wrap,
+        .order-item-inner {
+          transition: none;
+        }
+      }
+
       .order-items-section {
         margin-bottom: 4px;
       }
@@ -1559,12 +1591,14 @@
 
         function syncOrderItemsFromDom() {
           if (!els.orderItemsList) return;
-          var cards = els.orderItemsList.querySelectorAll(".order-item-card");
+          var wraps = els.orderItemsList.querySelectorAll(
+            ".order-item-wrap:not(.is-removing)"
+          );
           var next = [];
-          cards.forEach(function (card) {
-            var cat = card.querySelector(".order-item-category");
-            var det = card.querySelector(".order-item-details");
-            var pr = card.querySelector(".order-item-price");
+          wraps.forEach(function (wrap) {
+            var cat = wrap.querySelector(".order-item-category");
+            var det = wrap.querySelector(".order-item-details");
+            var pr = wrap.querySelector(".order-item-price");
             next.push({
               category: cat ? cat.value : "",
               details: det ? det.value.trim() : "",
@@ -1572,6 +1606,17 @@
             });
           });
           state.items = next.length ? next : [emptyOrderItem()];
+        }
+
+        function updateAddItemButton() {
+          if (!els.addOrderItem) return;
+          var atMax = state.items.length >= MAX_ORDER_ITEMS;
+          els.addOrderItem.disabled = atMax;
+          if (atMax) {
+            els.addOrderItem.setAttribute("disabled", "disabled");
+          } else {
+            els.addOrderItem.removeAttribute("disabled");
+          }
         }
 
         function parseMadToCents(raw) {
@@ -1798,14 +1843,56 @@
             "</span>";
         }
 
-        function renderOrderItems() {
-          if (!els.orderItemsList) return;
-          if (!state.items.length) state.items = [emptyOrderItem()];
+        function prefersReducedMotion() {
+          return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        }
 
-          els.orderItemsList.innerHTML = "";
-          state.items.forEach(function (item, index) {
-            var card = document.createElement("article");
-            card.className = "order-item-card";
+        function openOrderItemWrap(wrap, onDone) {
+          if (!wrap) return;
+          wrap.classList.remove("is-open");
+          void wrap.offsetHeight;
+          if (prefersReducedMotion()) {
+            wrap.classList.add("is-open");
+            if (onDone) onDone();
+            return;
+          }
+          requestAnimationFrame(function () {
+            requestAnimationFrame(function () {
+              wrap.classList.add("is-open");
+            });
+          });
+          if (onDone) window.setTimeout(onDone, 380);
+        }
+
+        function closeOrderItemWrap(wrap, onDone) {
+          if (!wrap) {
+            if (onDone) onDone();
+            return;
+          }
+          if (prefersReducedMotion()) {
+            wrap.classList.remove("is-open");
+            if (onDone) onDone();
+            return;
+          }
+          var done = false;
+          function finish() {
+            if (done) return;
+            done = true;
+            wrap.removeEventListener("transitionend", onTransitionEnd);
+            if (onDone) onDone();
+          }
+          function onTransitionEnd(e) {
+            if (e.target !== wrap || e.propertyName !== "grid-template-rows") return;
+            finish();
+          }
+          wrap.classList.remove("is-open");
+          wrap.addEventListener("transitionend", onTransitionEnd);
+          window.setTimeout(finish, 400);
+        }
+
+        function buildOrderItemCard(item, index) {
+          var card = document.createElement("article");
+          card.className = "order-item-card";
             card.setAttribute("role", "listitem");
             card.setAttribute("data-index", String(index));
 
@@ -1911,17 +1998,28 @@
             priceHint.setAttribute("data-i18n", "order.price.hint");
             priceHint.textContent = t("order.price.hint");
             priceGroup.appendChild(priceHint);
-            card.appendChild(priceGroup);
+          card.appendChild(priceGroup);
 
-            els.orderItemsList.appendChild(card);
-          });
+          return card;
+        }
 
-          if (els.addOrderItem) {
-            els.addOrderItem.disabled = state.items.length >= MAX_ORDER_ITEMS;
-          }
-          updateOrderItemsCountDisplay();
+        function createOrderItemWrap(item, index, startOpen) {
+          var wrap = document.createElement("div");
+          wrap.className = "order-item-wrap";
+          if (startOpen) wrap.classList.add("is-open");
+          wrap.setAttribute("data-index", String(index));
 
-          els.orderItemsList.querySelectorAll(".category-grid--item").forEach(function (grid) {
+          var inner = document.createElement("div");
+          inner.className = "order-item-inner";
+          inner.appendChild(buildOrderItemCard(item, index));
+          wrap.appendChild(inner);
+          return wrap;
+        }
+
+        function bindOrderItemWrapEvents(wrap) {
+          if (!wrap) return;
+
+          wrap.querySelectorAll(".category-grid--item").forEach(function (grid) {
             grid.querySelectorAll(".category-card").forEach(function (btn) {
               btn.addEventListener("click", function () {
                 var card = btn.closest(".order-item-card");
@@ -1944,7 +2042,7 @@
             });
           });
 
-          els.orderItemsList.querySelectorAll(".order-item-details, .order-item-price").forEach(function (el) {
+          wrap.querySelectorAll(".order-item-details, .order-item-price").forEach(function (el) {
             el.addEventListener("input", function () {
               el.classList.remove("error");
               updateItemsSubtotalPreview();
@@ -1952,7 +2050,7 @@
             el.addEventListener("change", updateItemsSubtotalPreview);
           });
 
-          els.orderItemsList.querySelectorAll(".order-item-price").forEach(function (el) {
+          wrap.querySelectorAll(".order-item-price").forEach(function (el) {
             el.addEventListener("wheel", function (e) {
               if (document.activeElement === el) e.preventDefault();
             });
@@ -1962,19 +2060,62 @@
             });
           });
 
-          els.orderItemsList.querySelectorAll(".order-item-remove").forEach(function (btn) {
+          wrap.querySelectorAll(".order-item-remove").forEach(function (btn) {
             btn.addEventListener("click", function () {
               syncOrderItemsFromDom();
               var idx = Number(btn.getAttribute("data-remove-index"));
-              if (state.items.length > 1 && !isNaN(idx)) {
-                state.items.splice(idx, 1);
+              if (state.items.length <= 1 || isNaN(idx)) return;
+
+              var itemWrap = btn.closest(".order-item-wrap");
+              if (!itemWrap || itemWrap.classList.contains("is-removing")) return;
+
+              itemWrap.classList.add("is-removing");
+              state.items.splice(idx, 1);
+              updateAddItemButton();
+              updateOrderItemsCountDisplay();
+
+              closeOrderItemWrap(itemWrap, function () {
                 renderOrderItems();
                 updateItemsSubtotalPreview();
-              }
+              });
             });
+          });
+        }
+
+        function renderOrderItems() {
+          if (!els.orderItemsList) return;
+          if (!state.items.length) state.items = [emptyOrderItem()];
+
+          els.orderItemsList.innerHTML = "";
+          state.items.forEach(function (item, index) {
+            els.orderItemsList.appendChild(createOrderItemWrap(item, index, true));
+          });
+
+          updateAddItemButton();
+          updateOrderItemsCountDisplay();
+
+          els.orderItemsList.querySelectorAll(".order-item-wrap").forEach(function (wrap) {
+            bindOrderItemWrapEvents(wrap);
           });
 
           updateItemsSubtotalPreview();
+        }
+
+        function appendOrderItemAnimated() {
+          if (!els.orderItemsList) return;
+          var index = state.items.length - 1;
+          var wrap = createOrderItemWrap(state.items[index], index, false);
+          els.orderItemsList.appendChild(wrap);
+          bindOrderItemWrapEvents(wrap);
+
+          updateAddItemButton();
+          updateOrderItemsCountDisplay();
+          updateItemsSubtotalPreview();
+
+          openOrderItemWrap(wrap, function () {
+            var focusEl = wrap.querySelector(".order-item-details");
+            if (focusEl) focusEl.focus({ preventScroll: true });
+          });
         }
 
         if (els.addOrderItem) {
@@ -1982,11 +2123,7 @@
             syncOrderItemsFromDom();
             if (state.items.length < MAX_ORDER_ITEMS) {
               state.items.push(emptyOrderItem());
-              renderOrderItems();
-              var cards = els.orderItemsList.querySelectorAll(".order-item-card");
-              var last = cards[cards.length - 1];
-              var focusEl = last && last.querySelector(".order-item-details");
-              if (focusEl) focusEl.focus();
+              appendOrderItemAnimated();
             }
           });
         }

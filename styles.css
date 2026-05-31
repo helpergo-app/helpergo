@@ -1568,6 +1568,7 @@
   .info-box--delivery .info-box-label {
     color: var(--color-text-secondary);
     font-weight: 500;
+    margin-inline-end: 0.35em;
   }
 
   .info-box--delivery .info-box-value {
