@@ -221,12 +221,46 @@
         border-color: #dc2626;
       }
 
-      #cash-amount-wrap {
-        margin-top: 16px;
+      .order-cash-amount-wrap {
+        margin-top: 0;
+        display: grid;
+        grid-template-rows: 0fr;
+        opacity: 0;
+        transition:
+          grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+          opacity 0.3s ease,
+          margin-top 0.35s cubic-bezier(0.4, 0, 0.2, 1);
       }
 
-      #cash-amount-wrap[hidden] {
+      .order-cash-amount-wrap.is-open {
+        margin-top: 16px;
+        grid-template-rows: 1fr;
+        opacity: 1;
+      }
+
+      .order-cash-amount-wrap[hidden] {
         display: none;
+      }
+
+      .order-cash-amount-inner {
+        overflow: hidden;
+        transform: translateY(-8px);
+        transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .order-cash-amount-wrap.is-open .order-cash-amount-inner {
+        transform: translateY(0);
+      }
+
+      .order-cash-amount-wrap .form-label {
+        margin-bottom: 8px;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .order-cash-amount-wrap,
+        .order-cash-amount-inner {
+          transition: none;
+        }
       }
 
       .order-items-section {
@@ -687,7 +721,7 @@
           padding: 12px 14px;
         }
 
-        #cash-amount-wrap {
+        .order-cash-amount-wrap.is-open {
           margin-top: 18px;
         }
 
@@ -951,24 +985,26 @@
                 </button>
               </div>
               <p class="form-error" id="err-change" data-i18n="order.err.change">Choisissez Oui ou Non.</p>
-              <div id="cash-amount-wrap" hidden>
-                <label class="form-label" for="especes" data-i18n="order.cash.label"
-                  >Quel montant avez-vous sur vous ?</label
-                >
-                <input
-                  type="number"
-                  id="especes"
-                  class="order-especes-field"
-                  data-i18n-placeholder="order.cash.ph"
-                  placeholder="Exemple : 50"
-                  min="1"
-                  step="1"
-                  inputmode="numeric"
-                />
-                <p class="form-hint" data-i18n="order.cash.hint">Votre Helper vous rendra la monnaie.</p>
-                <p class="form-error" id="err-cash" data-i18n="order.err.cash">
-                  Indique un montant en espèces (MAD).
-                </p>
+              <div id="cash-amount-wrap" class="order-cash-amount-wrap" hidden>
+                <div class="order-cash-amount-inner">
+                  <label class="form-label" for="especes" data-i18n="order.cash.label"
+                    >Quel montant avez-vous sur vous ?</label
+                  >
+                  <input
+                    type="number"
+                    id="especes"
+                    class="order-especes-field"
+                    data-i18n-placeholder="order.cash.ph"
+                    placeholder="Exemple : 50"
+                    min="1"
+                    step="1"
+                    inputmode="numeric"
+                  />
+                  <p class="form-hint" data-i18n="order.cash.hint">Votre Helper vous rendra la monnaie.</p>
+                  <p class="form-error" id="err-cash" data-i18n="order.err.cash">
+                    Indique un montant en espèces (MAD).
+                  </p>
+                </div>
               </div>
             </div>
 
@@ -1890,6 +1926,48 @@
           var esp = document.getElementById("especes");
 
           if (changeToggle && cashWrap) {
+            function showCashAmount() {
+              var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+              cashWrap.removeAttribute("hidden");
+              if (reduceMotion) {
+                cashWrap.classList.add("is-open");
+              } else {
+                requestAnimationFrame(function () {
+                  cashWrap.classList.add("is-open");
+                });
+              }
+              if (esp) {
+                window.setTimeout(
+                  function () {
+                    esp.focus({ preventScroll: true });
+                  },
+                  reduceMotion ? 0 : 320
+                );
+              }
+            }
+
+            function hideCashAmount() {
+              var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+              cashWrap.classList.remove("is-open");
+              if (reduceMotion) {
+                cashWrap.setAttribute("hidden", "");
+              } else {
+                cashWrap.addEventListener(
+                  "transitionend",
+                  function (e) {
+                    if (e.propertyName === "grid-template-rows" && !cashWrap.classList.contains("is-open")) {
+                      cashWrap.setAttribute("hidden", "");
+                    }
+                  },
+                  { once: true }
+                );
+              }
+              if (esp) esp.value = "";
+              var errCash = document.getElementById("err-cash");
+              if (errCash) errCash.classList.remove("visible");
+              if (esp) esp.classList.remove("error");
+            }
+
             changeToggle.querySelectorAll(".toggle-btn").forEach(function (btn) {
               btn.addEventListener("click", function () {
                 changeToggle.querySelectorAll(".toggle-btn").forEach(function (b) {
@@ -1901,14 +1979,9 @@
                 if (errChange) errChange.classList.remove("visible");
 
                 if (state.hasChange === "oui") {
-                  cashWrap.hidden = true;
-                  if (esp) esp.value = "";
-                  var errCash = document.getElementById("err-cash");
-                  if (errCash) errCash.classList.remove("visible");
-                  if (esp) esp.classList.remove("error");
+                  hideCashAmount();
                 } else if (state.hasChange === "non") {
-                  cashWrap.hidden = false;
-                  if (esp) esp.focus();
+                  showCashAmount();
                 }
               });
             });
