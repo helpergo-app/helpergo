@@ -866,7 +866,7 @@
           <input type="hidden" name="quartier" id="field-quartier" />
           <input type="hidden" name="cash_available_mad" id="field-cash" />
           <input type="hidden" name="has_change" id="field-has-change" />
-          <input type="hidden" name="delivery_fee_mad" value="8" />
+          <input type="hidden" name="delivery_fee_mad" value="10" />
           <input type="hidden" name="whatsapp" id="field-whatsapp" />
           <input type="hidden" name="delivery_lat" id="field-delivery-lat" />
           <input type="hidden" name="delivery_lng" id="field-delivery-lng" />
@@ -924,7 +924,7 @@
                 ></span>
                 <p class="info-box-copy" data-i18n-html="order.quartier.info">
                   <span class="info-box-label">Livraison :</span>
-                  <span class="info-box-value">8 MAD</span>
+                  <span class="info-box-value">10 MAD</span>
                   <span class="info-box-sep" aria-hidden="true">·</span>
                   <span class="info-box-label">Délai moyen estimé :</span>
                   <span class="info-box-value">~20 min</span>
@@ -1139,7 +1139,7 @@
                   </div>
                   <div class="summary-pay-row">
                     <span class="summary-pay-label" data-i18n="order.sum.delivery">Livraison :</span>
-                    <span class="summary-pay-value">8 MAD</span>
+                    <span class="summary-pay-value">10 MAD</span>
                   </div>
                 </div>
                 <div class="summary-pay-total">
@@ -2447,7 +2447,7 @@
           }
           document.getElementById("sum-whatsapp").textContent =
             formatWhatsAppDisplay(state.whatsapp);
-          var grandTotalCents = totalCents + 800;
+          var grandTotalCents = totalCents + 1000;
           var sumTotalValue = document.getElementById("sum-total-value");
           var sumPay = document.getElementById("summary-pay");
           if (sumTotalValue) {
