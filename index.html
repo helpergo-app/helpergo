@@ -1,1 +1,891 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HelperGo | Casablanca</title>
+    <meta
+      name="description"
+      content="HelperGo envoie un Helper pour faire tes courses en moins de 20 minutes. 10 MAD fixe, depuis n'importe quelle boutique de ton quartier à Casablanca."
+    />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Phosphor Fill (package exposes style.css; see @phosphor-icons/web) -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.0.3/src/fill/style.css"
+    />
+    <style>
+      .hero-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(46, 204, 143, 0.1);
+        border: 1px solid rgba(46, 204, 143, 0.25);
+        border-radius: 999px;
+        padding: 6px 16px;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #2ecc8f;
+        margin-bottom: 12px;
+      }
 
+      @media (min-width: 769px) {
+        .landing-hero {
+          padding: 32px 0 44px;
+        }
+
+        .landing-hero .hero-title {
+          margin-bottom: 8px;
+        }
+
+        .landing-hero .hero-subtitle {
+          margin-bottom: 16px;
+        }
+
+        .landing-hero .hero-badges {
+          margin-top: 20px;
+        }
+
+        .hero-subtitle {
+          font-size: 16px;
+          line-height: 1.6;
+        }
+
+        .hero-label {
+          font-size: 11px;
+        }
+
+        .phone-mockup {
+          width: 274px;
+          max-width: 274px;
+          height: auto;
+          aspect-ratio: 280 / 580;
+        }
+      }
+
+      .hero-animated-text {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        box-sizing: border-box;
+        height: 160px;
+        padding-top: 0;
+        padding-bottom: 0;
+        overflow: hidden;
+        margin-bottom: 4px;
+      }
+
+      .hero-animated-text span {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transform: translateY(calc(-50% + 12px));
+        transition: opacity 0.7s ease, transform 0.7s ease;
+        color: #2ecc8f;
+        font-size: 44px;
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+      }
+
+      .hero-animated-text span.active {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translateY(-50%);
+        z-index: 1;
+      }
+
+      .hero-animated-text span.exit {
+        opacity: 0;
+        transform: translateY(calc(-50% - 12px));
+      }
+
+      .hero-animated-text span.active.exit {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        visibility: visible;
+        transform: translateY(calc(-50% - 12px));
+      }
+
+      .hero-title {
+        font-size: 30px;
+        font-weight: 700;
+        line-height: 1.3;
+        margin-top: 8px;
+      }
+
+      .hero-subtitle {
+        color: rgba(255, 255, 255, 0.72);
+      }
+
+      .card.step-card {
+        padding: 28px 24px;
+        border-radius: 16px;
+        border: 1px solid #eeeeee;
+        background: #ffffff;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+        max-width: 320px;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+        cursor: default;
+      }
+
+      .card.step-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+      }
+
+      #comment .step-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: rgba(29, 158, 117, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+
+      #comment .step-icon i {
+        color: #1d9e75;
+        font-size: 26px;
+      }
+
+      #comment .step-title {
+        font-size: 16px;
+        font-weight: 700;
+        color: #0f172a;
+        margin-bottom: 8px;
+        letter-spacing: -0.01em;
+      }
+
+      #comment .step-description {
+        font-size: 14px;
+        color: #6b7280;
+        line-height: 1.6;
+      }
+
+      #comment .section-title {
+        font-size: 32px;
+        font-weight: 800;
+        color: #0f172a;
+        letter-spacing: -0.02em;
+      }
+
+      #comment .section-subtitle {
+        font-size: 15px;
+        color: #6b7280;
+        margin-top: 8px;
+      }
+
+      @media (min-width: 769px) {
+        #comment .steps-grid {
+          position: relative;
+        }
+
+        #comment .steps-grid::before {
+          content: "";
+          position: absolute;
+          top: 64px;
+          left: 8%;
+          right: 8%;
+          height: 2px;
+          background: repeating-linear-gradient(
+            to right,
+            rgba(29, 158, 117, 0.85) 0 2px,
+            transparent 2px 4px
+          );
+          opacity: 0.55;
+          z-index: 0;
+        }
+
+        #comment .steps-grid .card {
+          position: relative;
+          z-index: 1;
+        }
+      }
+
+      #comment.section.section-alt {
+        background: #ffffff;
+      }
+
+      #pourquoi.section {
+        background: #f8f8f8;
+      }
+
+      #pourquoi .section-title {
+        margin-bottom: 24px;
+      }
+
+      #pourquoi .why-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: rgba(29, 158, 117, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 16px;
+      }
+
+      #pourquoi .why-icon i {
+        color: #1d9e75;
+        font-size: 26px;
+      }
+
+      #pourquoi .why-title {
+        font-size: 16px;
+        font-weight: 700;
+        color: #0f172a;
+        margin-bottom: 8px;
+        letter-spacing: -0.01em;
+        text-align: center;
+      }
+
+      #pourquoi .why-description {
+        font-size: 14px;
+        color: #6b7280;
+        line-height: 1.6;
+        text-align: center;
+      }
+
+      #pourquoi .why-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 24px 20px 18px;
+        border-radius: 16px;
+        border: 1px solid #eeeeee;
+        background: #ffffff;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+        min-height: auto;
+      }
+
+      #pourquoi .why-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+      }
+
+      @keyframes glow-pulse {
+        0% {
+          box-shadow: 0 4px 16px rgba(29, 158, 117, 0.25);
+        }
+        50% {
+          box-shadow: 0 4px 28px rgba(46, 204, 143, 0.42);
+        }
+        100% {
+          box-shadow: 0 4px 16px rgba(29, 158, 117, 0.25);
+        }
+      }
+
+      .btn-primary {
+        background: #1d9e75;
+        color: white;
+        border: none;
+        border-radius: 12px;
+        padding: 14px 28px;
+        font-size: 15px;
+        font-weight: 700;
+        font-family: "Poppins", sans-serif;
+        cursor: pointer;
+        transition: transform 0.2s ease, background 0.2s ease,
+          box-shadow 0.2s ease;
+        box-shadow: 0 4px 14px rgba(29, 158, 117, 0.18);
+      }
+
+      .btn-primary:hover,
+      .btn-primary:hover:not(:disabled) {
+        background: #17a874;
+        transform: translateY(-4px);
+        box-shadow: 0 8px 28px rgba(29, 158, 117, 0.45);
+        text-decoration: none;
+        color: #fff;
+      }
+
+      .btn-primary:active {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 16px rgba(29, 158, 117, 0.3);
+      }
+
+      .hero .btn.btn-primary {
+        animation: glow-pulse 3.5s ease-in-out infinite;
+        transition: transform 0.2s ease, background 0.2s ease;
+      }
+
+      .hero .btn.btn-primary:hover,
+      .hero .btn.btn-primary:hover:not(:disabled) {
+        animation: none;
+        transform: translateY(-4px);
+        box-shadow: 0 8px 32px rgba(29, 158, 117, 0.55);
+        background: #17a874;
+        text-decoration: none;
+        color: #fff;
+      }
+
+      .hero-badges {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 26px;
+        flex-wrap: wrap;
+      }
+
+      .hero-badge {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        background: rgba(255, 255, 255, 0.07);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 999px;
+        padding: 7px 16px;
+        backdrop-filter: blur(8px);
+      }
+
+      .badge-icon {
+        font-size: 14px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .badge-icon .ph-fill {
+        font-size: 15px;
+        line-height: 1;
+        color: rgba(255, 255, 255, 0.88);
+      }
+
+      .badge-text {
+        font-size: 13px;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.85);
+        letter-spacing: 0.01em;
+      }
+
+      .badge-dot {
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.25);
+      }
+
+      @media (max-width: 480px) {
+        .badge-dot {
+          display: none;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .hero-grid {
+          justify-items: center;
+        }
+
+        .hero-grid > div:first-child {
+          text-align: center;
+        }
+
+        .hero-label {
+          justify-content: center;
+        }
+
+        .hero-subtitle {
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        .hero .btn.btn-primary {
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        .hero-badges {
+          justify-content: center;
+        }
+
+        .site-header {
+          background: #ffffff !important;
+        }
+
+        .nav-desktop {
+          display: none !important;
+        }
+
+        .phone-mockup-wrap {
+          display: flex !important;
+          justify-content: center;
+          max-width: 232px;
+          width: 100%;
+          margin: 0 auto;
+          grid-column: 1 / -1;
+        }
+
+        .phone-mockup {
+          width: 232px;
+          height: 437px;
+          max-width: 232px;
+          border-radius: 32px;
+          margin: 20px auto 0;
+          flex-shrink: 0;
+        }
+
+        .hero .phone-mockup .phone-screen {
+          border-radius: 22px;
+        }
+
+        .hero .phone-mockup .phone-notch {
+          width: 72px;
+          height: 22px;
+          top: 14px;
+        }
+
+        .hero .phone-mockup .phone-app-bar {
+          padding: 32px 10px 10px;
+          gap: 6px;
+        }
+
+        .hero .phone-mockup .phone-app-title {
+          font-size: 12px;
+        }
+
+        .hero .phone-mockup .phone-app-body {
+          padding: 0 10px 14px;
+          gap: 8px;
+        }
+
+        .hero .phone-mockup .phone-app-card {
+          padding: 10px 10px;
+          gap: 8px;
+          border-radius: 14px;
+        }
+
+        .hero .phone-mockup .phone-app-cta {
+          padding: 10px 12px;
+          font-size: 12px;
+          border-radius: 10px;
+          margin-top: 2px;
+        }
+
+        .hero .phone-mockup .phone-skeleton-lg {
+          height: 9px;
+        }
+
+        .hero .phone-mockup .phone-skeleton-sm {
+          height: 8px;
+        }
+
+        .hero .phone-mockup .phone-skeleton-line {
+          height: 7px;
+        }
+
+        .hero-animated-text {
+          height: 130px;
+        }
+
+        .hero-animated-text span {
+          font-size: 30px;
+          letter-spacing: -0.02em;
+        }
+
+        .hero-title {
+          font-size: 24px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .steps-grid {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 16px;
+          padding: 0 16px;
+        }
+
+        .card.step-card {
+          width: 100%;
+          max-width: none;
+          padding: 28px 24px;
+        }
+
+        #comment .steps-grid {
+          position: relative;
+        }
+
+        #comment .steps-grid::before {
+          content: "";
+          position: absolute;
+          width: 2px;
+          top: 96px;
+          bottom: 32px;
+          left: 52px; /* padding-left (24) + icon radius (28) */
+          background: repeating-linear-gradient(
+            to bottom,
+            rgba(29, 158, 117, 0.85) 0 2px,
+            transparent 2px 4px
+          );
+          opacity: 0.55;
+          z-index: 0;
+        }
+
+        #comment .card.step-card {
+          position: relative;
+          z-index: 1;
+        }
+      }
+    </style>
+  </head>
+  <body data-page="index">
+    <header class="site-header">
+      <div class="header-inner">
+        <a href="index.html" class="logo-link" data-i18n-aria="common.logoAria">
+          <svg
+            class="logo-mark"
+            width="44"
+            height="44"
+            viewBox="0 0 44 44"
+            aria-hidden="true"
+          >
+            <circle cx="22" cy="22" r="22" fill="#1D9E75" />
+            <!-- H shape + chevron -->
+            <g fill="#ffffff">
+              <rect x="10" y="12" width="4" height="20" rx="1" />
+              <rect x="18" y="12" width="4" height="20" rx="1" />
+              <rect x="10" y="20" width="12" height="4" rx="1" />
+            </g>
+            <path
+              d="M26 14 L34 22 L26 30"
+              fill="none"
+              stroke="#ffffff"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <span class="logo-text"
+            ><span class="logo-helper">Helper</span
+            ><span class="logo-go">Go</span></span
+          >
+        </a>
+        <div class="header-actions">
+          <nav class="nav-desktop" data-i18n-aria="common.nav.ariaDesktop">
+            <a href="about.html" data-i18n="common.nav.about">À propos</a>
+            <a href="helper.html" data-i18n="common.nav.helper">Devenir Helper</a>
+          </nav>
+          <div class="lang-dropdown">
+            <button
+              type="button"
+              class="lang-trigger"
+              aria-expanded="false"
+              aria-haspopup="listbox"
+              data-i18n-aria="common.langAria"
+            >
+              <i class="ph-fill ph-globe-hemisphere-west" aria-hidden="true"></i>
+            </button>
+            <div class="lang-menu" role="listbox">
+              <button type="button" class="lang-option" data-lang="fr" role="option">
+                Français
+              </button>
+              <button type="button" class="lang-option" data-lang="en" role="option">
+                English
+              </button>
+              <button type="button" class="lang-option" data-lang="ar" role="option">
+                العربية
+              </button>
+            </div>
+          </div>
+          <button
+            type="button"
+            class="nav-toggle"
+            data-i18n-aria="common.menu.open"
+            aria-expanded="false"
+          >
+            <span class="nav-toggle-bar"></span>
+            <span class="nav-toggle-bar"></span>
+            <span class="nav-toggle-bar"></span>
+          </button>
+        </div>
+      </div>
+      <nav class="nav-mobile" data-i18n-aria="common.nav.ariaMobile">
+        <a href="order.html" data-i18n="common.nav.order">Commander</a>
+        <a href="helper.html" data-i18n="common.nav.helper">Devenir Helper</a>
+        <a href="about.html" data-i18n="common.nav.about">À propos</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- Hero -->
+      <section class="hero landing-hero">
+        <div class="container hero-grid">
+          <div>
+            <div class="hero-label" data-i18n="index.hero.label">Livraison express de proximité</div>
+            <div
+              class="hero-animated-text"
+              id="hero-animated-text"
+              aria-live="polite"
+            >
+              <span class="active" data-i18n="index.hero.phrase0">Rentré fatigué du boulot ?</span>
+              <span data-i18n="index.hero.phrase1">Il te manque quelque chose ?</span>
+              <span data-i18n="index.hero.phrase2">Malade et besoin d'une course rapide ?</span>
+            </div>
+            <h1 class="hero-title" data-i18n="index.hero.title">Un Helper s'en occupe en 20 min.</h1>
+            <p class="hero-subtitle" data-i18n="index.hero.subtitle">
+              Depuis n'importe quelle boutique, épicerie ou supermarché de ton
+              quartier.
+            </p>
+            <a href="order.html" class="btn btn-primary btn-lg btn-pulse" data-i18n="index.hero.cta"
+              >Commander maintenant</a
+            >
+            <div class="hero-badges">
+              <div class="hero-badge">
+                <span class="badge-icon"
+                  ><i class="ph-fill ph-tag" aria-hidden="true"></i
+                ></span>
+                <span class="badge-text" data-i18n="index.badge.fee">10 MAD fixe</span>
+              </div>
+              <div class="badge-dot"></div>
+              <div class="hero-badge">
+                <span class="badge-icon"
+                  ><i class="ph-fill ph-timer" aria-hidden="true"></i
+                ></span>
+                <span class="badge-text" data-i18n="index.badge.time">~20 min</span>
+              </div>
+              <div class="badge-dot"></div>
+              <div class="hero-badge">
+                <span class="badge-icon"
+                  ><i class="ph-fill ph-map-pin" aria-hidden="true"></i
+                ></span>
+                <span class="badge-text" data-i18n="index.badge.city">Casablanca</span>
+              </div>
+            </div>
+          </div>
+          <div class="phone-mockup-wrap" aria-hidden="true">
+            <div class="phone-mockup">
+              <div class="phone-notch" aria-hidden="true"></div>
+              <div class="phone-screen phone-app-ui">
+                <header class="phone-app-bar">
+                  <span class="phone-app-dot"></span>
+                  <span class="phone-app-title">HelperGo</span>
+                </header>
+                <div class="phone-app-body">
+                  <div class="phone-app-card">
+                    <div class="phone-skeleton phone-skeleton-lg"></div>
+                    <div class="phone-skeleton phone-skeleton-sm"></div>
+                    <div class="phone-app-cta" data-i18n="index.phone.order">Commander</div>
+                  </div>
+                  <div class="phone-app-card">
+                    <div class="phone-skeleton phone-skeleton-line"></div>
+                    <div
+                      class="phone-skeleton phone-skeleton-line phone-skeleton-short"
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Comment ça marche -->
+      <section class="section section-alt" id="comment">
+        <div class="container">
+          <h2 class="section-title" data-reveal data-i18n="index.steps.title">Comment ça marche ?</h2>
+          <p class="section-subtitle" data-reveal data-i18n="index.steps.subtitle">
+            Ta commande en 3 étapes simples.
+          </p>
+          <div class="steps-grid">
+            <article class="card step-card" data-reveal>
+              <span class="step-icon"
+                ><i class="ph-fill ph-shopping-bag" aria-hidden="true"></i
+              ></span>
+              <h3 class="step-title" data-i18n="index.steps.1.title">Passe ta commande</h3>
+              <p class="step-description" data-i18n="index.steps.1.desc">
+                Choisis ton produit et indique ton quartier.
+              </p>
+            </article>
+            <article class="card step-card" data-reveal>
+              <span class="step-icon"
+                ><i
+                  class="ph-fill ph-person-simple-run step-icon-runner"
+                  aria-hidden="true"
+                ></i
+              ></span>
+              <h3 class="step-title" data-i18n="index.steps.2.title">Un Helper se met en route</h3>
+              <p class="step-description" data-i18n="index.steps.2.desc">
+                Un Helper proche achète ce dont tu as besoin.
+              </p>
+            </article>
+            <article class="card step-card" data-reveal>
+              <span class="step-icon"
+                ><i class="ph-fill ph-package" aria-hidden="true"></i
+              ></span>
+              <h3 class="step-title" data-i18n="index.steps.3.title">Livré chez toi</h3>
+              <p class="step-description" data-i18n="index.steps.3.desc">
+                En moins de 20 min, paiement à la livraison.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Pourquoi HelperGo -->
+      <section class="section" id="pourquoi">
+        <div class="container">
+          <h2 class="section-title" data-reveal data-i18n="index.why.title">Pourquoi choisir HelperGo ?</h2>
+          <div class="why-grid">
+            <article class="card why-card" data-reveal>
+              <span class="why-icon"
+                ><i class="ph-fill ph-couch" aria-hidden="true"></i
+              ></span>
+              <h3 class="why-title" data-i18n="index.why.1.title">Confort immédiat</h3>
+              <p class="why-description" data-i18n="index.why.1.desc">
+                Plus besoin de ressortir pour les petites urgences du quotidien.
+              </p>
+            </article>
+            <article class="card why-card" data-reveal>
+              <span class="why-icon"
+                ><i class="ph-fill ph-clock" aria-hidden="true"></i
+              ></span>
+              <h3 class="why-title" data-i18n="index.why.2.title">Plus qu'une livraison</h3>
+              <p class="why-description" data-i18n="index.why.2.desc">
+                Du temps gagné et le confort de rester chez toi.
+              </p>
+            </article>
+            <article class="card why-card" data-reveal>
+              <span class="why-icon"
+                ><i class="ph-fill ph-shield-check" aria-hidden="true"></i
+              ></span>
+              <h3 class="why-title" data-i18n="index.why.3.title">L'esprit tranquille</h3>
+              <p class="why-description" data-i18n="index.why.3.desc">
+                Des Helpers vérifiés pour gérer les petits besoins du quotidien,
+                en toute sécurité.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA final -->
+      <section class="cta-band" data-reveal>
+        <div class="container">
+          <h2 data-i18n="index.cta.title">Besoin de quelque chose ?</h2>
+          <a href="order.html" class="btn btn-primary btn-lg" data-i18n="index.cta.btn"
+            >Commander maintenant</a
+          >
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p class="footer-social-title" data-i18n="common.social.title">Suivez-nous</p>
+        <div class="footer-social">
+          <a
+            href="https://www.facebook.com/joinhelpergo"
+            class="footer-social-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-i18n-aria="common.social.facebook"
+          >
+            <i class="ph-fill ph-facebook-logo" aria-hidden="true"></i>
+          </a>
+          <a
+            href="https://www.instagram.com/helpergo.app"
+            class="footer-social-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-i18n-aria="common.social.instagram"
+          >
+            <i class="ph-fill ph-instagram-logo" aria-hidden="true"></i>
+          </a>
+          <a
+            href="https://x.com/HelperGo_App"
+            class="footer-social-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-i18n-aria="common.social.twitter"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path
+                fill="currentColor"
+                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
+              />
+            </svg>
+          </a>
+          <a
+            href="https://www.tiktok.com/@helpergo.app"
+            class="footer-social-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-i18n-aria="common.social.tiktok"
+          >
+            <i class="ph-fill ph-tiktok-logo" aria-hidden="true"></i>
+          </a>
+        </div>
+        <p class="footer-copy" data-i18n="common.footer">
+          HelperGo © 2026 — Casablanca, Maroc
+        </p>
+      </div>
+    </footer>
+
+    <script src="translations.js"></script>
+    <script src="i18n.js"></script>
+    <script src="main.js"></script>
+    <script>
+      (function () {
+        var container = document.getElementById("hero-animated-text");
+        if (!container) return;
+        var spans = container.querySelectorAll("span");
+        var i = 0;
+        var timerId = null;
+
+        function refreshPhrases() {
+          if (window.HelperGoI18n) {
+            var phrases = window.HelperGoI18n.getHeroPhrases();
+            spans.forEach(function (span, idx) {
+              if (phrases[idx]) span.textContent = phrases[idx];
+            });
+          }
+        }
+
+        function startRotation() {
+          if (timerId) window.clearInterval(timerId);
+          timerId = window.setInterval(function () {
+            var current = spans[i];
+            current.classList.add("exit");
+            window.setTimeout(function () {
+              current.classList.remove("active", "exit");
+              i = (i + 1) % spans.length;
+              spans[i].classList.add("active");
+            }, 700);
+          }, 3000);
+        }
+
+        refreshPhrases();
+        startRotation();
+        window.addEventListener("helpergo:langchange", function () {
+          refreshPhrases();
+        });
+      })();
+    </script>
+  </body>
+</html>
